@@ -1,15 +1,25 @@
-{% extends "base.html" %}
+{% extends "base.html" %} {% block title %}Login{% endblock %} {% block body %}
 
-{% block title %}Home{% endblock %}
-
-{% block body %}
-
-    <h1>login</h1>
-    {{ user.name }}
-
-
-    {% for user in allU %}
-    <li>{{ user.name|e }}</li>
-    {% endfor %}
+<h1>login</h1>
+<form class="white">
+  <h5 class="grey-text text-darken-0">Sign In</h5>
+  <div class="input-field">
+    <label for="email">Email</label
+    ><input
+      type="email"
+      id="email"
+      required=""
+      value="nikkyamresh8@gmail.com"
+    />
+  </div>
+  <div class="input-field">
+    <label for="password">Password</label
+    ><input type="password" id="password" required="" value="123456" />
+  </div>
+  <div class="input-field">
+    <button class="btn bg-orange lighten-1 z-depth-0">Login</button>
+    <div class="center red-text"></div>
+  </div>
+</form>
 
 {% endblock %}

@@ -2,3 +2,8 @@
 Stack trace: #0 /Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/public/index.php(37): Core\Router->dispatch('loginl')
 #1 {main}
 Thrown in '/Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/Core/Router.php' on line 130
+[13-Nov-2021 08:54:51 America/Los_Angeles] Uncaught exception: 'Exception' with message 'Method jAction not found in controller App\Controllers\Profile'
+Stack trace: #0 /Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/Core/Router.php(121): Core\Controller->__call('j', Array)
+#1 /Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/public/index.php(37): Core\Router->dispatch('profile/j')
+#2 {main}
+Thrown in '/Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/Core/Controller.php' on line 52

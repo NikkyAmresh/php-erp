@@ -5,11 +5,6 @@ namespace App\Controllers;
 use \App\Models\User;
 use \Core\View;
 
-/**
- * Home controller
- *
- * PHP version 7.0
- */
 class Login extends \Core\Controller
 {
 
