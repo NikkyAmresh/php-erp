@@ -5,5 +5,11 @@
 {% block body %}
 
     <h1>login</h1>
+    {{ user.name }}
+
+
+    {% for user in allU %}
+    <li>{{ user.name|e }}</li>
+    {% endfor %}
 
 {% endblock %}

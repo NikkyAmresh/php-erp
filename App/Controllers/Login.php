@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use \Core\View;
 use \App\Models\User;
+use \Core\View;
 
 /**
  * Home controller
@@ -21,8 +21,8 @@ class Login extends \Core\Controller
     public function indexAction()
     {
         $usr = new User();
-        print_r($usr->get(2));
-        print_r($usr->getAll());
-        View::renderTemplate('Home/login.html');
+        $user = $usr->get(2);
+        $users = $usr->getAll();
+        View::renderTemplate('Home/login.html', ['user' => $user, 'allU' => $users]);
     }
 }

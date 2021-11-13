@@ -1,0 +1,4 @@
+[13-Nov-2021 06:45:13 America/Los_Angeles] Uncaught exception: 'Exception' with message 'No route matched.'
+Stack trace: #0 /Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/public/index.php(37): Core\Router->dispatch('loginl')
+#1 {main}
+Thrown in '/Applications/mampstack-7.1.32-0/apache2/htdocs/erpSys/Core/Router.php' on line 130
