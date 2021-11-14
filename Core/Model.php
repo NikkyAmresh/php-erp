@@ -36,9 +36,14 @@ abstract class Model
         return $this->db->orderBy("id", "asc")->get(static::$table, $numRows);
     }
 
-    public function get($id)
+    public function get($id = null, $cond = null)
     {
-        $data = $this->db->where("id", $id)->getOne(static::$table);
+        $data = null;
+        if ($id) {
+            $data = $this->db->where("id", $id)->getOne(static::$table);
+        } elseif ($cond) {
+            $data = $this->db->where($cond['field'], $cond['value'])->getOne(static::$table);
+        }
         $this->setData($data);
         return $this->_data;
 
