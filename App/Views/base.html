@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"
@@ -11,9 +12,56 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
   </head>
   <body>
-    {% block body %} {% endblock %}
+    <div class="container">{% block body %} {% endblock %}</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
+    <script type="text/javascript">
+      var successMsg = {{ SUCCESS_MESSAGE | json_encode()| raw }}
+      var infoMsg = {{ INFO_MESSAGE | json_encode()| raw }}
+      var errorMsg = {{ ERROR_MESSAGE | json_encode()| raw }}
+      var warnMsg = {{ WARNING_MESSAGE | json_encode()| raw }}
+      if(successMsg){
+        Toastify({
+            text: successMsg,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+          }).showToast();
+      }
+      if(infoMsg){
+        Toastify({
+            text: infoMsg,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+          }).showToast();
+      }
+      if(errorMsg){
+        Toastify({
+            text: errorMsg,
+            style: {
+                background: "linear-gradient(to right, #b01800, #c93d3d)",
+              }
+          }).showToast();
+      }
+      if(warnMsg){
+        Toastify({
+            text: warnMsg,
+            style: {
+                background: "linear-gradient(to right, #00b09b, #96c93d)",
+              }
+          }).showToast();
+      }
+    </script>
   </body>
 </html>

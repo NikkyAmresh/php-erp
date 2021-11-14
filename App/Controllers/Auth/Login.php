@@ -12,7 +12,7 @@ class Login extends \Core\Controller
 
     public function isAlreadyLoggedIn()
     {
-        return Session::get('LOGGED_IN_USER_ID');
+        return Session::get(Constants::LOGGED_IN_USER_ID);
     }
 
     public function login($method, $body)

@@ -14,4 +14,8 @@ class Constants
     const ERROR = "ERROR";
     const SUCCESS = "SUCCESS";
     const WARNING = "WARNING";
+
+    const LOGGED_IN_ADMIN_ID = "LOGGED_IN_ADMIN_ID";
+    const LOGGED_IN_ADMIN_NAME = "LOGGED_IN_ADMIN_NAME";
+    const LOGGED_IN_ADMIN_EMAIL = "LOGGED_IN_ADMIN_EMAIL";
 }

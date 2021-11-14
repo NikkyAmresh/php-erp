@@ -29,10 +29,16 @@ $router = new Core\Router();
 
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
-$router->add('{controller}/{action}');
+// $router->add('{controller}/{action}');
 $router->add('login', ['controller' => 'Auth\Login', 'action' => 'index']);
 $router->add('logout', ['controller' => 'Auth\Logout', 'action' => 'index']);
 
 $router->add("profile", ['controller' => 'Profile', 'action' => 'xyz']);
+
+$router->add("admin", ['controller' => 'Admin\Index', 'action' => 'index']);
+$router->add("admin/department", ['controller' => 'Admin\Department', 'action' => 'index']);
+$router->add("admin/department/{id:\d+}", ['controller' => 'Admin\Department', 'action' => 'edit']);
+$router->add("admin/createDepartment", ['controller' => 'Admin\Department', 'action' => 'create']);
+$router->add("admin/deleteDepartment/{id:\d+}", ['controller' => 'Admin\Department', 'action' => 'delete']);
 
 $router->dispatch($_SERVER['QUERY_STRING'] ?? '/');
