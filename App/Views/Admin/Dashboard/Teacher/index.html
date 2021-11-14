@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}Admin | Teacher{% endblock %} {%
 block body %}
 <h1>Teachers</h1>
-{% for dept in teacher%} {{dept.id}} ({{dept.name}})
+{% for dept in teacher%} {{dept.id}}.{{dept.name}} - {{dept.department}}
 <a class="btn bg-red" href="/admin/teacher/{{dept.id}}">Edit</a>
 <a class="btn bg-red" href="/admin/deleteTeacher/{{dept.id}}">Delete</a>
 <br />

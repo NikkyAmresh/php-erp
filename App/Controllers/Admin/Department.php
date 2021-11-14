@@ -64,7 +64,7 @@ class Department extends \Core\Controller
     public function indexAction()
     {
         $st = new DepartmentModel();
-        $res = $st->getAll();
+        $res = $st->getWithJoin();
         View::renderTemplate('Admin/Dashboard/Department/index.html', array('department' => $res));
     }
 
