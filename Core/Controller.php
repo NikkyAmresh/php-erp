@@ -2,6 +2,9 @@
 
 namespace Core;
 
+use App\Helpers\Constants;
+use App\Helpers\Session;
+
 /**
  * Base controller
  *
@@ -69,5 +72,30 @@ abstract class Controller
      */
     protected function after()
     {
+    }
+
+    public function redirect($path, $messageObject = null)
+    {
+        if ($messageObject) {
+            Session::set(Constants::MESSAGE_TYPE[$messageObject['type']], $messageObject['message']);
+        }
+        header('location: ' . $path);
+    }
+
+    public function setSuccessMessage($message)
+    {
+        return Session::set(Constants::MESSAGE_TYPE[Constants::SUCCESS], $message);
+    }
+    public function setErrorMessage($message)
+    {
+        return Session::set(Constants::MESSAGE_TYPE[Constants::ERROR], $message);
+    }
+    public function setWarningMessage($message)
+    {
+        return Session::set(Constants::MESSAGE_TYPE[Constants::WARNING], $message);
+    }
+    public function getInfoMessage($message)
+    {
+        return Session::set(Constants::MESSAGE_TYPE[Constants::INFO], $message);
     }
 }

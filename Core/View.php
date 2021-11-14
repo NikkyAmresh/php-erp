@@ -2,6 +2,9 @@
 
 namespace Core;
 
+use App\Helpers\Constants;
+use App\Helpers\Session;
+
 /**
  * View
  *
@@ -22,7 +25,7 @@ class View
     {
         extract($args, EXTR_SKIP);
 
-        $file = dirname(__DIR__) . "/App/Views/$view";  // relative to Core directory
+        $file = dirname(__DIR__) . "/App/Views/$view"; // relative to Core directory
 
         if (is_readable($file)) {
             require $file;
@@ -47,7 +50,37 @@ class View
             $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/App/Views');
             $twig = new \Twig\Environment($loader);
         }
+        $messages = array(
+            Constants::MESSAGE_TYPE[Constants::SUCCESS] => self::getSuccessMessage(),
+            Constants::MESSAGE_TYPE[Constants::ERROR] => self::getErrorMessage(),
+            Constants::MESSAGE_TYPE[Constants::WARNING] => self::getWarningMessage(),
+            Constants::MESSAGE_TYPE[Constants::INFO] => self::getInfoMessage());
+        $finalArgs = array_merge($args, $messages);
+        echo $twig->render($template, $finalArgs);
+        self::resetMessages();
+    }
 
-        echo $twig->render($template, $args);
+    public static function resetMessages()
+    {
+        Session::delete(Constants::MESSAGE_TYPE[Constants::SUCCESS]);
+        Session::delete(Constants::MESSAGE_TYPE[Constants::ERROR]);
+        Session::delete(Constants::MESSAGE_TYPE[Constants::WARNING]);
+        Session::delete(Constants::MESSAGE_TYPE[Constants::INFO]);
+    }
+    public static function getSuccessMessage()
+    {
+        return Session::get(Constants::MESSAGE_TYPE[Constants::SUCCESS]);
+    }
+    public static function getErrorMessage()
+    {
+        return Session::get(Constants::MESSAGE_TYPE[Constants::ERROR]);
+    }
+    public static function getWarningMessage()
+    {
+        return Session::get(Constants::MESSAGE_TYPE[Constants::WARNING]);
+    }
+    public static function getInfoMessage()
+    {
+        return Session::get(Constants::MESSAGE_TYPE[Constants::INFO]);
     }
 }

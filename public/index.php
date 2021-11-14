@@ -30,7 +30,8 @@ $router = new Core\Router();
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
 $router->add('{controller}/{action}');
-$router->add('login', ['controller' => 'Login', 'action' => 'index']);
+$router->add('login', ['controller' => 'Auth\Login', 'action' => 'index']);
+$router->add('logout', ['controller' => 'Auth\Logout', 'action' => 'index']);
 
 $router->add("profile", ['controller' => 'Profile', 'action' => 'xyz']);
 

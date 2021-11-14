@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use \App\Helpers\Constants;
+use \App\Helpers\Session;
 use \Core\View;
 
 /**
@@ -19,6 +21,8 @@ class Home extends \Core\Controller
      */
     public function indexAction()
     {
-        View::renderTemplate('Home/index.html');
+        $userID = Session::get(Constants::LOGGED_IN_USER_ID);
+        $userName = Session::get(Constants::LOGGED_IN_USER_NAME);
+        View::renderTemplate('Home/index.html', ['userID' => $userID, 'userName' => $userName]);
     }
 }
