@@ -36,9 +36,19 @@ $router->add('logout', ['controller' => 'Auth\Logout', 'action' => 'index']);
 $router->add("profile", ['controller' => 'Profile', 'action' => 'xyz']);
 
 $router->add("admin", ['controller' => 'Admin\Index', 'action' => 'index']);
+
+
 $router->add("admin/department", ['controller' => 'Admin\Department', 'action' => 'index']);
 $router->add("admin/department/{id:\d+}", ['controller' => 'Admin\Department', 'action' => 'edit']);
 $router->add("admin/createDepartment", ['controller' => 'Admin\Department', 'action' => 'create']);
+$router->add("admin/updateDepartment", ['controller' => 'Admin\Department', 'action' => 'update']);
 $router->add("admin/deleteDepartment/{id:\d+}", ['controller' => 'Admin\Department', 'action' => 'delete']);
+
+
+$router->add("admin/teacher", ['controller' => 'Admin\Teacher', 'action' => 'index']);
+$router->add("admin/teacher/{id:\d+}", ['controller' => 'Admin\Teacher', 'action' => 'edit']);
+$router->add("admin/createTeacher", ['controller' => 'Admin\Teacher', 'action' => 'create']);
+$router->add("admin/updateTeacher", ['controller' => 'Admin\Teacher', 'action' => 'update']);
+$router->add("admin/deleteTeacher/{id:\d+}", ['controller' => 'Admin\Teacher', 'action' => 'delete']);
 
 $router->dispatch($_SERVER['QUERY_STRING'] ?? '/');

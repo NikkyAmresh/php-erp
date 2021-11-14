@@ -12,8 +12,19 @@ block body %}
     <input type="hidden" name="id" value="{{department.id}}" />
     <input type="text" id="name" name="name" value="{{department.name}}" />
   </div>
+  <br>
+  <label for="hod">Hod</label>
+
+  <div class="input-field col s12">
+    <select name="hod" class="browser-default" id="hod">
+      {% for hod in hods %}
+      <option {% if hod.id==department.hodID %}selected="selected"{% endif %} value="{{hod.id}}">{{hod.name}}</option>
+      {% endfor %}
+    </select>
+    <br>
+  </div>
   <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
 </form>
-<br>
+<br />
 <a href="/admin/department">Back to list</a>
 {% endblock %}

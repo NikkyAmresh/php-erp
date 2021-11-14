@@ -4,6 +4,7 @@ namespace Core;
 require_once 'MysqliDb.php';
 
 use App\Config;
+
 abstract class Model
 {
 
@@ -38,7 +39,7 @@ abstract class Model
     public function get($id)
     {
         $data = $this->db->where("id", $id)->getOne(static::$table);
-        $this->_data = $data;
+        $this->setData($data);
         return $this->_data;
 
     }
@@ -49,8 +50,11 @@ abstract class Model
 
     }
 
-    public function getWithJoin($numRows = null, $id = null)
+    public function getWithJoin($numRows = null, $id = null, $cond = null)
     {
+        if ($cond) {
+            return $this->db->where(static::$table . ".{$cond['field']}", $cond['value'])->getWithJoin(static::$tableJOIN, $numRows);
+        }
         if (!static::$tableJOIN) {
             return $this->db->getWithJoin("SELECT * FROM " . static::$table, $numRows);
         }
@@ -60,6 +64,13 @@ abstract class Model
         return $this->db->getWithJoin(static::$tableJOIN, $numRows);
     }
 
+    public function getOneWithJoin($id)
+    {
+        $data = $this->db->where(static::$table . '.id', $id)->getWithJoin(static::$tableJOIN);
+        $this->setData($data[0]);
+        return $this->_data;
+
+    }
 
     public function save()
     {
@@ -73,6 +84,5 @@ abstract class Model
     {
         return $this->_data = $data;
     }
-
 
 }
