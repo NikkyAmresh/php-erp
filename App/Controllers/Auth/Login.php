@@ -22,9 +22,9 @@ class Login extends \Core\Controller
             $validate = $usr->auth($body['email'], $body['password']);
             if ($validate) {
                 $user = $usr->getUser();
-                Session::set(Constants::LOGGED_IN_USER_ID, $user['id']);
-                Session::set(Constants::LOGGED_IN_USER_NAME, $user['name']);
-                Session::set(Constants::LOGGED_IN_USER_EMAIL, $user['email']);
+                Session::set(Constants::LOGGED_IN_USER_ID, $usr->getId());
+                Session::set(Constants::LOGGED_IN_USER_NAME, $usr->getName());
+                Session::set(Constants::LOGGED_IN_USER_EMAIL, $usr->getEmail());
                 $this->redirect("/", array('message' => "logined in as " . $user['name'], 'type' => Constants::SUCCESS));
                 return true;
             } else {

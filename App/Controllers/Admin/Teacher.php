@@ -81,7 +81,7 @@ class Teacher extends \Core\Controller
         View::renderTemplate('Admin/Dashboard/Teacher/index.html', array('teacher' => $res, 'deps' => $depts));
     }
 
-    public function after()
+    public function before()
     {
         if (!$this->isLoggedIn()) {
             $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));

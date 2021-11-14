@@ -31,9 +31,9 @@ abstract class Model
         }
     }
 
-    public function getAll()
+    public function getAll($numRows = null)
     {
-        return $this->db->orderBy("id", "asc")->get(static::$table);
+        return $this->db->orderBy("id", "asc")->get(static::$table, $numRows);
     }
 
     public function get($id)

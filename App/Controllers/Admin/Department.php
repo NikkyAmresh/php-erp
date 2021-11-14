@@ -68,7 +68,7 @@ class Department extends \Core\Controller
         View::renderTemplate('Admin/Dashboard/Department/index.html', array('department' => $res));
     }
 
-    public function after()
+    public function before()
     {
         if (!$this->isLoggedIn()) {
             $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
@@ -80,7 +80,7 @@ class Department extends \Core\Controller
         $st = new DepartmentModel();
         $res = $st->get($this->route_params['id']);
         if ($res) {
-            $hods = (new Teacher())->getWithJoin(null, null, array('field' => 'departmentID', 'value' => $res['id']));
+            $hods = (new Teacher())->getWithJoin(null, null, array('field' => 'departmentID', 'value' => $st->getId()));
             View::renderTemplate('Admin/Dashboard/Department/edit.html', array('department' => $res, 'hods' => $hods));
         } else {
             $this->redirect("/admin/department", array("message" => "Invalid DepartmentID!", 'type' => Constants::ERROR));

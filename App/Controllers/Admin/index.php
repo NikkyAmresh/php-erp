@@ -5,10 +5,6 @@ namespace App\Controllers\Admin;
 use App\Helpers\Constants;
 use App\Helpers\Session;
 use App\Models\Admin;
-use App\Models\Department;
-use App\Models\Student;
-use App\Models\Teacher;
-use App\Models\User;
 use \Core\View;
 
 class Index extends \Core\Controller
@@ -43,10 +39,7 @@ class Index extends \Core\Controller
     public function indexAction()
     {
         if ($this->isAlreadyLoggedIn()) {
-            $st = new Department();
-            $res = $st->getWithJoin();
-            // var_dump((new Teacher())->getWithJoin());
-            View::renderTemplate('Admin/Dashboard/index.html', array('department' => $res));
+            View::renderTemplate('Admin/Dashboard/index.html');
         } else {
             if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {
                 View::renderTemplate('Admin/Auth/login.html');
