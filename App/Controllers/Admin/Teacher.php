@@ -24,7 +24,7 @@ class Teacher extends \Core\Controller
             $teacher->setName($_REQUEST['name']);
             $teacher->setPhone($_REQUEST['mobile']);
             $teacher->setEmail($_REQUEST['email']);
-            $teacher->setPassword($_REQUEST['password']);
+            $teacher->setPassword(md5($_REQUEST['password']));
             if ($id = $teacher->save()) {
                 $teacher = new TeacherModel();
                 $teacher->setUserID($id);
