@@ -2,12 +2,11 @@
 
 namespace App\Controllers\Admin;
 
-use App\Controllers\Admin\AdminController as adminController;
 use App\Helpers\Constants;
 use App\Models\Batch as BatchModel;
 use \Core\View;
 
-class Batch extends adminController
+class Batch extends AdminController
 {
     public function get10Years()
     {

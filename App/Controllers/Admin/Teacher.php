@@ -2,14 +2,13 @@
 
 namespace App\Controllers\Admin;
 
-use App\Controllers\Admin\AdminController as adminController;
 use App\Helpers\Constants;
 use App\Models\Department;
 use App\Models\Teacher as TeacherModel;
 use App\Models\User;
 use \Core\View;
 
-class Teacher extends adminController
+class Teacher extends AdminController
 {
     public function createAction()
     {
