@@ -51,4 +51,12 @@ $router->add("admin/createTeacher", ['controller' => 'Admin\Teacher', 'action' =
 $router->add("admin/updateTeacher", ['controller' => 'Admin\Teacher', 'action' => 'update']);
 $router->add("admin/deleteTeacher/{id:\d+}", ['controller' => 'Admin\Teacher', 'action' => 'delete']);
 
+
+$router->add("admin/batches",['controller'=>'Admin\Batch','action'=>'index']);
+$router->add("admin/batches/{id:\d+}", ['controller' => 'Admin\Batch', 'action' => 'edit']);
+$router->add("admin/deleteBatch/{id:\d+}", ['controller' => 'Admin\Batch', 'action' => 'delete']);
+$router->add("admin/updateBatch", ['controller' => 'Admin\Batch', 'action' => 'update']);
+$router->add("admin/createBatch", ['controller' => 'Admin\Batch', 'action' => 'create']);
+
+
 $router->dispatch($_SERVER['QUERY_STRING'] ?? '/');
