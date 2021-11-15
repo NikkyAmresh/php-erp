@@ -2,24 +2,13 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\Admin\AdminController as adminController;
 use App\Helpers\Constants;
-use App\Helpers\Session;
 use App\Models\Batch as BatchModel;
 use \Core\View;
 
-class Batch extends \Core\Controller
-
+class Batch extends adminController
 {
-    public function isLoggedIn()
-    {
-        return Session::get(Constants::LOGGED_IN_ADMIN_ID);
-    }
-    public function before()
-    {
-        if (!$this->isLoggedIn()) {
-            $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
-        }
-    }
     public function get10Years()
     {
         $currentYear = date("Y");

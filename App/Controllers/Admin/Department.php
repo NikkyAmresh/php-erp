@@ -2,20 +2,14 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\Admin\AdminController as adminController;
 use App\Helpers\Constants;
-use App\Helpers\Session;
 use App\Models\Department as DepartmentModel;
 use App\Models\Teacher;
 use \Core\View;
 
-class Department extends \Core\Controller
+class Department extends adminController
 {
-
-    public function isLoggedIn()
-    {
-        return Session::get(Constants::LOGGED_IN_ADMIN_ID);
-    }
-
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
@@ -66,14 +60,6 @@ class Department extends \Core\Controller
         $st = new DepartmentModel();
         $res = $st->getWithJoin();
         View::renderTemplate('Admin/Dashboard/Department/index.html', array('department' => $res));
-    }
-
-    public function before()
-    {
-        if (!$this->isLoggedIn()) {
-            $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
-        }
-
     }
     public function editAction()
     {

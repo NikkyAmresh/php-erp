@@ -2,21 +2,15 @@
 
 namespace App\Controllers\Admin;
 
+use App\Controllers\Admin\AdminController as adminController;
 use App\Helpers\Constants;
-use App\Helpers\Session;
 use App\Models\Department;
 use App\Models\Teacher as TeacherModel;
 use App\Models\User;
 use \Core\View;
 
-class Teacher extends \Core\Controller
+class Teacher extends adminController
 {
-
-    public function isLoggedIn()
-    {
-        return Session::get(Constants::LOGGED_IN_ADMIN_ID);
-    }
-
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
@@ -79,14 +73,6 @@ class Teacher extends \Core\Controller
         $res = $st->getWithJoin();
         $depts = (new Department())->getAll();
         View::renderTemplate('Admin/Dashboard/Teacher/index.html', array('teacher' => $res, 'deps' => $depts));
-    }
-
-    public function before()
-    {
-        if (!$this->isLoggedIn()) {
-            $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
-        }
-
     }
     public function editAction()
     {
