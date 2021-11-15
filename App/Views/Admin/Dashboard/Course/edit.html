@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}Admin | Courses{% endblock %} {%
+block body %}
+<h3>
+    Courses
+    <br>
+    {{course.name}}
+    <a class="btn bg-red" href="/admin/deleteCourse/{{course.id}}">delete</a>
+</h3>
+<form action="/admin/updateCourse" method="post">
+    <div class="input-field">
+        <label for="name">course Name</label>
+        <input type="hidden" name="id" value="{{course.id}}" />
+        <input type="text" id="name" name="name" value="{{course.name}}" />
+    </div>
+    <br>
+    <div class="input-field col s12">
+        <select name="duration" class="browser-default" id="hod">
+            {% for year in range(1,5) %}
+            <option {% if course.duration==year %}selected="selected" {% endif %} value="{{course.id}}">
+                {{year}}</option>
+            {% endfor %}
+        </select>
+        <br>
+    </div>
+    <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
+</form>
+<br />
+<a href="/admin/course">Back to list</a>
+{% endblock %}
