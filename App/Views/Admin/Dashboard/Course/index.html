@@ -1,0 +1,32 @@
+{% extends "base.html" %} {% block title %}Admin | course{% endblock %} {%
+block body %}
+<h1>Courses</h1>
+{% for course in courses%} Course Name: {{course.name}} <br> Duration- {{course.duration}} years
+<br>
+<a class="btn bg-red" href="/admin/course/{{course.id}}">Edit</a>
+<a class="btn bg-red" href="/admin/deleteCourse/{{course.id}}">Delete</a>
+<br />
+<br />
+{% endfor %}
+
+<h4>New course</h4>
+<form action="/admin/createCourse" method="post">
+    <div class="input-field">
+        <label for="name">Course Name</label>
+        <input type="text" id="name" name="name" />
+    </div>
+    <div class="input-field col s12">
+        Select course duration
+        <select name="duration" class="browser-default" id="hod">
+            {% for year in range(1,5) %}
+            <option value="{{year}}">{{year}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
+</form>
+<br />
+<a href="/admin">Back to Admin Dashboard</a>
+
+{% endblock %}
