@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block title %}Admin | Teachers{% endblock %} {%
+block body %}
+<h3>
+  Batch
+  <br />
+  {{batch.code}}
+  <a class="btn bg-red" href="/admin/deleteBatch/{{batch.id}}">delete</a>
+</h3>
+<form action="/admin/updateBatch" method="post">
+  <div class="input-field col s12">
+    <h4>From</h4>
+    <input type="hidden" name="id" value="{{batch.id}}" />
+    <select name="fromYear" class="browser-default" id="hod">
+      {% for year in years.from %}
+      <option {% if batch.fromYear==year %}selected="selected" {% endif %} value="{{year}}">
+        {{year}}
+      </option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+  <div class="input-field col s12">
+    <h4 for="toYear">To</h4>
+    <select name="toYear" class="browser-default" id="hod">
+      {% for year in years.to %}
+      <option {% if batch.toYear==year %}selected="selected" {% endif %} value="{{year}}">{{year}}</option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+  <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
+</form>
+<br />
+<a href="/admin/batches">Back to list</a>
+{% endblock %}
