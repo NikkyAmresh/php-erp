@@ -12,7 +12,9 @@ block body %}
     <input type="hidden" name="id" value="{{batch.id}}" />
     <select name="fromYear" class="browser-default" id="hod">
       {% for year in years.from %}
-      <option value="{{year}}">{{year}}</option>
+      <option {% if batch.fromYear==year %}selected="selected" {% endif %} value="{{year}}">
+        {{year}}
+      </option>
       {% endfor %}
     </select>
     <br />
@@ -21,7 +23,7 @@ block body %}
     <h4 for="toYear">To</h4>
     <select name="toYear" class="browser-default" id="hod">
       {% for year in years.to %}
-      <option value="{{year}}">{{year}}</option>
+      <option {% if batch.toYear==year %}selected="selected" {% endif %} value="{{year}}">{{year}}</option>
       {% endfor %}
     </select>
     <br />

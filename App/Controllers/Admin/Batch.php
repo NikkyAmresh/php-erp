@@ -1,28 +1,35 @@
 <?php
 
- namespace App\Controllers\Admin;
+namespace App\Controllers\Admin;
 
- use App\Models\Batch as BatchModel;
- use \Core\View;
- use App\Helpers\Constants;
+use App\Helpers\Constants;
+use App\Helpers\Session;
+use App\Models\Batch as BatchModel;
+use \Core\View;
 
- class Batch extends \Core\Controller
- {
+class Batch extends \Core\Controller
+
+{
     public function isLoggedIn()
     {
         return Session::get(Constants::LOGGED_IN_ADMIN_ID);
     }
-
+    public function before()
+    {
+        if (!$this->isLoggedIn()) {
+            $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
+        }
+    }
     public function get10Years()
     {
-         $currentYear = date("Y");
-         $fromYears = array();
-         $toYears = array();
-         for ($i=0; $i < 11; $i++) { 
-             array_push($fromYears,$currentYear-$i);
-             array_push($toYears,$currentYear+$i);
-         }
-         return array('to'=>$toYears,'from'=>$fromYears);
+        $currentYear = date("Y");
+        $fromYears = array();
+        $toYears = array();
+        for ($i = 0; $i < 11; $i++) {
+            array_push($fromYears, $currentYear - $i);
+            array_push($toYears, $currentYear + $i);
+        }
+        return array('to' => $toYears, 'from' => $fromYears);
     }
 
     public function indexAction()
@@ -30,7 +37,7 @@
         $st = new BatchModel();
         $res = $st->getAll();
         $years = $this->get10Years();
-        View::renderTemplate('Admin/Dashboard/Batch/index.html', array('batches' => $res,'years'=>$years));
+        View::renderTemplate('Admin/Dashboard/Batch/index.html', array('batches' => $res, 'years' => $years));
     }
     public function createAction()
     {
@@ -38,13 +45,12 @@
             $batch = new BatchModel();
             $batch->setFromYear($_REQUEST['fromYear']);
             $batch->setToYear($_REQUEST['toYear']);
-            $batch->setCode($_REQUEST['fromYear']."-".$_REQUEST['toYear']);
+            $batch->setCode($_REQUEST['fromYear'] . "-" . $_REQUEST['toYear']);
             $batch->save();
             $this->setSuccessMessage("Batch created successfully");
+        } else {
+            $this->setErrorMessage("Unable to create Batch");
         }
-        else {
-             $this->setErrorMessage("Unable to create Batch");
-            }
         return $this->redirect('/admin/batches');
     }
     public function updateAction()
@@ -56,7 +62,7 @@
             $batch->setToYear($_REQUEST['toYear']);
             $from = $_REQUEST['fromYear'];
             $to = $_REQUEST['toYear'];
-            $batch->setCode($from."-".$to);
+            $batch->setCode($from . "-" . $to);
             if ($batch->save()) {
                 $this->setSuccessMessage("Batch updated successfully");
             } else {
@@ -85,10 +91,9 @@
         $res = $st->get($this->route_params['id']);
         $years = $this->get10Years();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/Batch/edit.html', ['batch' => $res,'years'=>$years]);
+            View::renderTemplate('Admin/Dashboard/Batch/edit.html', ['batch' => $res, 'years' => $years]);
         } else {
             $this->redirect("/admin/teacher", array("message" => "Invalid Batch id!", 'type' => Constants::ERROR));
         }
     }
- }
- 
+}
