@@ -2,8 +2,6 @@
 
 This is a simple MVC framework for building web applications in PHP. It's free and [open-source](LICENSE).
 
-It was created for the [Write PHP like a pro: build an MVC framework from scratch](https://davehollingworth.net/phpmvcg) course. The course explains how the framework is put together, building it step-by-step, from scratch. If you've taken the course, then you'll already know how to use it. If not, please follow the instructions below.
-
 ## Starting an application using this framework
 
 1. First, download the framework, either directly or by cloning the repo.
@@ -122,7 +120,3 @@ If the `SHOW_ERRORS` configuration setting is set to `true`, full error detail w
 ## Web server configuration
 
 Pretty URLs are enabled using web server rewrite rules. An [.htaccess](public/.htaccess) file is included in the `public` folder. Equivalent nginx configuration is in the [nginx-configuration.txt](nginx-configuration.txt) file.
-
----
-
-Signup for the course [here](https://davehollingworth.net/phpmvcg) and understand how this framework is built from scratch, putting it all together step by step.
