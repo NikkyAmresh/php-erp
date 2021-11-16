@@ -40,6 +40,7 @@ class Index
         $this->createManagementRoutes('course');
         $this->createManagementRoutes('branch');
         $this->createManagementRoutes('semester');
+        $this->createManagementRoutes('classes');
 
     }
 

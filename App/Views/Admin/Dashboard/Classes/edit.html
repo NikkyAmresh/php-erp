@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block title %}Admin | Classes{% endblock %} {%
+block body %}
+<h3>
+  {{class.name}} Class
+  <a class="btn bg-red" href="/admin/deleteClasses/{{class.id}}"
+    >delete</a
+  >
+</h3>
+<form action="/admin/updateClasses" method="post">
+  <div class="input-field">
+    <label for="name">Department</label>
+    <br>
+    <input type="hidden" name="id" value="{{class.id}}" />
+    <div class="input-field col s12">
+      <select name="department" class="browser-default" id="dept">
+        {% for dep in deps %}
+        <option {% if dep.id==class.departmentID %}selected="selected"{% endif %} value="{{dep.id}}">{{dep.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="input-field">
+    <label for="name">Branch</label>
+    <br>
+    <div class="input-field col s12">
+      <select name="branch" class="browser-default" id="branch">
+        {% for branch in branches %}
+        <option {% if branch.id==class.branchID %}selected="selected"{% endif %} value="{{branch.id}}">{{branch.code}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="input-field">
+    <label for="name">Semester</label>
+    <br>
+    <div class="input-field col s12">
+      <select name="semester" class="browser-default" id="Semester">
+        {% for semester in semesters %}
+        <option {% if semester.id==class.semesterID %}selected="selected"{% endif %} value="{{semester.id}}">{{semester.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="input-field">
+    <label for="name">Section</label>
+    <br>
+    <div class="input-field col s12">
+      <select name="section" class="browser-default" id="section">
+        {% for section in sections %}
+        <option {% if section.id==class.section %}selected="selected"{% endif %} value="{{section.id}}">{{section.code}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="input-field">
+    <label for="name">Class Teacher</label>
+    <br>
+    <div class="input-field col s12">
+      <select name="teacher" class="browser-default" id="teacher">
+        {% for teacher in teachers %}
+        <option {% if teacher.id==class.teacherID %}selected="selected"{% endif %} value="{{teacher.id}}">{{teacher.name}}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  
+  <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
+</form>
+<br />
+<a href="/admin/classes">Back to list</a>
+{% endblock %}
