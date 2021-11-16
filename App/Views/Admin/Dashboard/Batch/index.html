@@ -2,7 +2,7 @@
 {%block body %}
 <h3>Batches</h3>
 {% for batch in batches %} {{batch.code}} <br />
-<a class="btn bg-red" href="/admin/batches/{{batch.id}}">Edit</a>
+<a class="btn bg-red" href="/admin/batch/{{batch.id}}">Edit</a>
 <a class="btn bg-red" href="/admin/deleteBatch/{{batch.id}}">Delete</a>
 <br />
 {% endfor %}

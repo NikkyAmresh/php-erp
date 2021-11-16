@@ -38,6 +38,7 @@ class Index
         $this->createManagementRoutes('teacher');
         $this->createManagementRoutes('batch');
         $this->createManagementRoutes('course');
+        $this->createManagementRoutes('branch');
 
     }
 
