@@ -86,7 +86,7 @@ class Classes extends AdminController
     public function indexAction()
     {
         $st = new ClassModel();
-        $res = $st->getWithJoin();
+        $res = $st->getWithJoin(null, null, null, array('semester', 'asc'));
         $depts = (new Department())->getWithJoin();
         $branches = (new Branch())->getWithJoin();
         $teachers = (new Teacher())->getWithJoin();

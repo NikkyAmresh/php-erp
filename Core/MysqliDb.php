@@ -729,9 +729,12 @@ class MysqliDb
         return $this;
     }
 
-    public function getWithJoin($joinStr, $numRows = null)
+    public function getWithJoin($joinStr, $numRows = null, $orderBy = null)
     {
         $this->_query = $joinStr;
+        if ($orderBy) {
+            $this->orderBy($orderBy[0], $orderBy[1]);
+        }
         $stmt = $this->_buildQuery($numRows);
 
         if ($this->isSubQuery) {

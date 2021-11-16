@@ -55,18 +55,18 @@ abstract class Model
 
     }
 
-    public function getWithJoin($numRows = null, $id = null, $cond = null)
+    public function getWithJoin($numRows = null, $id = null, $cond = null, $orderBy = null)
     {
         if ($cond) {
-            return $this->db->where(static::$table . ".{$cond['field']}", $cond['value'])->getWithJoin(static::$tableJOIN, $numRows);
+            return $this->db->where(static::$table . ".{$cond['field']}", $cond['value'])->getWithJoin(static::$tableJOIN, $numRows, $orderBy);
         }
         if (!static::$tableJOIN) {
-            return $this->db->getWithJoin("SELECT * FROM " . static::$table, $numRows);
+            return $this->db->getWithJoin("SELECT * FROM " . static::$table, $numRows, $orderBy);
         }
         if ($id) {
-            return $this->db->where(static::$table . '.id', $id)->getWithJoin(static::$tableJOIN, $numRows);
+            return $this->db->where(static::$table . '.id', $id)->getWithJoin(static::$tableJOIN, $numRows, $orderBy);
         }
-        return $this->db->getWithJoin(static::$tableJOIN, $numRows);
+        return $this->db->getWithJoin(static::$tableJOIN, $numRows, $orderBy);
     }
 
     public function getOneWithJoin($id)
