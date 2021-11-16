@@ -61,4 +61,10 @@ $router->add("admin/course/{id:\d+}", ['controller' => 'Admin\Course', 'action' 
 $router->add("admin/deleteCourse/{id:\d+}", ['controller' => 'Admin\Course', 'action' => 'delete']);
 $router->add("admin/updateCourse", ['controller' => 'Admin\Course', 'action' => 'update']);
 
+$router->add("admin/branch", ['controller' => 'Admin\Branch', 'action' => 'index']);
+$router->add("admin/createBranch", ['controller' => 'Admin\Branch', 'action' => 'create']);
+$router->add("admin/branch/{id:\d+}", ['controller' => 'Admin\Branch', 'action' => 'edit']);
+$router->add("admin/deleteBranch/{id:\d+}", ['controller' => 'Admin\Branch', 'action' => 'delete']);
+$router->add("admin/updateBranch", ['controller' => 'Admin\Branch', 'action' => 'update']);
+
 $router->dispatch($_SERVER['QUERY_STRING'] ?? '/');

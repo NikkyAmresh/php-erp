@@ -1,0 +1,34 @@
+{% extends "base.html" %} {% block title %}Admin | Branches{% endblock %} {%
+block body %}
+<h3>
+  {{branch.name}} Branches
+  <a class="btn bg-red" href="/admin/deleteBranch/{{branch.id}}"
+    >delete</a
+  >
+</h3>
+<form action="/admin/updateBranch" method="post">
+  <div class="input-field">
+    <label for="name">Branch Name</label>
+    <input type="hidden" name="id" value="{{branch.id}}" />
+    <input type="text" id="name" name="name" value="{{branch.name}}" />
+  </div>
+  <div class="input-field">
+    <label for="code">Branch CODE</label>
+    <input type="text" id="code" name="code" value="{{branch.code}}" />
+  </div>
+  <br>
+  <label for="hod">Department</label>
+
+  <div class="input-field col s12">
+    <select name="department" class="browser-default" id="hod">
+      {% for dep in deps %}
+      <option {% if dep.id==branch.departmentID %}selected="selected"{% endif %} value="{{dep.id}}">{{dep.name}}</option>
+      {% endfor %}
+    </select>
+    <br>
+  </div>
+  <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
+</form>
+<br />
+<a href="/admin/branch">Back to list</a>
+{% endblock %}
