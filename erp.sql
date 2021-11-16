@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 14, 2021 at 10:41 AM
+-- Generation Time: Nov 15, 2021 at 11:42 PM
 -- Server version: 5.7.27
 -- PHP Version: 7.1.32
 
@@ -22,6 +22,9 @@ SET time_zone = "+00:00";
 -- Database: `erp`
 --
 
+DROP Database `erp`;
+CREATE Database `erp`;
+use `erp`;
 -- --------------------------------------------------------
 
 --
@@ -83,7 +86,8 @@ CREATE TABLE `branches` (
 
 INSERT INTO `branches` (`id`, `departmentID`, `name`, `code`) VALUES
 (1, 1, 'Computer Science Engineering', 'CSE'),
-(2, 2, 'Electronics and Communications Engineering', 'ECE');
+(2, 2, 'Electronics and Communications Engineering', 'ECE'),
+(4, 24, 'Nikky Amresh', '2132');
 
 -- --------------------------------------------------------
 
@@ -96,7 +100,7 @@ CREATE TABLE `classes` (
   `departmentID` int(11) NOT NULL,
   `branchID` int(11) NOT NULL,
   `section` varchar(1) NOT NULL,
-  `yearID` int(11) NOT NULL,
+  `semesterID` int(11) NOT NULL,
   `teacherID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -104,7 +108,7 @@ CREATE TABLE `classes` (
 -- Dumping data for table `classes`
 --
 
-INSERT INTO `classes` (`id`, `departmentID`, `branchID`, `section`, `yearID`, `teacherID`) VALUES
+INSERT INTO `classes` (`id`, `departmentID`, `branchID`, `section`, `semesterID`, `teacherID`) VALUES
 (1, 1, 1, 'a', 1, 1),
 (2, 1, 1, 'b', 1, 1),
 (3, 1, 1, 'a', 3, 1),
@@ -127,8 +131,9 @@ CREATE TABLE `courses` (
 --
 
 INSERT INTO `courses` (`id`, `name`, `duration`) VALUES
-(1, 'BTech', 4),
-(2, 'BSc', 3);
+(2, 'BSc', 3),
+(4, 'btech', 4),
+(5, 'VISA', 1);
 
 -- --------------------------------------------------------
 
@@ -149,7 +154,28 @@ CREATE TABLE `departments` (
 INSERT INTO `departments` (`id`, `name`, `hodID`) VALUES
 (1, 'Computer Science', 1),
 (2, 'Electrical', 1),
-(24, 'VISA', 5);
+(24, 'CIVIL', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `semesters`
+--
+
+CREATE TABLE `semesters` (
+  `id` int(11) NOT NULL,
+  `name` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `semesters`
+--
+
+INSERT INTO `semesters` (`id`, `name`) VALUES
+(1, '1st'),
+(2, '2nd'),
+(3, '3rd'),
+(4, '4th');
 
 -- --------------------------------------------------------
 
@@ -162,7 +188,7 @@ CREATE TABLE `students` (
   `userID` int(11) NOT NULL,
   `courseID` int(11) NOT NULL,
   `batchID` int(11) NOT NULL,
-  `yearID` int(11) NOT NULL,
+  `semesterID` int(11) NOT NULL,
   `classID` int(11) NOT NULL,
   `rollNum` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -171,7 +197,7 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `yearID`, `classID`, `rollNum`) VALUES
+INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `semesterID`, `classID`, `rollNum`) VALUES
 (1, 1, 1, 3, 3, 3, '190240101065'),
 (2, 3, 1, 3, 3, 3, '190240101017'),
 (3, 4, 1, 3, 3, 4, '1902ECE');
@@ -197,8 +223,8 @@ INSERT INTO `teachers` (`id`, `userID`, `departmentID`) VALUES
 (2, 6, 2),
 (3, 17, 1),
 (4, 18, 25),
-(5, 19, 24),
-(6, 20, 25);
+(6, 20, 25),
+(7, 21, 24);
 
 -- --------------------------------------------------------
 
@@ -229,28 +255,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `lastLogin`) VA
 (17, 'Amit', 'amit@gmail.com', '23223232', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 15:48:12'),
 (18, 'Anuk', 'nik.ky.amresh.8@gmail.com', '89237', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 16:31:17'),
 (19, 'Nikky Amresh', 'kjhdrtykj@dfghjkk.fdgh', '+91880900692', '045cbbfb5d0ea613f5f487aa25e5495c', '2021-11-14 16:41:40'),
-(20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `years`
---
-
-CREATE TABLE `years` (
-  `id` int(11) NOT NULL,
-  `name` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `years`
---
-
-INSERT INTO `years` (`id`, `name`) VALUES
-(1, '1st'),
-(2, '2nd'),
-(3, '3rd'),
-(4, '4th');
+(20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50'),
+(21, 'Nikky Amresh', '8800900692@fd.hg', '08800900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-15 10:38:33');
 
 --
 -- Indexes for dumped tables
@@ -293,6 +299,12 @@ ALTER TABLE `departments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `semesters`
+--
+ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
@@ -311,12 +323,6 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `years`
---
-ALTER TABLE `years`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -330,13 +336,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `batches`
 --
 ALTER TABLE `batches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `classes`
@@ -348,13 +354,19 @@ ALTER TABLE `classes`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `semesters`
+--
+ALTER TABLE `semesters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `students`
@@ -366,19 +378,13 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
-
---
--- AUTO_INCREMENT for table `years`
---
-ALTER TABLE `years`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

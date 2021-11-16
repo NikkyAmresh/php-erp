@@ -1,0 +1,8 @@
+#!/usr/bin/php
+<?php
+
+$db = new mysqli('localhost', 'root', 'MyNewPass');
+
+$commands = file_get_contents('erp.sql');   
+$db->multi_query($commands);
+?>
