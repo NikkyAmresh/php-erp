@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 15, 2021 at 11:42 PM
+-- Generation Time: Nov 16, 2021 at 01:12 AM
 -- Server version: 5.7.27
 -- PHP Version: 7.1.32
 
@@ -172,7 +172,8 @@ INSERT INTO `semesters` (`id`, `name`) VALUES
 (1, '1st'),
 (2, '2nd'),
 (3, '3rd'),
-(4, '4th');
+(4, '4th'),
+(6, '5th');
 
 -- --------------------------------------------------------
 
@@ -195,9 +196,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `semesterID`, `classID`, `rollNum`) VALUES
-(1, 1, 1, 3, 3, 3, '190240101065'),
-(2, 3, 1, 3, 3, 3, '190240101017'),
-(3, 4, 1, 3, 3, 4, '1902ECE');
+(1, 1, 4, 3, 3, 3, '190240101065'),
+(2, 3, 4, 3, 3, 3, '190240101017'),
+(3, 4, 4, 3, 3, 4, '1902ECE');
 
 -- --------------------------------------------------------
 
@@ -363,7 +364,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `semesters`
 --
 ALTER TABLE `semesters`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `students`

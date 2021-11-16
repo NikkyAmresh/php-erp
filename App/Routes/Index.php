@@ -22,7 +22,7 @@ class Index
         $this->router->add("admin/$type", ['controller' => $controller, 'action' => 'index']);
         $this->router->add("admin/$type/{id:\d+}", ['controller' => $controller, 'action' => 'edit']);
         $this->router->add("admin/create$_type", ['controller' => $controller, 'action' => 'create']);
-        $this->router->add("admin/update$_type}", ['controller' => $controller, 'action' => 'update']);
+        $this->router->add("admin/update$_type", ['controller' => $controller, 'action' => 'update']);
         $this->router->add("admin/delete$_type/{id:\d+}", ['controller' => $controller, 'action' => 'delete']);
     }
 
@@ -39,6 +39,7 @@ class Index
         $this->createManagementRoutes('batch');
         $this->createManagementRoutes('course');
         $this->createManagementRoutes('branch');
+        $this->createManagementRoutes('semester');
 
     }
 

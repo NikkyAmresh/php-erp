@@ -39,7 +39,7 @@ class Batch extends AdminController
         } else {
             $this->setErrorMessage("Unable to create Batch");
         }
-        return $this->redirect('/admin/batches');
+        return $this->redirect('/admin/batch');
     }
     public function updateAction()
     {
@@ -59,7 +59,7 @@ class Batch extends AdminController
         } else {
             $this->setErrorMessage("Invalid Request!");
         }
-        return $this->redirect('/admin/batches');
+        return $this->redirect('/admin/batch');
     }
 
     public function deleteAction()
@@ -71,7 +71,7 @@ class Batch extends AdminController
         } else {
             $this->setErrorMessage("Unable to delete");
         }
-        return $this->redirect('/admin/batches');
+        return $this->redirect('/admin/batch');
     }
     public function editAction()
     {
