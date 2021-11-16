@@ -1,4 +1,4 @@
-#!/usr/bin/php
+#!/Applications/mampstack-7.1.32-0/php/bin/php
 <?php
 
 $db = new mysqli('localhost', 'root', 'MyNewPass');
