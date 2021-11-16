@@ -6,7 +6,6 @@ use App\Helpers\Constants;
 use App\Helpers\Session;
 
 class AdminController extends \Core\Controller
-
 {
     public function isLoggedIn()
     {
@@ -14,9 +13,11 @@ class AdminController extends \Core\Controller
     }
     public function before()
     {
-        if (!$this->isLoggedIn()) {
-            $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
+        if ($this->isLoggedIn()) {
+            return true;
         }
+        $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
+        return false;
     }
 
 }
