@@ -22,9 +22,6 @@ SET time_zone = "+00:00";
 -- Database: `erp`
 --
 
-DROP Database `erp`;
-CREATE Database `erp`;
-use `erp`;
 -- --------------------------------------------------------
 
 --

@@ -1,8 +1,30 @@
 #!/Applications/mampstack-7.1.32-0/php/bin/php
 <?php
 
+echo "Updating db";
+
 $db = new mysqli('localhost', 'root', 'MyNewPass');
 
-$commands = file_get_contents('erp.sql');   
+$database = 'erp';
+$db->query('use information_schema');
+
+$query = "SELECT * from `SCHEMATA` WHERE `SCHEMA_NAME`='$database';";
+
+$res = $db->query($query);
+if (mysqli_num_rows($res)) {
+    print("\nDatabase already exists!");
+    print("\nWould you like to reset db? (y/n) : ");
+    $input = rtrim(fgets(STDIN));
+    if ($input == "y") {
+        $db->query("DROP DATABASE $database;");
+    } else {
+        exit("exited!");
+    }
+}
+$db->query("Create DATABASE $database;");
+$db->query("use $database;");
+print("\nSetting up...");
+$commands = file_get_contents('erp.sql');
 $db->multi_query($commands);
+print("\nCompleted!");
 ?>
