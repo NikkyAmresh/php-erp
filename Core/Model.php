@@ -90,4 +90,9 @@ abstract class Model
         return $this->_data = $data;
     }
 
+    public function getError()
+    {
+        return $this->db->getLastError();
+    }
+
 }

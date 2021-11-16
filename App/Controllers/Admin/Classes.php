@@ -78,7 +78,7 @@ class Classes extends AdminController
         if ($res) {
             $this->setSuccessMessage("Class delete successfully");
         } else {
-            $this->setErrorMessage("Unable to create Class");
+            $this->setErrorMessage("Unable to delete Class");
         }
         return $this->redirect('/admin/classes');
     }

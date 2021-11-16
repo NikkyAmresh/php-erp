@@ -15,7 +15,7 @@ class Teacher extends AdminController
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
             $teacher = new User();
             $teacher->setName($_REQUEST['name']);
-            $teacher->setPhone($_REQUEST['mobile']);
+            $teacher->setMobile($_REQUEST['mobile']);
             $teacher->setEmail($_REQUEST['email']);
             $teacher->setPassword(md5($_REQUEST['password']));
             if ($id = $teacher->save()) {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 16, 2021 at 01:12 AM
+-- Generation Time: Nov 16, 2021 at 04:40 AM
 -- Server version: 5.7.27
 -- PHP Version: 7.1.32
 
@@ -109,7 +109,10 @@ INSERT INTO `classes` (`id`, `departmentID`, `branchID`, `section`, `semesterID`
 (1, 1, 1, 'a', 1, 1),
 (2, 1, 1, 'b', 1, 1),
 (3, 1, 1, 'a', 3, 1),
-(4, 2, 2, 'a', 3, 2);
+(4, 2, 2, 'a', 3, 2),
+(5, 1, 1, 'a', 6, 1),
+(7, 1, 4, 'c', 3, 7),
+(8, 2, 2, 'd', 2, 2);
 
 -- --------------------------------------------------------
 
@@ -186,7 +189,6 @@ CREATE TABLE `students` (
   `userID` int(11) NOT NULL,
   `courseID` int(11) NOT NULL,
   `batchID` int(11) NOT NULL,
-  `semesterID` int(11) NOT NULL,
   `classID` int(11) NOT NULL,
   `rollNum` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -195,10 +197,10 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `semesterID`, `classID`, `rollNum`) VALUES
-(1, 1, 4, 3, 3, 3, '190240101065'),
-(2, 3, 4, 3, 3, 3, '190240101017'),
-(3, 4, 4, 3, 3, 4, '1902ECE');
+INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `classID`, `rollNum`) VALUES
+(1, 1, 4, 3, 3, '190240101065'),
+(2, 3, 5, 3, 3, '190240101016'),
+(3, 4, 4, 3, 8, '1902ECE');
 
 -- --------------------------------------------------------
 
@@ -234,7 +236,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `phone` varchar(20) NOT NULL,
+  `mobile` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
   `lastLogin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -243,7 +245,7 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `lastLogin`) VALUES
+INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `lastLogin`) VALUES
 (1, 'Nikky Amresh', 'nikkyamresh8@gmail.com', '8800900692', '098f6bcd4621d373cade4e832627b4f6', '2021-11-13 13:12:18'),
 (2, 'Test User', 'test@gmail.com', '812981982', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 13:04:59'),
 (3, 'Aman', 'aman@gmail.com', '2111111111', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 10:14:19'),
@@ -253,9 +255,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `phone`, `password`, `lastLogin`) VA
 (17, 'Amit', 'amit@gmail.com', '23223232', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 15:48:12'),
 (18, 'Anuk', 'nik.ky.amresh.8@gmail.com', '89237', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 16:31:17'),
 (19, 'Nikky Amresh', 'kjhdrtykj@dfghjkk.fdgh', '+91880900692', '045cbbfb5d0ea613f5f487aa25e5495c', '2021-11-14 16:41:40'),
-(20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50'),
-(21, 'Nikky Amresh', '8800900692@fd.hg', '08800900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-15 10:38:33');
-
+(20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50');
 --
 -- Indexes for dumped tables
 --
@@ -346,7 +346,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -370,7 +370,7 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `teachers`
@@ -382,7 +382,7 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

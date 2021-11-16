@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Admin | Student{% endblock %} {%
+block body %}
+<h3>
+  {{student.name}}
+  <a class="btn bg-red" href="/admin/deleteStudent/{{student.id}}"
+    >delete</a
+  >
+</h3>
+<form action="/admin/updateStudent" method="post">
+  <div class="input-field">
+    <div class="input-field">
+      <label for="name">Name</label>
+      <input type="hidden" name="id" value="{{student.id}}" />
+      <input type="hidden" id="userID" name="userID" value="{{student.userID}}" />
+      <input type="text" id="name" name="name" value="{{student.name}}" />
+    </div>
+    <div class="input-field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{student.email}}" />
+    </div>
+    <div class="input-field">
+      <label for="mobile">Mobile</label>
+      <input type="tel" id="mobile" name="mobile" value="{{student.mobile}}" />
+    </div>
+    <div class="input-field">
+      <label for="mobile">Roll Num</label>
+      <input type="tel" id="rollNum" name="rollNum" value="{{student.rollNum}}" />
+    </div>
+    <div class="input-field">
+      <label for="name">Course</label>
+      <br />
+      <div class="input-field col s12">
+        <select name="course" class="browser-default" id="course">
+          {% for course in courses %}
+          <option {% if course.id==student.courseID %}selected{% endif %} value="{{course.id}}">{{course.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="input-field">
+      <label for="name">Batch</label>
+      <br />
+      <div class="input-field col s12">
+        <select name="batch" class="browser-default" id="batch">
+          {% for batch in batches %}
+          <option {% if batch.id==student.batchID %}selected{% endif %} value="{{batch.id}}">{{batch.code}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="input-field">
+      <label for="name">Class</label>
+      <br />
+      <div class="input-field col s12">
+        <select name="class" class="browser-default" id="class">
+          {% for class in classes %}
+          <option {% if class.id==student.classID %}selected{% endif %} value="{{class.id}}">{{class.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  
+  <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
+</form>
+<br />
+<a href="/admin/student">Back to list</a>
+{% endblock %}
