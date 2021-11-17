@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Nov 16, 2021 at 04:40 AM
--- Server version: 5.7.27
--- PHP Version: 7.1.32
+-- Host: localhost:3307
+-- Generation Time: Nov 17, 2021 at 06:56 AM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.3.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -205,6 +204,27 @@ INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `classID`, `rollN
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subjects`
+--
+
+CREATE TABLE `subjects` (
+  `id` int(11) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `subjectCode` varchar(10) NOT NULL,
+  `departmentID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `subjects`
+--
+
+INSERT INTO `subjects` (`id`, `name`, `subjectCode`, `departmentID`) VALUES
+(1, 'database management system', 'dbms', 1),
+(2, 'applied physics', 'ap', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `teachers`
 --
 
@@ -238,7 +258,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `mobile` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `lastLogin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `lastLogin` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -256,6 +276,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `lastLogin`) V
 (18, 'Anuk', 'nik.ky.amresh.8@gmail.com', '89237', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 16:31:17'),
 (19, 'Nikky Amresh', 'kjhdrtykj@dfghjkk.fdgh', '+91880900692', '045cbbfb5d0ea613f5f487aa25e5495c', '2021-11-14 16:41:40'),
 (20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50');
+
 --
 -- Indexes for dumped tables
 --
@@ -306,6 +327,12 @@ ALTER TABLE `semesters`
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -371,6 +398,12 @@ ALTER TABLE `semesters`
 --
 ALTER TABLE `students`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `teachers`
