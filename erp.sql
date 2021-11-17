@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3307
--- Generation Time: Nov 17, 2021 at 06:56 AM
+-- Generation Time: Nov 17, 2021 at 01:03 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.3.32
 
@@ -154,6 +154,29 @@ INSERT INTO `departments` (`id`, `name`, `hodID`) VALUES
 (1, 'Computer Science', 1),
 (2, 'Electrical', 1),
 (24, 'CIVIL', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `periods`
+--
+
+CREATE TABLE `periods` (
+  `id` int(20) NOT NULL,
+  `fromTime` varchar(10) NOT NULL,
+  `toTime` varchar(10) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `classID` int(10) NOT NULL,
+  `subjectID` int(10) NOT NULL,
+  `teacherID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `periods`
+--
+
+INSERT INTO `periods` (`id`, `fromTime`, `toTime`, `day`, `classID`, `subjectID`, `teacherID`) VALUES
+(1, '9:00 PM', '10:10 PM', 'monday', 1, 1, 5);
 
 -- --------------------------------------------------------
 
@@ -318,6 +341,12 @@ ALTER TABLE `departments`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `periods`
+--
+ALTER TABLE `periods`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `semesters`
 --
 ALTER TABLE `semesters`
@@ -386,6 +415,12 @@ ALTER TABLE `courses`
 --
 ALTER TABLE `departments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `periods`
+--
+ALTER TABLE `periods`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `semesters`
