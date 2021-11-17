@@ -11,7 +11,6 @@ Department - {{period.department}} <br>
 Branch - {{period.branch}} <br>
 Semester - {{period.semester}} <br>
 Teacher - {{period.teacher}} <br>
-
 <a class="btn bg-red" href="/admin/periods/{{periods.id}}">Edit</a>
 <a class="btn bg-red" href="/admin/deletePeriod/{{periods.id}}">Delete</a>
 <br />
@@ -28,6 +27,15 @@ Teacher - {{period.teacher}} <br>
     <div class="input-field">
         <label for="toTime">To</label>
         <input type="time" id="appt" name="toTime" min="09:00" max="18:00" required>
+    </div>
+    <h5>Day</h5>
+    <div class="input-field col s12">
+        <select name="day" class="browser-default" id="hod">
+            {% for day in days %}
+            <option value="{{day}}">{{day}}</option>
+            {% endfor %}
+        </select>
+        <br />
     </div>
     <h5>Subject</h5>
     <div class="input-field col s12">

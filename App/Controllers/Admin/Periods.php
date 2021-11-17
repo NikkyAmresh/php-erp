@@ -79,8 +79,8 @@ class Periods extends AdminController
         $semesterRes = $semesters->getAll();
         $teachers = new TeacherModel();
         $teacherRes = $teachers->getWithJoin();
-        print_r($res);
-        View::renderTemplate('Admin/Dashboard/Periods/index.html', array('periods' => $res, 'subjects' => $subRes, 'branches' => $branchRes, 'semesters' => $semesterRes, 'teachers' => $teacherRes));
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        View::renderTemplate('Admin/Dashboard/Periods/index.html', array('periods' => $res, 'subjects' => $subRes, 'branches' => $branchRes, 'semesters' => $semesterRes, 'teachers' => $teacherRes, 'days' => $days));
     }
     public function editAction()
     {
