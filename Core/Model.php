@@ -14,7 +14,7 @@ abstract class Model
 
     public function __construct()
     {
-        $db = new \MysqliDb(Config::DB_HOST, Config::DB_USER, Config::DB_PASSWORD, Config::DB_NAME);
+        $db = new \MysqliDb(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
         $this->db = $db;
     }
 
