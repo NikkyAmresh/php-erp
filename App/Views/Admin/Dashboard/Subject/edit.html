@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}Admin | Subject{% endblock %} {%
+block body %}
+<h4>Update</h4>
+
+<a class="btn bg-red" href="/admin/deleteSubject/{{subject.id}}">delete</a>
+<form action="/admin/updateSubject" method="post">
+    <div class="input-field">
+        <label for="name">Name</label>
+        <input type="hidden" name="id" value="{{subject.id}}" />
+        <input type="text" id="name" name="name" value="{{subject.name}}" />
+    </div>
+    <div class="input-field">
+        <label for="subjectCode">Code</label>
+        <input type="text" id="name" name="subjectCode" value="{{subject.subjectCode}}" />
+    </div>
+    <label for="hod">Department</label>
+    <div class="input-field col s12">
+        <select name="department" class="browser-default" id="hod">
+            {% for dep in deps %}
+            <option {% if dep.id==subject.departmentID %} selected {% endif %} value="{{dep.id}}">{{dep.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <button class="btn bg-orange lighten-1 z-subjecth-0">Update</button>
+</form>
+<br />
+<a href="/admin">Back to Admin Dashboard</a>
+
+{% endblock %}
