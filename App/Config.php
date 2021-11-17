@@ -1,42 +1,28 @@
 <?php
 
 namespace App;
-
-/**
- * Application configuration
- *
- * PHP version 7.0
- */
 class Config
 {
 
-    /**
-     * Database host
-     * @var string
-     */
-    const DB_HOST = 'localhost';
+    public static function getDbHost()
+    {
+        return $_ENV['DB_HOST'];
+    }
+    public static function getDbName()
+    {
+        return $_ENV['DB_NAME'];
+    }
+    public static function getDbUser()
+    {
+        return $_ENV['DB_USER'];
+    }
+    public static function getDbPassword()
+    {
+        return $_ENV['DB_PASSWORD'];
+    }
+    public static function getShowErrors()
+    {
+        return $_ENV['SHOW_ERRORS'];
+    }
 
-    /**
-     * Database name
-     * @var string
-     */
-    const DB_NAME = 'erp';
-
-    /**
-     * Database user
-     * @var string
-     */
-    const DB_USER = 'root';
-
-    /**
-     * Database password
-     * @var string
-     */
-    const DB_PASSWORD = 'MyNewPass';
-
-    /**
-     * Show or hide error messages on screen
-     * @var boolean
-     */
-    const SHOW_ERRORS = true;
 }

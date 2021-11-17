@@ -14,7 +14,7 @@ See below for more details.
 
 ## Configuration
 
-Configuration settings are stored in the [App/Config.php](App/Config.php) class. Default settings include database connection data and a setting to show or hide error detail. You can access the settings in your code like this: `Config::DB_HOST`. You can add your own configuration settings in here.
+Configuration settings are stored in the [App/Config.php](App/Config.php) class. Default settings include database connection data and a setting to show or hide error detail. You can access the settings in your code like this: `Config::getDbHost()`. You can add your own configuration settings in here.
 
 ## Routing
 
