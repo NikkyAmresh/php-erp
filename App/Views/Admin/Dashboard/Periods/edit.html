@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {%
+block body %}
+<h4>Periods</h4>
+<h5>Update</h5>
+<a class="btn bg-red" href="/admin/deletePeriod/{{periods.id}}">Delete</a>
+<br />
+<br />
+{% endfor %}
+
+<h4>New Period</h4>
+<form action="/admin/createPeriod" method="post">
+    <h5>Timing</h5>
+    <div class="input-field">
+        <label for="fromTime">From</label>
+        <input type="time" id="appt" name="fromTime" min="09:00" max="18:00" required>
+    </div>
+    <div class="input-field">
+        <label for="toTime">To</label>
+        <input type="time" id="appt" name="toTime" min="09:00" max="18:00" required>
+    </div>
+    <h5>Subject</h5>
+    <div class="input-field col s12">
+        <select name="subject" class="browser-default" id="hod">
+            {% for subject in subjects %}
+            <option {% if periods.subjectID==subject.id %}selected="selected" {% endif %} value="{{subject.id}}">
+                {{subject.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Branch</h5>
+    <div class="input-field col s12">
+        <select name="branch" class="browser-default" id="hod">
+            {% for branch in branches %}
+            <option {% if branch.id==periods.branchID %}selected="selected" {% endif %} value="{{branch.id}}">
+                {{branch.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Semester</h5>
+    <div class="input-field col s12">
+        <select name="semester" class="browser-default" id="hod">
+            {% for sem in semesters %}
+            <option {% if periods.semesterID==sem.id %}selected="selected" {% endif %} value="{{sem.id}}">{{sem.name}}
+            </option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Teacher</h5>
+    <div class="input-field col s12">
+        <select name="teacher" class="browser-default" id="hod">
+            {% for teacher in teachers %}
+            <option {% if periods.teacherID==teacher.userID %}selected="selected" {% endif %}
+                value="{{teacher.userID}}">{{teacher.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+
+    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
+</form>
+<br />
+<a href="/admin">Back to Admin Dashboard</a>
+
+{% endblock %}

@@ -43,6 +43,7 @@ class Index
         $this->createManagementRoutes('classes');
         $this->createManagementRoutes('student');
         $this->createManagementRoutes('subject');
+        $this->createManagementRoutes('periods');
 
     }
 
