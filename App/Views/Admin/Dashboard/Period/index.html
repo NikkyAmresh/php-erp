@@ -43,7 +43,7 @@ Teacher - {{period.teacherID}} <br>
     </div>
     <h5>Class id</h5>
     <div class="input-field col s12">
-        <select name="subject" class="browser-default" id="hod">
+        <select name="class" class="browser-default" id="hod">
             {% for class in classes %}
             <option value="{{class.id}}">{{class.id}}</option>
             {% endfor %}
@@ -52,7 +52,7 @@ Teacher - {{period.teacherID}} <br>
     </div>
     <h5>Teacher id</h5>
     <div class="input-field col s12">
-        <select name="subject" class="browser-default" id="hod">
+        <select name="teacher" class="browser-default" id="hod">
             {% for teacher in teachers %}
             <option value="{{teacher.userID}}">{{teacher.name}}</option>
             {% endfor %}
