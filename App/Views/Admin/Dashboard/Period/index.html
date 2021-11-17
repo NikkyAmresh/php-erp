@@ -4,15 +4,10 @@ block body %}
 {% for period in periods%}
 Timing {{period.fromTime}}-{{period.toTime}} <br>
 Day - {{period.day}} <br>
-section - {{period.section}} <br>
-Subject Name - {{period.name}} <br>
-Subject Code - {{period.subjectCode}} <br>
-Department - {{period.department}} <br>
-Branch - {{period.branch}} <br>
-Semester - {{period.semester}} <br>
-Teacher - {{period.teacher}} <br>
-<a class="btn bg-red" href="/admin/periods/{{periods.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deletePeriod/{{periods.id}}">Delete</a>
+Subject - {{period.subjectID}} <br>
+Teacher - {{period.teacherID}} <br>
+<a class="btn bg-red" href="/admin/period/{{period.id}}">Edit</a>
+<a class="btn bg-red" href="/admin/deletePeriod/{{period.id}}">Delete</a>
 <br />
 <br />
 {% endfor %}
@@ -46,27 +41,18 @@ Teacher - {{period.teacher}} <br>
         </select>
         <br />
     </div>
-    <h5>Branch</h5>
+    <h5>Class id</h5>
     <div class="input-field col s12">
-        <select name="branch" class="browser-default" id="hod">
-            {% for branch in branches %}
-            <option value="{{branch.id}}">{{branch.name}}</option>
+        <select name="subject" class="browser-default" id="hod">
+            {% for class in classes %}
+            <option value="{{class.id}}">{{class.id}}</option>
             {% endfor %}
         </select>
         <br />
     </div>
-    <h5>Semester</h5>
+    <h5>Teacher id</h5>
     <div class="input-field col s12">
-        <select name="semester" class="browser-default" id="hod">
-            {% for sem in semesters %}
-            <option value="{{sem.id}}">{{sem.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Teacher</h5>
-    <div class="input-field col s12">
-        <select name="teacher" class="browser-default" id="hod">
+        <select name="subject" class="browser-default" id="hod">
             {% for teacher in teachers %}
             <option value="{{teacher.userID}}">{{teacher.name}}</option>
             {% endfor %}

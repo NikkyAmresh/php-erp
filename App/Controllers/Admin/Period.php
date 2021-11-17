@@ -3,15 +3,13 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Models\Branch as BranchModel;
-use App\Models\Department;
-use App\Models\Periods as PeriodModel;
-use App\Models\Semester as SemesterModel;
+use App\Models\Classes as ClassModel;
+use App\Models\Period as PeriodModel;
 use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use \Core\View;
 
-class Periods extends AdminController
+class Period extends AdminController
 {
     public function createAction()
     {
@@ -70,33 +68,29 @@ class Periods extends AdminController
     public function indexAction()
     {
         $st = new PeriodModel();
-        $res = $st->getWithJoin();
+        $res = $st->getAll();
         $subjects = new SubjectModel();
         $subRes = $subjects->getAll();
-        $branches = new BranchModel();
-        $branchRes = $branches->getAll();
-        $semesters = new SemesterModel();
-        $semesterRes = $semesters->getAll();
-        $teachers = new TeacherModel();
-        $teacherRes = $teachers->getWithJoin();
+        $classes = new ClassModel();
+        $classRes = $classes->getWithJoin();
+        $teacher = new TeacherModel();
+        $teacherRes = $teacher->getWithJoin();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        View::renderTemplate('Admin/Dashboard/Periods/index.html', array('periods' => $res, 'subjects' => $subRes, 'branches' => $branchRes, 'semesters' => $semesterRes, 'teachers' => $teacherRes, 'days' => $days));
+        View::renderTemplate('Admin/Dashboard/Period/index.html', array('periods' => $res, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
     }
     public function editAction()
     {
         $st = new PeriodModel();
-        $res = $st->getOneWithJoin($this->route_params['id']);
+        $res = $st->get($this->route_params['id']);
         $subjects = new SubjectModel();
         $subRes = $subjects->getAll();
-        $branches = new BranchModel();
-        $branchRes = $branches->getAll();
-        $semesters = new SemesterModel();
-        $semesterRes = $semesters->getAll();
-        $teachers = new TeacherModel();
-        $teacherRes = $teachers->getWithJoin();
+        $classes = new ClassModel();
+        $classRes = $classes->getWithJoin();
+        $teacher = new TeacherModel();
+        $teacherRes = $teacher->getWithJoin();
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         if ($res) {
-            $depts = (new Department())->getAll();
-            View::renderTemplate('Admin/Dashboard/Periods/edit.html', array('periods' => $res, 'subjects' => $subRes, 'branches' => $branchRes, 'semesters' => $semesterRes, 'teachers' => $teacherRes));
+            View::renderTemplate('Admin/Dashboard/Period/edit.html', array('periods' => $res, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
         } else {
             $this->redirect("/admin/period", array("message" => "Invalid TecherID!", 'type' => Constants::ERROR));
         }

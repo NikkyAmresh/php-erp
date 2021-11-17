@@ -5,8 +5,6 @@ block body %}
 <a class="btn bg-red" href="/admin/deletePeriod/{{periods.id}}">Delete</a>
 <br />
 <br />
-{% endfor %}
-
 <h4>New Period</h4>
 <form action="/admin/createPeriod" method="post">
     <h5>Timing</h5>
@@ -37,21 +35,12 @@ block body %}
         </select>
         <br />
     </div>
-    <h5>Branch</h5>
+
+    <h5>Class id</h5>
     <div class="input-field col s12">
-        <select name="branch" class="browser-default" id="hod">
-            {% for branch in branches %}
-            <option {% if branch.id==periods.branchID %}selected="selected" {% endif %} value="{{branch.id}}">
-                {{branch.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Semester</h5>
-    <div class="input-field col s12">
-        <select name="semester" class="browser-default" id="hod">
-            {% for sem in semesters %}
-            <option {% if periods.semesterID==sem.id %}selected="selected" {% endif %} value="{{sem.id}}">{{sem.name}}
+        <select name="teacher" class="browser-default" id="hod">
+            {% for class in classes %}
+            <option {% if class.id==periods.classID %}selected="selected" {% endif %} value="{{class.id}}">{{class.id}}
             </option>
             {% endfor %}
         </select>
@@ -59,16 +48,16 @@ block body %}
     </div>
     <h5>Teacher</h5>
     <div class="input-field col s12">
-        <select name="teacher" class="browser-default" id="hod">
+        <select name="subject" class="browser-default" id="hod">
             {% for teacher in teachers %}
-            <option {% if periods.teacherID==teacher.userID %}selected="selected" {% endif %}
-                value="{{teacher.userID}}">{{teacher.name}}</option>
+            <option {% if teacher.userID==periods.teacherID %}selected="selected" {% endif %}
+                value="{{teacher.userID}}">
+                {{teacher.name}}</option>
             {% endfor %}
         </select>
         <br />
     </div>
 
-    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
 </form>
 <br />
 <a href="/admin">Back to Admin Dashboard</a>
