@@ -15,17 +15,9 @@ class Period extends AdminController
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
             $period = new PeriodModel();
-            if (($period->get(null, ['field' => 'teacherID', 'value' => $_REQUEST['teacher']])) && ($period->get(['field' => 'fromTo', 'value' => $_REQUEST['fromTime']]))) {
-                $this->setInfoMessage("This Teacher already exists at this time period");
 
-            } else {
-                $period->setFromTime($_REQUEST['fromTime']);
-                $period->setToTime($_REQUEST['toTime']);
-                $period->setDay($_REQUEST['day']);
-                $period->setClassID($_REQUEST['class']);
-                $period->setSubjectID($_REQUEST['subject']);
-                $period->setTeacherID($_REQUEST['teacher']);
-            }
+            $period->setFromTime($_REQUEST['fromTime']);
+            $period->setToTime($_REQUEST['toTime']);
 
             if ($period->save()) {
                 $this->setSuccessMessage("Period created successfully");
@@ -35,15 +27,18 @@ class Period extends AdminController
         } else {
             $this->setErrorMessage("Invalid Request!");
         }
-        return $this->redirect('/admin/periods');
+        return $this->redirect('/admin/period');
     }
     public function updateAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['fromTime']))) {
             $period = new PeriodModel();
             $period->get($_REQUEST['id']);
+
+            $period->setFromTime($_REQUEST['fromTime']);
+            $period->setToTime($_REQUEST['toTime']);
             if ($period->save()) {
-                $this->setSuccessMessage("Period {$_REQUEST['name']} updated successfully");
+                $this->setSuccessMessage("Period {$_REQUEST['toTime']} updated successfully");
             } else {
                 $this->setErrorMessage("Unable to update Period");
             }
@@ -69,28 +64,14 @@ class Period extends AdminController
     {
         $st = new PeriodModel();
         $res = $st->getAll();
-        $subjects = new SubjectModel();
-        $subRes = $subjects->getAll();
-        $classes = new ClassModel();
-        $classRes = $classes->getWithJoin();
-        $teacher = new TeacherModel();
-        $teacherRes = $teacher->getWithJoin();
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        View::renderTemplate('Admin/Dashboard/Period/index.html', array('periods' => $res, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
+        View::renderTemplate('Admin/Dashboard/Period/index.html', array('periods' => $res));
     }
     public function editAction()
     {
         $st = new PeriodModel();
         $res = $st->get($this->route_params['id']);
-        $subjects = new SubjectModel();
-        $subRes = $subjects->getAll();
-        $classes = new ClassModel();
-        $classRes = $classes->getWithJoin();
-        $teacher = new TeacherModel();
-        $teacherRes = $teacher->getWithJoin();
-        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/Period/edit.html', array('periods' => $res, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
+            View::renderTemplate('Admin/Dashboard/Period/edit.html', array('period' => $res));
         } else {
             $this->redirect("/admin/period", array("message" => "Invalid TecherID!", 'type' => Constants::ERROR));
         }

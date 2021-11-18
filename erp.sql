@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Nov 17, 2021 at 01:03 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.3.32
+-- Host: localhost:3306
+-- Generation Time: Nov 18, 2021 at 04:08 AM
+-- Server version: 5.7.27
+-- PHP Version: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -162,21 +163,20 @@ INSERT INTO `departments` (`id`, `name`, `hodID`) VALUES
 --
 
 CREATE TABLE `periods` (
-  `id` int(20) NOT NULL,
+  `id` int(11) NOT NULL,
   `fromTime` varchar(10) NOT NULL,
   `toTime` varchar(10) NOT NULL,
-  `day` varchar(10) NOT NULL,
-  `classID` int(10) NOT NULL,
-  `subjectID` int(10) NOT NULL,
-  `teacherID` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `isExtra` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `periods`
 --
 
-INSERT INTO `periods` (`id`, `fromTime`, `toTime`, `day`, `classID`, `subjectID`, `teacherID`) VALUES
-(1, '9:00 PM', '10:10 PM', 'monday', 1, 1, 5);
+INSERT INTO `periods` (`id`, `fromTime`, `toTime`, `isExtra`) VALUES
+(1, '9:30', '10:40', NULL),
+(2, '10:15', '11:18', NULL),
+(3, '17:16', '11:11', NULL);
 
 -- --------------------------------------------------------
 
@@ -265,9 +265,33 @@ INSERT INTO `teachers` (`id`, `userID`, `departmentID`) VALUES
 (1, 5, 2),
 (2, 6, 2),
 (3, 17, 1),
-(4, 18, 25),
-(6, 20, 25),
-(7, 21, 24);
+(8, 21, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `timetables`
+--
+
+CREATE TABLE `timetables` (
+  `id` int(20) NOT NULL,
+  `periodID` int(11) NOT NULL,
+  `day` varchar(10) NOT NULL,
+  `classID` int(10) NOT NULL,
+  `subjectID` int(10) NOT NULL,
+  `teacherID` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `timetables`
+--
+
+INSERT INTO `timetables` (`id`, `periodID`, `day`, `classID`, `subjectID`, `teacherID`) VALUES
+(5, 1, 'thursday', 5, 2, 3),
+(6, 2, 'monday', 3, 1, 1),
+(7, 3, 'wednesday', 1, 1, 1),
+(8, 1, 'friday', 2, 1, 3),
+(9, 1, 'thursday', 4, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -281,7 +305,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `mobile` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `lastLogin` timestamp NOT NULL DEFAULT current_timestamp()
+  `lastLogin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -298,7 +322,8 @@ INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `lastLogin`) V
 (17, 'Amit', 'amit@gmail.com', '23223232', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 15:48:12'),
 (18, 'Anuk', 'nik.ky.amresh.8@gmail.com', '89237', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 16:31:17'),
 (19, 'Nikky Amresh', 'kjhdrtykj@dfghjkk.fdgh', '+91880900692', '045cbbfb5d0ea613f5f487aa25e5495c', '2021-11-14 16:41:40'),
-(20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50');
+(20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50'),
+(21, 'Nikky Amresh', '8800900692@fd.hg', '91880900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 11:55:07');
 
 --
 -- Indexes for dumped tables
@@ -371,6 +396,12 @@ ALTER TABLE `teachers`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `timetables`
+--
+ALTER TABLE `timetables`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -420,7 +451,7 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `periods`
 --
 ALTER TABLE `periods`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -444,13 +475,19 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `timetables`
+--
+ALTER TABLE `timetables`
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

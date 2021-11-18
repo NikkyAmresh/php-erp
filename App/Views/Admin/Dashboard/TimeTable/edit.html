@@ -1,0 +1,69 @@
+{% extends "base.html" %} {% block title %}Admin | TimeTable{% endblock %} {%
+block body %}
+<h4>TimeTable</h4>
+<h5>Update</h5>
+<a class="btn bg-red" href="/admin/deleteTimeTable/{{timeTable.id}}">Delete</a>
+<br />
+<br />
+<h4>New TimeTable</h4>
+<form action="/admin/updateTimeTable" method="post">
+    <h5>Timing</h5>
+    <input type="hidden" name="id" value="{{timeTable.id}}">
+
+    <h5>Period</h5>
+    <div class="input-field col s12">
+        <select name="period" class="browser-default" id="hod">
+            {% for period in periods %}
+            <option {% if period.id==timeTable.periodID %}selected="selected" {% endif %} value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Day</h5>
+    <div class="input-field col s12">
+        <select name="day" class="browser-default" id="hod">
+            {% for day in days %}
+            <option {% if timeTable.day==day %}selected="selected" {% endif %} value="{{day}}">{{day}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Subject</h5>
+    <div class="input-field col s12">
+        <select name="subject" class="browser-default" id="hod">
+            {% for subject in subjects %}
+            <option {% if timeTable.subjectID==subject.id %}selected="selected" {% endif %} value="{{subject.id}}">
+                {{subject.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+
+    <h5>Class id</h5>
+    <div class="input-field col s12">
+        <select name="class" class="browser-default" id="hod">
+            {% for class in classes %}
+            <option {% if class.id==timeTable.classID %}selected="selected" {% endif %} value="{{class.id}}">{{class.name}}
+            </option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Teacher</h5>
+    <div class="input-field col s12">
+        <select name="teacher" class="browser-default" id="hod">
+            {% for teacher in teachers %}
+            <option {% if teacher.id==timeTable.teacherID %}selected="selected" {% endif %}
+                value="{{teacher.id}}">
+                {{teacher.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <button class="btn bg-orange lighten-1 z-depth-0">Update</button>
+
+</form>
+<br />
+<a href="/admin">Back to Admin Dashboard</a>
+
+{% endblock %}

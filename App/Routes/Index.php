@@ -44,6 +44,7 @@ class Index
         $this->createManagementRoutes('student');
         $this->createManagementRoutes('subject');
         $this->createManagementRoutes('period');
+        $this->createManagementRoutes('timeTable');
 
     }
 

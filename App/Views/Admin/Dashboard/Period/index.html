@@ -3,9 +3,6 @@ block body %}
 <h4>Periods</h4>
 {% for period in periods%}
 Timing {{period.fromTime}}-{{period.toTime}} <br>
-Day - {{period.day}} <br>
-Subject - {{period.subjectID}} <br>
-Teacher - {{period.teacherID}} <br>
 <a class="btn bg-red" href="/admin/period/{{period.id}}">Edit</a>
 <a class="btn bg-red" href="/admin/deletePeriod/{{period.id}}">Delete</a>
 <br />
@@ -22,42 +19,6 @@ Teacher - {{period.teacherID}} <br>
     <div class="input-field">
         <label for="toTime">To</label>
         <input type="time" id="appt" name="toTime" min="09:00" max="18:00" required>
-    </div>
-    <h5>Day</h5>
-    <div class="input-field col s12">
-        <select name="day" class="browser-default" id="hod">
-            {% for day in days %}
-            <option value="{{day}}">{{day}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Subject</h5>
-    <div class="input-field col s12">
-        <select name="subject" class="browser-default" id="hod">
-            {% for subject in subjects %}
-            <option value="{{subject.id}}">{{subject.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Class id</h5>
-    <div class="input-field col s12">
-        <select name="class" class="browser-default" id="hod">
-            {% for class in classes %}
-            <option value="{{class.id}}">{{class.id}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Teacher id</h5>
-    <div class="input-field col s12">
-        <select name="teacher" class="browser-default" id="hod">
-            {% for teacher in teachers %}
-            <option value="{{teacher.userID}}">{{teacher.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
     </div>
 
     <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
