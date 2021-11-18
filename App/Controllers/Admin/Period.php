@@ -3,10 +3,7 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Models\Classes as ClassModel;
 use App\Models\Period as PeriodModel;
-use App\Models\Subject as SubjectModel;
-use App\Models\Teacher as TeacherModel;
 use \Core\View;
 
 class Period extends AdminController
