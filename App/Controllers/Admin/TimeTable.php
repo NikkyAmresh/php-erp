@@ -23,7 +23,6 @@ class TimeTable extends AdminController
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
             $timeTable = new TimeTableModel();
-
             $timeTable->setPeriodID($_REQUEST['period']);
             $timeTable->setDay($_REQUEST['day']);
             $timeTable->setClassID($_REQUEST['class']);
@@ -110,5 +109,46 @@ class TimeTable extends AdminController
         } else {
             $this->redirect("/admin/timeTable", array("message" => "Invalid TecherID!", 'type' => Constants::ERROR));
         }
+    }
+
+    public function getAction()
+    {
+        $st = new TimeTableModel();
+        $res = $st->getWithJoin(null, null, ['field' => 'classID', 'value' => $this->route_params['id']], null);
+        $subjects = new SubjectModel();
+        $periods = (new Period())->getAll();
+        $subRes = $subjects->getAll();
+        $classes = new ClassModel();
+        $classRes = $classes->getWithJoin();
+        $teacher = new TeacherModel();
+        $teacherRes = $teacher->getWithJoin();
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        foreach ($classRes as $key => $r) {
+            $classRes[$key]['name'] = $this->className($r);
+        }
+        if ($res) {
+            echo json_encode($res);
+            return;
+            // View::renderTemplate('Admin/Dashboard/TimeTable/getTimeTable.html', array('timeTable' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
+        } else {
+            $this->redirect("/admin/timeTable", array("message" => "Invalid TecherID!", 'type' => Constants::ERROR));
+        }
+    }
+    public function showAction()
+    {
+        $st = new TimeTableModel();
+        $res = $st->getWithJoin();
+        $subjects = new SubjectModel();
+        $subRes = $subjects->getAll();
+        $periods = (new Period())->getAll();
+        $classes = new ClassModel();
+        $classRes = $classes->getWithJoin();
+        $teacher = new TeacherModel();
+        $teacherRes = $teacher->getWithJoin();
+        $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        foreach ($classRes as $key => $r) {
+            $classRes[$key]['name'] = $this->className($r);
+        }
+        View::renderTemplate('Admin/Dashboard/TimeTable/getTimeTable.html', array('timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
     }
 }

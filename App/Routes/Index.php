@@ -24,6 +24,8 @@ class Index
         $this->router->add("admin/create$_type", ['controller' => $controller, 'action' => 'create']);
         $this->router->add("admin/update$_type", ['controller' => $controller, 'action' => 'update']);
         $this->router->add("admin/delete$_type/{id:\d+}", ['controller' => $controller, 'action' => 'delete']);
+        $this->router->add("admin/get$_type/{id:\d+}", ['controller' => $controller, 'action' => 'get']);
+        $this->router->add("admin/show$_type", ['controller' => $controller, 'action' => 'show']);
     }
 
     public function setRoutes()
@@ -45,7 +47,6 @@ class Index
         $this->createManagementRoutes('subject');
         $this->createManagementRoutes('period');
         $this->createManagementRoutes('timeTable');
-
     }
 
 }

@@ -19,6 +19,7 @@ class TimeTable extends Model
     users.id as teacherUserID,
     periods.fromTime,
     periods.toTime,
+    subjects.subjectCode,
     subjects.name as subjectName from timetables
     join periods on periods.id=timetables.periodID
     join classes on timetables.classID=classes.id
@@ -28,7 +29,7 @@ class TimeTable extends Model
     join teachers on timetables.teacherID=teachers.id
     join users on users.id=teachers.userID
     join subjects on timetables.subjectID=subjects.id
-'   
+'
     ;
 
 }
