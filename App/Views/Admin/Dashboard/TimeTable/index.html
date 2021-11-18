@@ -1,0 +1,70 @@
+{% extends "base.html" %} {% block title %}Admin | TimeTable{% endblock %} {%
+block body %}
+<h4>TimeTable</h4>
+{% for timeTable in timeTables%}
+Timing {{timeTable.fromTime}}-{{timeTable.toTime}} <br>
+Day - {{timeTable.day}} <br>
+Subject - {{timeTable.subjectID}} <br>
+Teacher - {{timeTable.teacherID}} <br>
+<a class="btn bg-red" href="/admin/timeTable/{{timeTable.id}}">Edit</a>
+<a class="btn bg-red" href="/admin/deleteTimeTable/{{timeTable.id}}">Delete</a>
+<br />
+<br />
+{% endfor %}
+
+<h4>New TimeTable</h4>
+<form action="/admin/createTimeTable" method="post">
+    <h5>Timing</h5>
+
+    <h5>Period</h5>
+    <div class="input-field col s12">
+        <select name="period" class="browser-default" id="hod">
+            {% for period in periods %}
+            <option value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Day</h5>
+    <div class="input-field col s12">
+        <select name="day" class="browser-default" id="hod">
+            {% for day in days %}
+            <option value="{{day}}">{{day}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Subject</h5>
+    <div class="input-field col s12">
+        <select name="subject" class="browser-default" id="hod">
+            {% for subject in subjects %}
+            <option value="{{subject.id}}">{{subject.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Class id</h5>
+    <div class="input-field col s12">
+        <select name="class" class="browser-default" id="hod">
+            {% for class in classes %}
+            <option value="{{class.id}}">{{class.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <h5>Teacher id</h5>
+    <div class="input-field col s12">
+        <select name="teacher" class="browser-default" id="hod">
+            {% for teacher in teachers %}
+            <option value="{{teacher.id}}">{{teacher.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+
+    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
+</form>
+<br />
+<a href="/admin">Back to Admin Dashboard</a>
+
+{% endblock %}
