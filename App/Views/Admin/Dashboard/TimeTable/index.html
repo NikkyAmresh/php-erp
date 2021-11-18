@@ -1,11 +1,11 @@
 {% extends "base.html" %} {% block title %}Admin | TimeTable{% endblock %} {%
 block body %}
 <h4>TimeTable</h4>
-{% for timeTable in timeTables%}
-Timing {{timeTable.fromTime}}-{{timeTable.toTime}} <br>
-Day - {{timeTable.day}} <br>
-Subject - {{timeTable.subjectID}} <br>
-Teacher - {{timeTable.teacherID}} <br>
+{% for timeTable in timeTables%} Timing
+{{timeTable.fromTime}}-{{timeTable.toTime}} <br />
+Day - {{timeTable.day}} <br />
+Subject - {{timeTable.subjectID}} <br />
+Teacher - {{timeTable.teacherID}} <br />
 <a class="btn bg-red" href="/admin/timeTable/{{timeTable.id}}">Edit</a>
 <a class="btn bg-red" href="/admin/deleteTimeTable/{{timeTable.id}}">Delete</a>
 <br />
@@ -13,56 +13,94 @@ Teacher - {{timeTable.teacherID}} <br>
 {% endfor %}
 
 <h4>New TimeTable</h4>
-<form action="/admin/createTimeTable" method="post">
-    <h5>Timing</h5>
+<!-- <form action="/admin/createTimeTable" method="post">
+  <h5>Timing</h5>
 
-    <h5>Period</h5>
-    <div class="input-field col s12">
-        <select name="period" class="browser-default" id="hod">
-            {% for period in periods %}
-            <option value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Day</h5>
-    <div class="input-field col s12">
-        <select name="day" class="browser-default" id="hod">
-            {% for day in days %}
-            <option value="{{day}}">{{day}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Subject</h5>
-    <div class="input-field col s12">
-        <select name="subject" class="browser-default" id="hod">
-            {% for subject in subjects %}
-            <option value="{{subject.id}}">{{subject.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Class id</h5>
-    <div class="input-field col s12">
-        <select name="class" class="browser-default" id="hod">
-            {% for class in classes %}
-            <option value="{{class.id}}">{{class.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <h5>Teacher id</h5>
-    <div class="input-field col s12">
-        <select name="teacher" class="browser-default" id="hod">
-            {% for teacher in teachers %}
-            <option value="{{teacher.id}}">{{teacher.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
+  <h5>Period</h5>
+  <div class="input-field col s12">
+    <select name="period" class="browser-default" id="hod">
+      {% for period in periods %}
+      <option value="{{period.id}}">
+        {{period.fromTime}}-{{period.toTime}}
+      </option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+  <h5>Day</h5>
+  <div class="input-field col s12">
+    <select name="day" class="browser-default" id="hod">
+      {% for day in days %}
+      <option value="{{day}}">{{day}}</option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+  <h5>Subject</h5>
+  <div class="input-field col s12">
+    <select name="subject" class="browser-default" id="hod">
+      {% for subject in subjects %}
+      <option value="{{subject.id}}">{{subject.name}}</option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+  <h5>Class id</h5>
+  <div class="input-field col s12">
+    <select name="class" class="browser-default" id="hod">
+      {% for class in classes %}
+      <option value="{{class.id}}">{{class.name}}</option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+  <h5>Teacher id</h5>
+  <div class="input-field col s12">
+    <select name="teacher" class="browser-default" id="hod">
+      {% for teacher in teachers %}
+      <option value="{{teacher.id}}">{{teacher.name}}</option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
 
-    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
+  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
+</form> -->
+
+<form action="/admin/timetableForClass">
+  <h5>Class</h5>
+  <div class="input-field col s12">
+    <select name="class" class="browser-default" id="hod">
+      {% for class in classes %}
+      <option value="{{class.id}}">{{class.name}}</option>
+      {% endfor %}
+    </select>
+    <br />
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Day/Period</th>
+        {% for period in periods %}
+        <th data-value="{{period.id}}">
+          {{period.fromTime}}-{{period.toTime}}
+        </th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for day in days %}
+      <tr data-value="{{day}}">
+        <td><b>{{day}}</b></td>
+        {% for period in periods %}
+        <td data-value="{{period.id}}-{{day}}" contenteditable="true">NA</td>
+        {% endfor %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
 </form>
 <br />
 <a href="/admin">Back to Admin Dashboard</a>
