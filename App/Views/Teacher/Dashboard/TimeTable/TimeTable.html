@@ -1,0 +1,56 @@
+{% extends "base.html" %} {% block title %}TimeTable{% endblock %} {% block body
+%}
+
+<h3>Time Table</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Day/Period</th>
+      {% for period in periods %}
+      <th data-value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for day in days %}
+    <tr data-value="{{day}}">
+      <td><b>{{day|ucf}}</b></td>
+      {% for period in periods %}
+      <td class="tableData" id="{{period.id}}-{{day}}">NA</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script type="text/javascript">
+  $(function () {
+    $.ajax({
+      url: "/teacher/getTimetable",
+      method: "get",
+    })
+      .done((data) => {
+        data = JSON.parse(data);
+        console.log(data);
+        data.forEach((_data) => {
+          let td = $("#" + _data.periodID + "-" + _data.day);
+          if (td.length) {
+            const yr = Math.ceil(parseInt(_data.semester) / 2);
+            const className = `${_data.branchCode}-${yr}yr (${_data.section})`;
+            td.text(_data.subjectName + "/" + className);
+            td.attr("data-timeTable", _data.id);
+          }
+        });
+      })
+      .fail((err) => {
+        console.log(err);
+      });
+    $(".tableData").each(function () {
+      const self = this;
+      $(this).on("click", function () {
+        window.open("attendance/"+$(self).attr("data-timeTable"));
+      });
+    });
+    console.log("read");
+  });
+</script>
+{% endblock %}

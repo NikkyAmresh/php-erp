@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}Student | Dashboard{% endblock %} {%
+block body %}
+
+<h3>{{timeTable.branchCode}} - {{timeTable.semester}} sem section - {{timeTable.section|ucf}}</h3>
+
+<h4>
+  Subject - {{timeTable.subjectName}}({{timeTable.subjectCode}}) -
+  {{timeTable.day|ucf}}/{{timeTable.fromTime}}-{{timeTable.toTime}}
+</h4>
+
+{%for student in students%}
+  {{student.name}} <br>
+{% endfor %}
+
+<a href="/teacher/timeTable">back to Time Table</a> <br /><br />
+
+{% endblock %}

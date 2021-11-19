@@ -11,6 +11,7 @@ class TimeTable extends Model
     departments.name as department,
     departments.id as departmentID,
     branches.name as branch,
+    branches.code as branchCode,
     branches.id as branchID,
     classes.section as section,
     semesters.name as semester,
@@ -19,6 +20,7 @@ class TimeTable extends Model
     users.id as teacherUserID,
     periods.fromTime,
     periods.toTime,
+    subjects.subjectCode,
     subjects.name as subjectName from timetables
     join periods on periods.id=timetables.periodID
     join classes on timetables.classID=classes.id
@@ -28,7 +30,7 @@ class TimeTable extends Model
     join teachers on timetables.teacherID=teachers.id
     join users on users.id=teachers.userID
     join subjects on timetables.subjectID=subjects.id
-'   
+'
     ;
 
 }

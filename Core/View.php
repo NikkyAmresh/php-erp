@@ -56,6 +56,7 @@ class View
             Constants::MESSAGE_TYPE[Constants::WARNING] => self::getWarningMessage(),
             Constants::MESSAGE_TYPE[Constants::INFO] => self::getInfoMessage());
         $finalArgs = array_merge($args, $messages);
+        $twig->addFilter(new \Twig\TwigFilter('ucf','ucfirst'));
         echo $twig->render($template, $finalArgs);
         self::resetMessages();
     }

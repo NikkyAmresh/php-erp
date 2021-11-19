@@ -1,0 +1,46 @@
+{% extends "base.html" %} {% block title %}TimeTable{% endblock %} {%
+block body %}
+
+<h3>Time Table</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Day/Period</th>
+      {% for period in periods %}
+      <th data-value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for day in days %}
+    <tr data-value="{{day}}">
+      <td><b>{{day}}</b></td>
+      {% for period in periods %}
+      <td class="tableData" id="{{period.id}}-{{day}}">NA</td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<script type="text/javascript">
+  $(function () {
+    $.ajax({
+      url: "/student/getTimetable",
+      method: "get",
+    })
+      .done((data) => {
+        data = JSON.parse(data);
+        data.forEach((_data) => {
+          let td = $("#" + _data.periodID + "-" + _data.day);
+          if (td.length) {
+            td.text(_data.subjectName + "/" + _data.teacher);
+          }
+        });
+      })
+      .fail((err)=>{
+        console.log(err)
+      });
+    console.log("read");
+  });
+</script>
+{% endblock %}

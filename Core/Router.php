@@ -192,6 +192,8 @@ class Router
             }
         }
 
+        $url = rtrim($url, '/');
+
         return $url;
     }
 

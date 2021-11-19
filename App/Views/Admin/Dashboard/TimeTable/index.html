@@ -1,81 +1,42 @@
 {% extends "base.html" %} {% block title %}Admin | TimeTable{% endblock %} {%
 block body %}
-<h4>TimeTable</h4>
-{% for timeTable in timeTables%} Timing
-{{timeTable.fromTime}}-{{timeTable.toTime}} <br />
-Day - {{timeTable.day}} <br />
-Subject - {{timeTable.subjectID}} <br />
-Teacher - {{timeTable.teacherID}} <br />
-<a class="btn bg-red" href="/admin/timeTable/{{timeTable.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteTimeTable/{{timeTable.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
-
-<h4>New TimeTable</h4>
-<!-- <form action="/admin/createTimeTable" method="post">
-  <h5>Timing</h5>
-
-  <h5>Period</h5>
-  <div class="input-field col s12">
-    <select name="period" class="browser-default" id="hod">
-      {% for period in periods %}
-      <option value="{{period.id}}">
-        {{period.fromTime}}-{{period.toTime}}
-      </option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <h5>Day</h5>
-  <div class="input-field col s12">
-    <select name="day" class="browser-default" id="hod">
-      {% for day in days %}
-      <option value="{{day}}">{{day}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <h5>Subject</h5>
-  <div class="input-field col s12">
-    <select name="subject" class="browser-default" id="hod">
-      {% for subject in subjects %}
-      <option value="{{subject.id}}">{{subject.name}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <h5>Class id</h5>
-  <div class="input-field col s12">
-    <select name="class" class="browser-default" id="hod">
-      {% for class in classes %}
-      <option value="{{class.id}}">{{class.name}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <h5>Teacher id</h5>
-  <div class="input-field col s12">
-    <select name="teacher" class="browser-default" id="hod">
-      {% for teacher in teachers %}
-      <option value="{{teacher.id}}">{{teacher.name}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-
-  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form> -->
-
-<form action="/admin/timetableForClass">
+<form action="/admin/timetableForClass" onsubmit="return saveTimeTable()">
   <h5>Class</h5>
   <div class="input-field col s12">
-    <select name="class" class="browser-default" id="hod">
+    <select
+      onchange="updateClass(this)"
+      name="class"
+      class="browser-default"
+      id="classId"
+    >
       {% for class in classes %}
-      <option value="{{class.id}}">{{class.name}}</option>
+      <option class="class-id" value="{{class.id}}">{{class.name}}</option>
       {% endfor %}
     </select>
     <br />
+  </div>
+
+  <div class="row col s12">
+    <div class="input-field col s6">
+      <h5>Subject</h5>
+      <select name="class" class="browser-default" id="subject">
+        {% for subject in subjects %}
+        <option value="{{subject.id}}" data-code="{{subject.subjectCode}}">
+          {{subject.name}}
+        </option>
+        {% endfor %}
+      </select>
+      <br />
+    </div>
+    <div class="input-field col s6">
+      <h5>Teacher</h5>
+      <select name="teacher" class="browser-default" id="teacher">
+        {% for teacher in teachers %}
+        <option value="{{teacher.id}}">{{teacher.name}}</option>
+        {% endfor %}
+      </select>
+      <br />
+    </div>
   </div>
 
   <table>
@@ -94,15 +55,148 @@ Teacher - {{timeTable.teacherID}} <br />
       <tr data-value="{{day}}">
         <td><b>{{day}}</b></td>
         {% for period in periods %}
-        <td data-value="{{period.id}}-{{day}}" contenteditable="true">NA</td>
+        <td
+          onclick="changeId(this)"
+          class="tableData"
+          id="{{period.id}}-{{day}}"
+        >
+          NA
+        </td>
         {% endfor %}
       </tr>
       {% endfor %}
     </tbody>
   </table>
-  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
+  <button type="submit" class="btn btn-primary">Update TimeTable</button>
 </form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
+<a href="/admin">Back to Time table</a>
 
+<script type="text/javascript">
+  const formData = {};
+  let data = {
+    classID: $("#classId").val(),
+    periodID: null,
+    day: null,
+    subjectID: null,
+    teacherID: null,
+  };
+  let dataCode = {
+    subject: null,
+    teacher: null,
+  };
+  activeTd = null;
+  function changeId(val) {
+    $("td").each(function () {
+      $(this).removeClass("selected");
+      data = {
+        classID: $("#classId").val(),
+        periodID: null,
+        day: null,
+        subjectID: null,
+        teacherID: null,
+      };
+      dataCode = {
+        subject: null,
+        teacher: null,
+      };
+    });
+    if (activeTd == val.id) {
+      $("#" + activeTd).removeClass("selected");
+      activeTd = null;
+    } else {
+      activeTd = val.id;
+      $("#" + activeTd).addClass("selected");
+      data.periodID = activeTd.split("-")[0];
+      data.day = activeTd.split("-")[1];
+    }
+  }
+  function updateClass(e) {
+    $(".tableData").each(function () {
+      $(this).html("N/A");
+    });
+    $.ajax({
+      url: "/admin/getTimetable/" + e.value,
+      method: "get",
+    })
+      .done((data) => {
+        data = JSON.parse(data);
+        data.forEach((_data) => {
+          let td = $("#" + _data.periodID + "-" + _data.day);
+          const _id = `${_data.periodID}-${_data.day}`;
+          formData[_id] = {
+            classID: _data.classID,
+            periodID: _data.periodID,
+            day: _data.day,
+            subjectID: _data.subjectID,
+            teacherID: _data.teacherID,
+          };
+          if (td.length) {
+            td.text(_data.subjectCode + "/" + _data.teacher);
+          }
+        });
+      })
+      .fail(console.log);
+  }
+  $(function () {
+    $.ajax({
+      url: "/admin/getTimetable/" + $("#classId").val(),
+      method: "get",
+    })
+      .done((data) => {
+        data = JSON.parse(data);
+        data.forEach((_data) => {
+          let td = $("#" + _data.periodID + "-" + _data.day);
+          const _id = `${_data.periodID}-${_data.day}`;
+          formData[_id] = {
+            classID: _data.classID,
+            periodID: _data.periodID,
+            day: _data.day,
+            subjectID: _data.subjectID,
+            teacherID: _data.teacherID,
+          };
+          if (td.length) {
+            td.text(_data.subjectCode + "/" + _data.teacher);
+          }
+        });
+      })
+      .fail(console.log);
+    $("#teacher").on("change", function () {
+      dataCode.teacher = this.options[this.selectedIndex].text;
+      $("#" + activeTd).html(dataCode.subject + "/" + dataCode.teacher);
+      data.teacherID = this.value;
+      const _id = `${data.periodID}-${data.day}`;
+      formData[_id] = data;
+    });
+    $("#subject").on("change", function () {
+      dataCode.subject =
+        this.options[this.selectedIndex].getAttribute("data-code");
+      $("#" + activeTd).html(dataCode.subject + "/" + dataCode.teacher);
+      data.subjectID = this.value;
+      const _id = `${data.periodID}-${data.day}`;
+      formData[_id] = data;
+    });
+    console.log("read");
+  });
+  function saveTimeTable() {
+    console.log(formData);
+    $.ajax({
+      url: "/admin/setTimetable",
+      method: "post",
+      data: {
+        classID: $("#classId").val(),
+        data: Object.values(formData),
+      },
+    })
+      .done(() => {
+        Toastify({
+          text: "Time-Table Updated",
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+        }).showToast();
+      })
+      .fail(console.log);
+    return false;
+  }
+</script>
 {% endblock %}
