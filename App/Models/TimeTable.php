@@ -11,6 +11,7 @@ class TimeTable extends Model
     departments.name as department,
     departments.id as departmentID,
     branches.name as branch,
+    branches.code as branchCode,
     branches.id as branchID,
     classes.section as section,
     semesters.name as semester,

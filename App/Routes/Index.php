@@ -24,8 +24,6 @@ class Index
         $this->router->add("admin/create$_type", ['controller' => $controller, 'action' => 'create']);
         $this->router->add("admin/update$_type", ['controller' => $controller, 'action' => 'update']);
         $this->router->add("admin/delete$_type/{id:\d+}", ['controller' => $controller, 'action' => 'delete']);
-        $this->router->add("admin/get$_type/{id:\d+}", ['controller' => $controller, 'action' => 'get']);
-        $this->router->add("admin/show$_type", ['controller' => $controller, 'action' => 'show']);
     }
 
     public function setRoutes()
@@ -47,6 +45,20 @@ class Index
         $this->createManagementRoutes('subject');
         $this->createManagementRoutes('period');
         $this->createManagementRoutes('timeTable');
+
+        $this->router->add("admin/getTimeTable/{id:\d+}", ['controller' => 'Admin\TimeTable', 'action' => 'get']);
+        $this->router->add("admin/showTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'show']);
+        $this->router->add("admin/setTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'updateByClass']);
+        
+        $this->router->add("student", ['controller' => 'Student\Index', 'action' => 'index']);
+        $this->router->add("student/getTimeTable", ['controller' => 'Student\TimeTable', 'action' => 'get']);
+        $this->router->add("student/timeTable", ['controller' => 'Student\TimeTable', 'action' => 'show']);
+        
+        $this->router->add("teacher", ['controller' => 'teacher\Index', 'action' => 'index']);
+        $this->router->add("teacher/getTimeTable", ['controller' => 'teacher\TimeTable', 'action' => 'get']);
+        $this->router->add("teacher/timeTable", ['controller' => 'teacher\TimeTable', 'action' => 'show']);
+        $this->router->add("teacher/attendance/{id:\d+}", ['controller' => 'teacher\Attendance', 'action' => 'mark']);
+
     }
 
 }

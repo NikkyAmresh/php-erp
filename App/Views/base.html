@@ -10,12 +10,18 @@
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <style>
+    .selected{
+      border: 2px solid #acbcf4;
+      background: #dedede;
+    }
+  </style>
 </head>
 
 <body>
   <div class="container">{% block body %} {% endblock %}</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script type="text/javascript">
     var successMsg = {{ SUCCESS_MESSAGE | json_encode() | raw }}
     var infoMsg = {{ INFO_MESSAGE | json_encode() | raw }}

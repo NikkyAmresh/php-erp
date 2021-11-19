@@ -85,6 +85,16 @@ abstract class Model
         return $this->db->insert(static::$table, $this->_data);
     }
 
+    public function deleteMany($cond, $numRows = null)
+    {
+        $this->db->where(static::$table . ".{$cond['field']}", $cond['value'])->delete(static::$table, $numRows);
+    }
+
+    public function insertMulti($dataArray)
+    {
+        $this->db->insertMulti(static::$table, $dataArray);
+    }
+
     public function setData($data)
     {
         return $this->_data = $data;
