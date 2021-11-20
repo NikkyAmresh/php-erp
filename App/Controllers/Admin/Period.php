@@ -29,8 +29,7 @@ class Period extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['fromTime']))) {
-            $period = new PeriodModel();
-            $period->get($_REQUEST['id']);
+            $period = new PeriodModel($_REQUEST['id']);
 
             $period->setFromTime($_REQUEST['fromTime']);
             $period->setToTime($_REQUEST['toTime']);
@@ -47,8 +46,8 @@ class Period extends AdminController
 
     public function deleteAction()
     {
-        $period = new PeriodModel();
-        $res = $period->delete($this->route_params['id']);
+        $period = new PeriodModel($this->route_params['id']);
+        $res = $period->delete();
         if ($res) {
             $this->setSuccessMessage("Period delete successfully");
         } else {
@@ -61,16 +60,16 @@ class Period extends AdminController
     {
         $st = new PeriodModel();
         $res = $st->getAll();
-        View::renderTemplate('Admin/Dashboard/Period/index.html', array('periods' => $res));
+        View::renderTemplate('Admin/Dashboard/Period/index.html', ['periods' => $res]);
     }
     public function editAction()
     {
-        $st = new PeriodModel();
-        $res = $st->get($this->route_params['id']);
+        $st = new PeriodModel($this->route_params['id']);
+        $res = $st->get();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/Period/edit.html', array('period' => $res));
+            View::renderTemplate('Admin/Dashboard/Period/edit.html', ['period' => $res]);
         } else {
-            $this->redirect("/admin/period", array("message" => "Invalid TecherID!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/period", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }
     }
 }

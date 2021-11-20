@@ -50,13 +50,13 @@ class View
             $loader = new \Twig\Loader\FilesystemLoader(dirname(__DIR__) . '/App/Views');
             $twig = new \Twig\Environment($loader);
         }
-        $messages = array(
+        $messages = [
             Constants::MESSAGE_TYPE[Constants::SUCCESS] => self::getSuccessMessage(),
             Constants::MESSAGE_TYPE[Constants::ERROR] => self::getErrorMessage(),
             Constants::MESSAGE_TYPE[Constants::WARNING] => self::getWarningMessage(),
-            Constants::MESSAGE_TYPE[Constants::INFO] => self::getInfoMessage());
+            Constants::MESSAGE_TYPE[Constants::INFO] => self::getInfoMessage()];
         $finalArgs = array_merge($args, $messages);
-        $twig->addFilter(new \Twig\TwigFilter('ucf','ucfirst'));
+        $twig->addFilter(new \Twig\TwigFilter('ucf', 'ucfirst'));
         echo $twig->render($template, $finalArgs);
         self::resetMessages();
     }

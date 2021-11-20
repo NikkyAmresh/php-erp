@@ -22,12 +22,12 @@ class Student extends AdminController
 
     public function getSections()
     {
-        return array(
-            array('id' => 'a', 'code' => 'A'),
-            array('id' => 'b', 'code' => 'B'),
-            array('id' => 'c', 'code' => 'C'),
-            array('id' => 'd', 'code' => 'D'),
-        );
+        return [
+            ['id' => 'a', 'code' => 'A'],
+            ['id' => 'b', 'code' => 'B'],
+            ['id' => 'c', 'code' => 'C'],
+            ['id' => 'd', 'code' => 'D'],
+        ];
     }
     public function createAction()
     {
@@ -89,8 +89,8 @@ class Student extends AdminController
 
     public function deleteAction()
     {
-        $student = new StudentModel();
-        $res = $student->delete($this->route_params['id']);
+        $student = new StudentModel($this->route_params['id']);
+        $res = $student->delete();
         if ($res) {
             $this->setSuccessMessage("Student delete successfully");
         } else {
@@ -101,40 +101,40 @@ class Student extends AdminController
 
     public function indexAction()
     {
-        $st = new StudentModel();
-        $res = $st->getWithJoin(null, null, null, array('users.name', 'asc'));
+        $st = new StudentModel(null, null, ['users.name', 'asc']);
+        $res = $st->getWithJoin();
         $courses = (new Course())->getWithJoin();
         $batches = (new Batch())->getWithJoin();
-        $classes = (new Classes())->getWithJoin(null, null, null, array('semester', 'asc'));
+        $classes = (new Classes())->getWithJoin(null, null, null, ['semester', 'asc']);
         foreach ($classes as $key => $r) {
             $classes[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Admin/Dashboard/Student/index.html', array(
+        View::renderTemplate('Admin/Dashboard/Student/index.html', [
             'students' => $res,
             'courses' => $courses,
             'batches' => $batches,
             'classes' => $classes,
-        ));
+        ]);
     }
     public function editAction()
     {
-        $st = new StudentModel();
-        $res = $st->getOneWithJoin($this->route_params['id']);
+        $st = new StudentModel($this->route_params['id']);
+        $res = $st->getOneWithJoin();
         if ($res) {
             $courses = (new Course())->getWithJoin();
             $batches = (new Batch())->getWithJoin();
-            $classes = (new Classes())->getWithJoin(null, null, null, array('semester', 'asc'));
+            $classes = (new Classes())->getWithJoin(null, null, ['semester', 'asc']);
             foreach ($classes as $key => $r) {
                 $classes[$key]['name'] = $this->className($r);
             }
-            View::renderTemplate('Admin/Dashboard/Student/edit.html', array(
+            View::renderTemplate('Admin/Dashboard/Student/edit.html', [
                 'student' => $res,
                 'courses' => $courses,
                 'batches' => $batches,
                 'classes' => $classes,
-            ));
+            ]);
         } else {
-            $this->redirect("/admin/student", array("message" => "Invalid StudentID!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/student", ["message" => "Invalid StudentID!", 'type' => Constants::ERROR]);
         }
     }
 }

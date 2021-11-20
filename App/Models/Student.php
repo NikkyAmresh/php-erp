@@ -36,4 +36,10 @@ class Student extends \Core\Model
         return $this->user;
     }
 
+    public function getTimeTable()
+    {
+        $timeTable = new TimeTable(null, ['field' => 'classID', 'value' => $this->getClassID()]);
+        return $timeTable->getWithJoin();
+    }
+
 }

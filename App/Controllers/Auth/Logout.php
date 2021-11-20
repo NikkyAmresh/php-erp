@@ -12,6 +12,6 @@ class Logout extends \Core\Controller
     {
         Session::reset();
         
-        $this->redirect('/', array('type' => Constants::SUCCESS, 'message' => 'Logout Success!'));
+        $this->redirect('/', ['type' => Constants::SUCCESS, 'message' => 'Logout Success!']);
     }
 }

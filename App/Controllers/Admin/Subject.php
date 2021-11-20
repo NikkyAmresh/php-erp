@@ -14,7 +14,7 @@ class Subject extends AdminController
         $dep = new DepartmentModel();
         $deps = $dep->getAll();
         $res = $st->getWithJoin();
-        View::renderTemplate('Admin/Dashboard/Subject/index.html', array('subjects' => $res, 'deps' => $deps));
+        View::renderTemplate('Admin/Dashboard/Subject/index.html', ['subjects' => $res, 'deps' => $deps]);
     }
     public function createAction()
     {
@@ -33,8 +33,7 @@ class Subject extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $subject = new SubjectModel();
-            $subject->get($_REQUEST['id']);
+            $subject = new SubjectModel($_REQUEST['id']);
             $subject->setName($_REQUEST['name']);
             $subject->setSubjectCode($_REQUEST['subjectCode']);
             $subject->setDepartmentID($_REQUEST['department']);
@@ -51,8 +50,8 @@ class Subject extends AdminController
 
     public function deleteAction()
     {
-        $subject = new SubjectModel();
-        $res = $subject->delete($this->route_params['id']);
+        $subject = new SubjectModel($this->route_params['id']);
+        $res = $subject->delete();
         if ($res) {
             $this->setSuccessMessage("subject deleted successfully");
         } else {
@@ -62,14 +61,14 @@ class Subject extends AdminController
     }
     public function editAction()
     {
-        $st = new SubjectModel();
-        $res = $st->get($this->route_params['id']);
+        $st = new SubjectModel($this->route_params['id']);
+        $res = $st->get();
         $dep = new DepartmentModel();
         $deps = $dep->getAll();
         if ($res) {
             View::renderTemplate('Admin/Dashboard/subject/edit.html', ['subject' => $res, 'deps' => $deps]);
         } else {
-            $this->redirect("/admin/subject", array("message" => "Invalid subject id!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/subject", ["message" => "Invalid subject id!", 'type' => Constants::ERROR]);
         }
     }
 }

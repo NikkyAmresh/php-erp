@@ -37,4 +37,9 @@ class Teacher extends Model
         return $this->user;
     }
 
+    public function getTimeTable()
+    {
+        $timeTable = new TimeTable(null, ['field' => 'teacherID', 'value' => $this->getId()]);
+        return $timeTable->getWithJoin();
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Department as DepartmentModel;
-use App\Models\Teacher;
 use \Core\View;
 
 class Department extends AdminController
@@ -27,8 +26,7 @@ class Department extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $department = new DepartmentModel();
-            $department->get($_REQUEST['id']);
+            $department = new DepartmentModel($_REQUEST['id']);
             $department->setName($_REQUEST['name']);
             $department->setHodID($_REQUEST['hod']);
             if ($department->save()) {
@@ -44,8 +42,8 @@ class Department extends AdminController
 
     public function deleteAction()
     {
-        $department = new DepartmentModel();
-        $res = $department->delete($this->route_params['id']);
+        $department = new DepartmentModel($this->route_params['id']);
+        $res = $department->delete();
         if ($res) {
             $this->setSuccessMessage("Department delete successfully");
         } else {
@@ -58,17 +56,17 @@ class Department extends AdminController
     {
         $st = new DepartmentModel();
         $res = $st->getWithJoin();
-        View::renderTemplate('Admin/Dashboard/Department/index.html', array('department' => $res));
+        View::renderTemplate('Admin/Dashboard/Department/index.html', ['department' => $res]);
     }
     public function editAction()
     {
-        $st = new DepartmentModel();
-        $res = $st->get($this->route_params['id']);
+        $st = new DepartmentModel($this->route_params['id']);
+        $res = $st->get();
         if ($res) {
-            $hods = (new Teacher())->getWithJoin(null, null, array('field' => 'departmentID', 'value' => $st->getId()));
-            View::renderTemplate('Admin/Dashboard/Department/edit.html', array('department' => $res, 'hods' => $hods));
+            $hods = $st->getTeachers();
+            View::renderTemplate('Admin/Dashboard/Department/edit.html', ['department' => $res, 'hods' => $hods]);
         } else {
-            $this->redirect("/admin/department", array("message" => "Invalid DepartmentID!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/department", ["message" => "Invalid DepartmentID!", 'type' => Constants::ERROR]);
         }
     }
 }

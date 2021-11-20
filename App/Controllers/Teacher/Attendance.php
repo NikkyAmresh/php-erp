@@ -29,22 +29,21 @@ class Attendance extends TeacherController
         foreach ($classRes as $key => $r) {
             $classRes[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Teacher/Dashboard/TimeTable/index.html', array('timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes));
+        View::renderTemplate('Teacher/Dashboard/TimeTable/index.html', ['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
     }
 
     public function markAction()
     {
-        $st = new TimeTableModel();
-        $res = $st->getOneWithJoin($this->route_params['id']);
-        $students = new Student();
-        $students = $students->getWithJoin(null,null,['field'=>'classID','value'=>$res['classID']]);
-        View::renderTemplate('Teacher/Dashboard/Attendance/index.html', array('ets' => json_encode($res),'timeTable'=>$res,'students'=>$students));
+        $timeTable = new TimeTableModel($this->route_params['id']);
+        $res = $timeTable->getOneWithJoin();
+        $students = $timeTable->getStudents();
+        View::renderTemplate('Teacher/Dashboard/Attendance/index.html', ['ets' => json_encode($res),'timeTable'=>$res,'students'=>$students]);
         return;
     }
     public function showAction()
     {
         $periods = (new Period())->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        View::renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html', array('periods' => $periods, 'days' => $days));
+        View::renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html', ['periods' => $periods, 'days' => $days]);
     }
 }

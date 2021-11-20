@@ -25,7 +25,7 @@ class Login extends \Core\Controller
                 Session::set(Constants::LOGGED_IN_USER_ID, $usr->getId());
                 Session::set(Constants::LOGGED_IN_USER_NAME, $usr->getName());
                 Session::set(Constants::LOGGED_IN_USER_EMAIL, $usr->getEmail());
-                $this->redirect("/", array('message' => "logined in as " . $user['name'], 'type' => Constants::SUCCESS));
+                $this->redirect("/", ['message' => "logined in as " . $user['name'], 'type' => Constants::SUCCESS]);
                 return true;
             } else {
                 $this->setErrorMessage("Invalid Credentials!");

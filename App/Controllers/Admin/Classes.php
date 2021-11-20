@@ -22,12 +22,12 @@ class Classes extends AdminController
 
     public function getSections()
     {
-        return array(
-            array('id' => 'a', 'code' => 'A'),
-            array('id' => 'b', 'code' => 'B'),
-            array('id' => 'c', 'code' => 'C'),
-            array('id' => 'd', 'code' => 'D'),
-        );
+        return [
+            ['id' => 'a', 'code' => 'A'],
+            ['id' => 'b', 'code' => 'B'],
+            ['id' => 'c', 'code' => 'C'],
+            ['id' => 'd', 'code' => 'D'],
+        ];
     }
     public function createAction()
     {
@@ -53,8 +53,7 @@ class Classes extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['semester']))) {
-            $class = new ClassModel();
-            $class->get($_REQUEST['id']);
+            $class = new ClassModel($_REQUEST['id']);
             $class->setDepartmentID($_REQUEST['department']);
             $class->setBranchID($_REQUEST['branch']);
             $class->setSemesterID($_REQUEST['semester']);
@@ -73,8 +72,8 @@ class Classes extends AdminController
 
     public function deleteAction()
     {
-        $class = new ClassModel();
-        $res = $class->delete($this->route_params['id']);
+        $class = new ClassModel($this->route_params['id']);
+        $res = $class->delete();
         if ($res) {
             $this->setSuccessMessage("Class delete successfully");
         } else {
@@ -85,8 +84,8 @@ class Classes extends AdminController
 
     public function indexAction()
     {
-        $st = new ClassModel();
-        $res = $st->getWithJoin(null, null, null, array('semester', 'asc'));
+        $st = new ClassModel(null, null, ['semester', 'asc']);
+        $res = $st->getWithJoin();
         $depts = (new Department())->getWithJoin();
         $branches = (new Branch())->getWithJoin();
         $teachers = (new Teacher())->getWithJoin();
@@ -95,19 +94,19 @@ class Classes extends AdminController
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Admin/Dashboard/Classes/index.html', array(
+        View::renderTemplate('Admin/Dashboard/Classes/index.html', [
             'classes' => $res,
             'deps' => $depts,
             'branches' => $branches,
             'teachers' => $teachers,
             'semesters' => $semesters,
             'sections' => $sections,
-        ));
+        ]);
     }
     public function editAction()
     {
-        $st = new ClassModel();
-        $res = $st->getOneWithJoin($this->route_params['id']);
+        $st = new ClassModel($this->route_params['id']);
+        $res = $st->getOneWithJoin();
         if ($res) {
             $depts = (new Department())->getWithJoin();
             $branches = (new Branch())->getWithJoin();
@@ -115,16 +114,16 @@ class Classes extends AdminController
             $semesters = (new Semester)->getWithJoin();
             $res['name'] = $this->className($res);
             $sections = $this->getSections();
-            View::renderTemplate('Admin/Dashboard/Classes/edit.html', array(
+            View::renderTemplate('Admin/Dashboard/Classes/edit.html', [
                 'class' => $res,
                 'deps' => $depts,
                 'branches' => $branches,
                 'teachers' => $teachers,
                 'semesters' => $semesters,
                 'sections' => $sections,
-            ));
+            ]);
         } else {
-            $this->redirect("/admin/classes", array("message" => "Invalid ClassID!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/classes", ["message" => "Invalid ClassID!", 'type' => Constants::ERROR]);
         }
     }
 }

@@ -33,4 +33,13 @@ class TimeTable extends Model
 '
     ;
 
+
+    public function getStudents()
+    {
+        if($this->id){
+            $students = new Student(null,['field'=>'classID','value'=>$this->getClassID()]);
+            $students = $students->getWithJoin();
+        }
+        return;
+    }
 }
