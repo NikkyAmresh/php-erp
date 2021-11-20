@@ -47,7 +47,8 @@
     $(".tableData").each(function () {
       const self = this;
       $(this).on("click", function () {
-        window.open("attendance/"+$(self).attr("data-timeTable"));
+        if ($(self).attr("data-timeTable"))
+          window.open("attendance/" + $(self).attr("data-timeTable"));
       });
     });
     console.log("read");
