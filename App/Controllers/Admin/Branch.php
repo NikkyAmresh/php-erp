@@ -31,8 +31,7 @@ class Branch extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $branch = new BranchModel();
-            $branch->get($_REQUEST['id']);
+            $branch = new BranchModel($_REQUEST['id']);
             $branch->setDepartmentID($_REQUEST['department']);
             $branch->setName($_REQUEST['name']);
             $branch->setCode($_REQUEST['code']);
@@ -49,8 +48,8 @@ class Branch extends AdminController
 
     public function deleteAction()
     {
-        $branch = new BranchModel();
-        $res = $branch->delete($this->route_params['id']);
+        $branch = new BranchModel($this->route_params['id']);
+        $res = $branch->delete();
         if ($res) {
             $this->setSuccessMessage("Branch delete successfully");
         } else {
@@ -64,17 +63,17 @@ class Branch extends AdminController
         $st = new BranchModel();
         $res = $st->getWithJoin();
         $depts = (new Department())->getAll();
-        View::renderTemplate('Admin/Dashboard/Branch/index.html', array('branches' => $res, 'deps' => $depts));
+        View::renderTemplate('Admin/Dashboard/Branch/index.html', ['branches' => $res, 'deps' => $depts]);
     }
     public function editAction()
     {
-        $st = new BranchModel();
-        $res = $st->getOneWithJoin($this->route_params['id']);
+        $st = new BranchModel($this->route_params['id']);
+        $res = $st->getOneWithJoin();
         if ($res) {
             $depts = (new Department())->getAll();
-            View::renderTemplate('Admin/Dashboard/Branch/edit.html', array('branch' => $res, 'deps' => $depts));
+            View::renderTemplate('Admin/Dashboard/Branch/edit.html', ['branch' => $res, 'deps' => $depts]);
         } else {
-            $this->redirect("/admin/branch", array("message" => "Invalid BranchID!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/branch", ["message" => "Invalid BranchID!", 'type' => Constants::ERROR]);
         }
     }
 }

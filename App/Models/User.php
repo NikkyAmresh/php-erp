@@ -10,7 +10,7 @@ class User extends \Core\Model
     {
         $result = $this->db->where('email', $email)->where('password', md5($pass))->getOne(static::$table);
         if ($result && isset($result['id'])) {
-            $this->get($result['id']);
+            // $this->get($result['id']);
             $this->user = $result;
             return true;
         } else {

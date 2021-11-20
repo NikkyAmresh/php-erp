@@ -35,8 +35,8 @@ class Teacher extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $teacher = new TeacherModel();
-            $teacher->get($_REQUEST['id']);
+            $teacher = new TeacherModel($_REQUEST['id']);
+            $teacher->get();
             if ($_REQUEST['userID']) {
                 $user = new User();
                 $user->get($_REQUEST['userID']);
@@ -56,8 +56,8 @@ class Teacher extends AdminController
 
     public function deleteAction()
     {
-        $teacher = new TeacherModel();
-        $res = $teacher->delete($this->route_params['id']);
+        $teacher = new TeacherModel($this->route_params['id']);
+        $res = $teacher->delete();
         if ($res) {
             $this->setSuccessMessage("Teacher delete successfully");
         } else {
@@ -71,17 +71,17 @@ class Teacher extends AdminController
         $st = new TeacherModel();
         $res = $st->getWithJoin();
         $depts = (new Department())->getAll();
-        View::renderTemplate('Admin/Dashboard/Teacher/index.html', array('teacher' => $res, 'deps' => $depts));
+        View::renderTemplate('Admin/Dashboard/Teacher/index.html', ['teacher' => $res, 'deps' => $depts]);
     }
     public function editAction()
     {
-        $st = new TeacherModel();
-        $res = $st->getOneWithJoin($this->route_params['id']);
+        $st = new TeacherModel($this->route_params['id']);
+        $res = $st->getOneWithJoin();
         if ($res) {
             $depts = (new Department())->getAll();
-            View::renderTemplate('Admin/Dashboard/Teacher/edit.html', array('teacher' => $res, 'deps' => $depts));
+            View::renderTemplate('Admin/Dashboard/Teacher/edit.html', ['teacher' => $res, 'deps' => $depts]);
         } else {
-            $this->redirect("/admin/teacher", array("message" => "Invalid TecherID!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/teacher", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }
     }
 }

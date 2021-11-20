@@ -11,8 +11,8 @@ class Profile extends Controller
 
     public function xyzAction()
     {
-        $d = new Department();
-        $list = $d->get(2);
+        $d = new Department(2);
+        $list = $d->get();
         print_r($list);
         View::renderTemplate('Profile.html', ['abcVar' => 'nikky']);
     }

@@ -11,13 +11,13 @@ class Batch extends AdminController
     public function get10Years()
     {
         $currentYear = date("Y");
-        $fromYears = array();
-        $toYears = array();
+        $fromYears = [];
+        $toYears = [];
         for ($i = 0; $i < 11; $i++) {
             array_push($fromYears, $currentYear - $i);
             array_push($toYears, $currentYear + $i);
         }
-        return array('to' => $toYears, 'from' => $fromYears);
+        return ['to' => $toYears, 'from' => $fromYears];
     }
 
     public function indexAction()
@@ -25,7 +25,7 @@ class Batch extends AdminController
         $st = new BatchModel();
         $res = $st->getAll();
         $years = $this->get10Years();
-        View::renderTemplate('Admin/Dashboard/Batch/index.html', array('batches' => $res, 'years' => $years));
+        View::renderTemplate('Admin/Dashboard/Batch/index.html', ['batches' => $res, 'years' => $years]);
     }
     public function createAction()
     {
@@ -44,8 +44,7 @@ class Batch extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $batch = new BatchModel();
-            $batch->get($_REQUEST['id']);
+            $batch = new BatchModel($_REQUEST['id']);
             $batch->setFromYear($_REQUEST['fromYear']);
             $batch->setToYear($_REQUEST['toYear']);
             $from = $_REQUEST['fromYear'];
@@ -64,8 +63,8 @@ class Batch extends AdminController
 
     public function deleteAction()
     {
-        $batch = new BatchModel();
-        $res = $batch->delete($this->route_params['id']);
+        $batch = new BatchModel($this->route_params['id']);
+        $res = $batch->delete();
         if ($res) {
             $this->setSuccessMessage("Batch deleted successfully");
         } else {
@@ -75,13 +74,13 @@ class Batch extends AdminController
     }
     public function editAction()
     {
-        $st = new BatchModel();
-        $res = $st->get($this->route_params['id']);
+        $st = new BatchModel($this->route_params['id']);
+        $res = $st->get();
         $years = $this->get10Years();
         if ($res) {
             View::renderTemplate('Admin/Dashboard/Batch/edit.html', ['batch' => $res, 'years' => $years]);
         } else {
-            $this->redirect("/admin/teacher", array("message" => "Invalid Batch id!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/teacher", ["message" => "Invalid Batch id!", 'type' => Constants::ERROR]);
         }
     }
 }

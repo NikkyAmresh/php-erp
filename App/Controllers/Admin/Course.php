@@ -11,7 +11,7 @@ class Course extends AdminController
     {
         $st = new CourseModel();
         $res = $st->getAll();
-        View::renderTemplate('Admin/Dashboard/Course/index.html', array('courses' => $res));
+        View::renderTemplate('Admin/Dashboard/Course/index.html', ['courses' => $res]);
     }
     public function createAction()
     {
@@ -29,8 +29,7 @@ class Course extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $course = new CourseModel();
-            $course->get($_REQUEST['id']);
+            $course = new CourseModel($_REQUEST['id']);
             $course->setName($_REQUEST['name']);
             $course->setDuration($_REQUEST['duration']);
             if ($course->save()) {
@@ -46,8 +45,8 @@ class Course extends AdminController
 
     public function deleteAction()
     {
-        $course = new CourseModel();
-        $res = $course->delete($this->route_params['id']);
+        $course = new CourseModel($this->route_params['id']);
+        $res = $course->delete();
         if ($res) {
             $this->setSuccessMessage("course deleted successfully");
         } else {
@@ -57,12 +56,12 @@ class Course extends AdminController
     }
     public function editAction()
     {
-        $st = new CourseModel();
-        $res = $st->get($this->route_params['id']);
+        $st = new CourseModel($this->route_params['id']);
+        $res = $st->get();
         if ($res) {
             View::renderTemplate('Admin/Dashboard/course/edit.html', ['course' => $res]);
         } else {
-            $this->redirect("/admin/course", array("message" => "Invalid course id!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/course", ["message" => "Invalid course id!", 'type' => Constants::ERROR]);
         }
     }
 }

@@ -16,7 +16,7 @@ class AdminController extends \Core\Controller
         if ($this->isLoggedIn()) {
             return true;
         }
-        $this->redirect("/admin", array("message" => "You must need to login!", 'type' => Constants::ERROR));
+        $this->redirect("/admin", ["message" => "You must need to login!", 'type' => Constants::ERROR]);
         return false;
     }
 

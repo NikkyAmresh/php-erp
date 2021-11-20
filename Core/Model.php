@@ -10,12 +10,28 @@ abstract class Model
 
     protected static $table = '';
     protected static $tableJOIN = '';
-    protected $_data = array();
+    protected $_data = [];
 
-    public function __construct()
+    public function initDb()
     {
-        $db = new \MysqliDb(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
-        $this->db = $db;
+        $this->db = new \MysqliDb(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
+    }
+
+    public function __construct($id = null, $cond = null,  $orderBy = null ,$numRows = null)
+    {
+        $this->id = $id;
+        $this->cond = $cond;
+        $this->orderBy = $orderBy;
+        $this->numRows = $numRows;
+        $this->initDb();
+        if ($id) {
+            $data = $this->db->where("id", $id)->getOne(static::$table);
+            $this->setData($data);
+        } elseif ($cond) {
+            $data = $this->db->where($cond['field'], $cond['value'])->orderBy("id", "asc")->get(static::$table);
+            $this->setData($data);
+        }
+
     }
 
     public function __call($func, $params)
@@ -36,42 +52,34 @@ abstract class Model
         return $this->db->orderBy("id", "asc")->get(static::$table, $numRows);
     }
 
-    public function get($id = null, $cond = null)
+    public function get()
     {
-        $data = null;
-        if ($id) {
-            $data = $this->db->where("id", $id)->getOne(static::$table);
-        } elseif ($cond) {
-            $data = $this->db->where($cond['field'], $cond['value'])->getOne(static::$table);
-        }
-        $this->setData($data);
         return $this->_data;
+    }
+
+    public function delete()
+    {
+        return $this->db->where("id", $this->id)->delete(static::$table);
 
     }
 
-    public function delete($id)
+    public function getWithJoin()
     {
-        return $this->db->where("id", $id)->delete(static::$table);
-
-    }
-
-    public function getWithJoin($numRows = null, $id = null, $cond = null, $orderBy = null)
-    {
-        if ($cond) {
-            return $this->db->where(static::$table . ".{$cond['field']}", $cond['value'])->getWithJoin(static::$tableJOIN, $numRows, $orderBy);
+        if ($this->cond) {
+            return $this->db->where(static::$table . ".{$this->cond['field']}", $this->cond['value'])->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
         }
         if (!static::$tableJOIN) {
-            return $this->db->getWithJoin("SELECT * FROM " . static::$table, $numRows, $orderBy);
+            return $this->db->getWithJoin("SELECT * FROM " . static::$table, $this->numRows, $this->orderBy);
         }
-        if ($id) {
-            return $this->db->where(static::$table . '.id', $id)->getWithJoin(static::$tableJOIN, $numRows, $orderBy);
+        if ($this->id) {
+            return $this->db->where(static::$table . '.id', $this->id)->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
         }
-        return $this->db->getWithJoin(static::$tableJOIN, $numRows, $orderBy);
+        return $this->db->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
     }
 
-    public function getOneWithJoin($id)
+    public function getOneWithJoin()
     {
-        $data = $this->db->where(static::$table . '.id', $id)->getWithJoin(static::$tableJOIN);
+        $data = $this->db->where(static::$table . '.id', $this->id)->getWithJoin(static::$tableJOIN);
         $this->setData($data[0]);
         return $this->_data;
 

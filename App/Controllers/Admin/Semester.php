@@ -11,7 +11,7 @@ class Semester extends AdminController
     {
         $st = new SemesterModel();
         $res = $st->getAll();
-        View::renderTemplate('Admin/Dashboard/Semester/index.html', array('semesters' => $res));
+        View::renderTemplate('Admin/Dashboard/Semester/index.html', ['semesters' => $res]);
     }
     public function createAction()
     {
@@ -28,8 +28,7 @@ class Semester extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = new SemesterModel();
-            $semester->get($_REQUEST['id']);
+            $semester = new SemesterModel($_REQUEST['id']);
             $semester->setName($_REQUEST['name']);
             if ($semester->save()) {
                 $this->setSuccessMessage("semester updated successfully");
@@ -44,8 +43,8 @@ class Semester extends AdminController
 
     public function deleteAction()
     {
-        $semester = new SemesterModel();
-        $res = $semester->delete($this->route_params['id']);
+        $semester = new SemesterModel($this->route_params['id']);
+        $res = $semester->delete();
         if ($res) {
             $this->setSuccessMessage("semester deleted successfully");
         } else {
@@ -55,12 +54,12 @@ class Semester extends AdminController
     }
     public function editAction()
     {
-        $st = new SemesterModel();
-        $res = $st->get($this->route_params['id']);
+        $st = new SemesterModel($this->route_params['id']);
+        $res = $st->get();
         if ($res) {
             View::renderTemplate('Admin/Dashboard/semester/edit.html', ['semester' => $res]);
         } else {
-            $this->redirect("/admin/semester", array("message" => "Invalid semester id!", 'type' => Constants::ERROR));
+            $this->redirect("/admin/semester", ["message" => "Invalid semester id!", 'type' => Constants::ERROR]);
         }
     }
 }

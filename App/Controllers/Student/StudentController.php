@@ -4,6 +4,7 @@ namespace App\Controllers\Student;
 
 use App\Helpers\Constants;
 use App\Helpers\Session;
+use App\Models\Student;
 
 class StudentController extends \Core\Controller
 {
@@ -13,10 +14,13 @@ class StudentController extends \Core\Controller
     }
     public function before()
     {
-        if ($this->isLoggedIn()) {
+        $studentID = $this->isLoggedIn();
+        if ($studentID) {
+            $this->loggedStudentID = $studentID;
+            $this->student = new Student($this->loggedStudentID);
             return true;
         }
-        $this->redirect("/student", array("message" => "You must need to login!", 'type' => Constants::ERROR));
+        $this->redirect("/student", ["message" => "You must need to login!", 'type' => Constants::ERROR]);
         return false;
     }
 
