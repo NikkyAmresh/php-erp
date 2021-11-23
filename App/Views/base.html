@@ -9,18 +9,27 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" />
   <link rel="stylesheet" href="styles/style.css" />
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <style>
-    .selected{
-      border: 2px solid #acbcf4;
+    .selected {
+      border: 2px solid #f0f0f1;
       background: #dedede;
     }
   </style>
 </head>
 
 <body>
-  <div class="container">{% block body %} {% endblock %}</div>
+  <nav class="flex items-center justify-between flex-wrap bg-blue-900 p-6">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <span class="text-xl tracking-tight"><img src="./Assets/rit2.jpeg" width="150" height="150" alt="logo"></span>
+    </div>
+  </nav>
+  <div>{% block body %} {% endblock %}</div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
   <script type="text/javascript">
     var successMsg = {{ SUCCESS_MESSAGE | json_encode() | raw }}
