@@ -12,6 +12,7 @@ class User extends \Core\Model
         if ($result && isset($result['id'])) {
             // $this->get($result['id']);
             $this->user = $result;
+            $this->setData($result);
             return true;
         } else {
             return false;
