@@ -1,51 +1,30 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>{% block title %}{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap"
-    />
-    <link rel="stylesheet" href="/media/styles/style.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
-    <link
-      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
-      crossorigin="anonymous"
-    />
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/toastify-js"
-    ></script>
-    <link rel="stylesheet" href="/media/styles/style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <title>{% block title %}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Teko:wght@300;400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="/media/styles/style.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 
-  <body>
-    <nav class="flex items-center justify-between flex-wrap bg-blue-900 p-6">
-      <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <span class="text-xl tracking-tight"
-          ><img src="/media/images/rit.png" width="80" height="80" alt="logo"
-        /></span>
-      </div>
-    </nav>
-    <div class="min-h-screen flex flex-row bg-gray-100">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" href="/media/styles/style.css" />
+</head>
+
+<body>
+  <nav class="flex items-center justify-between flex-wrap bg-blue-900 p-6">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+      <span class="text-xl tracking-tight"><img src="/media/images/rit.png" width="80" height="80" alt="logo" /></span>
+    </div>
+  </nav>
+  <div class="min-h-screen flex flex-row bg-gray-100">
     {% include 'menu.html' with {'islogin':islogin}%}
     <div class="container">{% block body %} {% endblock %}</div>
     <!-- <div>{% block footer %}hello{% endblock %}</div> -->
@@ -88,5 +67,6 @@
         }).showToast();
       }
     </script>
-  </body>
+</body>
+
 </html>
