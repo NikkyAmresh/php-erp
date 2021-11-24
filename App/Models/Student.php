@@ -3,6 +3,7 @@
 namespace App\Models;
 
 class Student extends \Core\Model
+
 {
     protected static $table = 'students';
 

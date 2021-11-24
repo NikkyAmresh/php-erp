@@ -8,6 +8,7 @@ use \App\Models\User;
 use \Core\View;
 
 class Login extends \Core\Controller
+
 {
 
     public function isAlreadyLoggedIn()

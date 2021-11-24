@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}dashboard{% endblock %} {% block body %}
 
 <div class="min-h-screen flex flex-row bg-gray-100">
-    <div class="flex flex-col w-56 bg-white rounded-r-3xl overflow-hidden">
+    <div class="flex flex-col w-80 sm:w-56 bg-white rounded-r-3xl overflow-hidden">
         <ul class="flex flex-col py-4">
             <li>
                 <a href="#"
@@ -52,18 +52,129 @@
             </li>
         </ul>
     </div>
-    <div class="flex">
-        <div class="flex-1 ...">
-            hello
-            <!-- Will grow and shrink as needed without taking initial size into account -->
+
+    <div class="flex flex-col sm:flex-row md:flex-row">
+        <div>
+            <div
+                class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
+                <div class="h-64 bg-cover hover:bg-gray">
+                    <img src="https://img.icons8.com/color/240/000000/attendance-mark.png" />
+                </div>
+                <div class="mx-6 my-4 border-b border-gray-light">
+                    <p class="text-blue-900 text-center group-hover:text-gray-500 ...">
+                        Attendance
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="flex-1 ...">
-            hi
-            <!-- Will grow and shrink as needed without taking initial size into account -->
+        <div>
+            <div
+                class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
+
+                <div class="h-64 bg-cover hover:bg-gray">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="250" viewBox="0 0 172 172"
+                        style=" fill:#000000;">
+                        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <path d="M0,172v-172h172v172z" fill="none"></path>
+                            <g>
+                                <path
+                                    d="M150.5,136.16667c0,7.91558 -6.41775,14.33333 -14.33333,14.33333h-100.33333c-7.91558,0 -14.33333,-6.41775 -14.33333,-14.33333v-100.33333c0,-7.91558 6.41775,-14.33333 14.33333,-14.33333h100.33333c7.91558,0 14.33333,6.41775 14.33333,14.33333z"
+                                    fill="#cfd8dc"></path>
+                                <path
+                                    d="M39.41667,64.5h17.91667v17.91667h-17.91667zM64.5,64.5h17.91667v17.91667h-17.91667zM89.58333,64.5h17.91667v17.91667h-17.91667zM114.66667,64.5h17.91667v17.91667h-17.91667zM114.66667,89.58333h17.91667v17.91667h-17.91667zM39.41667,89.58333h17.91667v17.91667h-17.91667zM39.41667,114.66667h17.91667v17.91667h-17.91667zM64.5,89.58333h17.91667v17.91667h-17.91667zM89.58333,89.58333h17.91667v17.91667h-17.91667zM64.5,114.66667h17.91667v17.91667h-17.91667zM89.58333,114.66667h17.91667v17.91667h-17.91667zM114.66667,114.66667h17.91667v17.91667h-17.91667z"
+                                    fill="#90a4ae"></path>
+                                <g fill="#3870d3">
+                                    <path
+                                        d="M39.41667,39.41667h17.91667v17.91667h-17.91667zM64.5,39.41667h17.91667v17.91667h-17.91667zM89.58333,39.41667h17.91667v17.91667h-17.91667zM114.66667,39.41667h17.91667v17.91667h-17.91667z">
+                                    </path>
+                                </g>
+                                <g>
+                                    <path
+                                        d="M136.16667,93.16667c-1.21117,0 -2.39725,0.08242 -3.58333,0.17917v14.15417h-17.91667v-8.5355c-6.51092,3.76967 -11.92892,9.19125 -15.70217,15.70217h8.5355v17.91667h-14.15417c-0.09675,1.18608 -0.17917,2.37217 -0.17917,3.58333c0,5.03458 0.91017,9.84342 2.49758,14.33333h40.50242c7.91558,0 14.33333,-6.41775 14.33333,-14.33333v-40.50242c-4.48992,-1.58742 -9.29875,-2.49758 -14.33333,-2.49758z"
+                                        fill="#eceff1"></path>
+                                    <path
+                                        d="M132.58333,107.5v-14.15417c-6.493,0.5375 -12.56317,2.51908 -17.91667,5.61867v8.5355zM107.5,114.66667h-8.5355c-3.09958,5.3535 -5.08117,11.42367 -5.61867,17.91667h14.15417z"
+                                        fill="#cfd8dc"></path>
+                                    <path
+                                        d="M172,136.16667c0,19.70833 -16.125,35.83333 -35.83333,35.83333c-19.70833,0 -35.83333,-16.125 -35.83333,-35.83333c0,-19.70833 16.125,-35.83333 35.83333,-35.83333c19.70833,0 35.83333,16.125 35.83333,35.83333"
+                                        fill="#3870d3"></path>
+                                    <path
+                                        d="M161.25,136.16667c0,13.975 -11.10833,25.08333 -25.08333,25.08333c-13.975,0 -25.08333,-11.10833 -25.08333,-25.08333c0,-13.975 11.10833,-25.08333 25.08333,-25.08333c13.975,0 25.08333,11.10833 25.08333,25.08333"
+                                        fill="#eeeeee"></path>
+                                    <path
+                                        d="M151.93333,147.275l-10.39167,-10.39167c0,-0.35833 0,-0.35833 0,-0.71667c0,-1.43333 -0.71667,-2.86667 -1.79167,-3.94167v-13.975h-7.16667v13.975c-1.075,1.075 -1.79167,2.50833 -1.79167,3.94167c0,2.86667 2.50833,5.375 5.375,5.375h0.35833l10.39167,10.39167z"
+                                        fill="#000000"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <div class="mx-6 my-4 border-b border-gray-light">
+                    <p class="text-blue-900 text-center group-hover:text-gray-500 ...">
+                        Time Table
+                    </p>
+                </div>
+            </div>
         </div>
-        <div class="flex-1 ...">
-            hi
-            <!-- Will grow and shrink as needed without taking initial size into account -->
+        <div>
+            <div
+                class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
+
+                <div class="h-64 bg-cover hover:bg-gray">
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="250" height="250"
+                        viewBox="0 0 172 172" style=" fill:#000000;">
+                        <defs>
+                            <linearGradient x1="125.41667" y1="158.2185" x2="154.08333" y2="158.2185"
+                                gradientUnits="userSpaceOnUse" id="color-1_T5ATsUangzQW_gr1">
+                                <stop offset="0" stop-color="#3498db"></stop>
+                                <stop offset="1" stop-color="#3498db"></stop>
+                            </linearGradient>
+                        </defs>
+                        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                            style="mix-blend-mode: normal">
+                            <path d="M0,172v-172h172v172z" fill="none"></path>
+                            <g>
+                                <path
+                                    d="M139.75,25.08333v121.83333c0,3.95958 -3.20708,7.16667 -7.16667,7.16667h-93.16667c-3.95958,0 -7.16667,-3.20708 -7.16667,-7.16667v-121.83333c0,-3.95958 3.20708,-7.16667 7.16667,-7.16667h93.16667c3.95958,0 7.16667,3.20708 7.16667,7.16667z"
+                                    fill="#ecf0f1"></path>
+                                <path
+                                    d="M151.489,171.81008l-11.739,-5.87308l-11.739,5.8695c-1.19325,0.59842 -2.59433,-0.26875 -2.59433,-1.60175v-25.76775h28.66667v25.76775c0,1.333 -1.40108,2.20017 -2.59433,1.60533z"
+                                    fill="url(#color-1_T5ATsUangzQW_gr1)"></path>
+                                <path
+                                    d="M142.674,104.67992l3.12467,1.75225l3.57975,0.043c2.08192,0.02508 4.00258,1.13233 5.06325,2.924l1.8275,3.07808l3.07808,1.8275c1.79167,1.06425 2.89892,2.98133 2.924,5.06325l0.043,3.57975l1.75225,3.12467c1.01767,1.81675 1.01767,4.03125 0,5.848l-1.75225,3.12467l-0.043,3.57975c-0.02508,2.08192 -1.13233,4.00258 -2.924,5.06325l-3.07808,1.8275l-1.8275,3.08525c-1.06425,1.79167 -2.98133,2.89892 -5.06325,2.924l-3.57975,0.043l-3.12467,1.75225c-1.81675,1.01767 -4.03125,1.01767 -5.848,0l-3.12467,-1.75225l-3.57975,-0.043c-2.08192,-0.02508 -4.00258,-1.13233 -5.06325,-2.924l-1.8275,-3.07808l-3.07808,-1.8275c-1.79167,-1.06425 -2.89892,-2.98133 -2.924,-5.06325l-0.043,-3.57975l-1.75225,-3.12467c-1.01767,-1.81675 -1.01767,-4.03125 0,-5.848l1.75225,-3.12467l0.043,-3.57975c0.02508,-2.08192 1.13233,-4.00258 2.924,-5.06325l3.07808,-1.8275l1.8275,-3.07808c1.06425,-1.79167 2.98133,-2.89892 5.06325,-2.924l3.57975,-0.043l3.12467,-1.75225c1.81675,-1.02483 4.03125,-1.02483 5.848,-0.00717z"
+                                    fill="#3498db"></path>
+                                <circle cx="39" cy="36" transform="scale(3.58333,3.58333)" r="5.353" fill="#ffffff">
+                                </circle>
+                                <path
+                                    d="M123.625,50.16667h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-7.16667c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v7.16667c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                    fill="#3498db"></path>
+                                <path
+                                    d="M123.625,75.25h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                    fill="#3498db"></path>
+                                <path
+                                    d="M84.20833,132.58333h-35.83333c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h35.83333c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                    fill="#3498db"></path>
+                                <path
+                                    d="M123.625,89.58333h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                    fill="#3498db"></path>
+                                <path
+                                    d="M123.625,103.91667h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                    fill="#3498db"></path>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <div class="mx-6 my-4 border-b border-gray-light">
+                    <p class="text-blue-900 text-center group-hover:text-gray-500 ...">
+                        Marksheet
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
