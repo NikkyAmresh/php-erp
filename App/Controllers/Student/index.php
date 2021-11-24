@@ -43,7 +43,7 @@ class Index extends \Core\Controller
     public function indexAction()
     {
         if ($this->isAlreadyLoggedIn()) {
-            View::renderTemplate('Student/Dashboard/index.html', ['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME)]);
+            View::renderTemplate('Student/Dashboard/Homepage/index.html', ['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME)]);
         } else {
             if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {
                 View::renderTemplate('Student/Auth/login.html');

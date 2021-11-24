@@ -1,59 +1,9 @@
-{% extends "base.html" %} {% block title %}dashboard{% endblock %} {% block body %}
-
-<div class="min-h-screen flex flex-row bg-gray-100">
-    <div class="flex flex-col w-80 sm:w-56 bg-white rounded-r-3xl overflow-hidden">
-        <ul class="flex flex-col py-4">
-            <li>
-                <a href="#"
-                    class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
-                            class="fas fa-home"></i></span>
-                    <span class="text-sm font-medium">Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
-                            class="fas fa-user"></i></span>
-                    <span class="text-sm font-medium">profile</span>
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
-                            class="fas fa-clock"></i></span>
-                    <span class="text-sm font-medium">Attendance</span>
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
-                            class="fas fa-calendar"></i></span>
-                    <span class="text-sm font-medium">Timetable</span>
-                </a>
-            </li>
-            <li>
-                <a href="#"
-                    class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                    <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
-                            class="fa fa-certificate"></i></span>
-                    <span class="text-sm font-medium">Marksheet</span>
-                </a>
-            </li>
-            <a href="#"
-                class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
-                        class="fas fa-sign-out-alt"></i></span>
-                <span class="text-sm font-medium">Logout</span>
-            </a>
-            </li>
-        </ul>
-    </div>
+{% extends "base.html" %}
+{% set islogin=1 %}
+{% block title %}dashboard{% endblock %} {% block body %}
 
     <div class="flex flex-col sm:flex-row md:flex-row">
+        <a href="student/attendance/">
         <div>
             <div
                 class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
@@ -67,7 +17,9 @@
                 </div>
             </div>
         </div>
+        </a>
         <div>
+            <a href="student/timetable/">
             <div
                 class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
 
@@ -118,6 +70,7 @@
                     </p>
                 </div>
             </div>
+            </a>
         </div>
         <div>
             <div
