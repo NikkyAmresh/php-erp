@@ -23,11 +23,11 @@
     <div>
       <span><img src="/media/images/rit.png" width="100" height="100" alt="logo" /></span>
     </div>
-    {%if username%}
+    {%if name%}
     <div class="flex items-center justify-end p-6 gap-5">
       <a href="#">
         <i class="fas fa-user fa-2x cursor pointer"></i>
-        {{username}}
+        {{name}}
       </a>
       <div>
         <a href="/logout">
@@ -38,7 +38,7 @@
     {%endif%}
   </nav>
   <div class="min-h-screen flex flex-row bg-gray-100">
-    {% include 'menu.html' with {'islogin':islogin,'listIems':listItems}%}
+    {% include 'menu.html' with {'islogin':islogin,'listItems':listItems}%}
     <div class="container">{% block body %} {% endblock %}</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script type="text/javascript">
