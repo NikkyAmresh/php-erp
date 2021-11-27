@@ -1,5 +1,12 @@
-{% extends "base.html" %} {% block title %}TimeTable{% endblock %} {% block body
-%}
+{% extends "base.html" %}
+{%set islogin=1%}
+{%set username=(name)%}
+{%set
+listItems=[{name:'Home',url:'/teacher',icon:'fa fa-home'},{name:'Profile',url:'#',icon:'fa
+fa-user'},{name:'Attendance',url:'#',icon:'fa fa-clock'},{name:'Timetable',url:'/teacher/timetable/',icon:'fa
+fa-calendar'},{name:'Logout',url:'/logout',icon:'fa fa-sign-out-alt'}]%}
+{% block title %}TimeTable{% endblock %}
+{% block body %}
 
 <h3>Time Table</h3>
 <table>

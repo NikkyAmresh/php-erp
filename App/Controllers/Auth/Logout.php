@@ -23,6 +23,10 @@ class Logout extends \Core\Controller
             Session::reset();
 
             $this->redirect('/admin', ['type' => Constants::SUCCESS, 'message' => 'Logout Success!']);
+        } else {
+            Session::reset();
+            $this->redirect('/', ['type' => Constants::SUCCESS, 'message' => 'Logout Success!']);
         }
+
     }
 }

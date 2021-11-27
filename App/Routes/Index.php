@@ -29,7 +29,6 @@ class Index
     public function setRoutes()
     {
         $this->router->add('', ['controller' => 'Home', 'action' => 'index']);
-        // $this->router->add('{controller}/{action}');
         $this->router->add('login', ['controller' => 'Auth\Login', 'action' => 'index']);
         $this->router->add('logout', ['controller' => 'Auth\Logout', 'action' => 'index']);
         $this->router->add("admin", ['controller' => 'Admin\Index', 'action' => 'index']);
@@ -58,8 +57,6 @@ class Index
         $this->router->add("teacher/getTimeTable", ['controller' => 'teacher\TimeTable', 'action' => 'get']);
         $this->router->add("teacher/timeTable", ['controller' => 'teacher\TimeTable', 'action' => 'show']);
         $this->router->add("teacher/attendance/{id:\d+}", ['controller' => 'teacher\Attendance', 'action' => 'mark']);
-
-        $this->router->add("userDashboard", ['controller' => 'StudentDashboard', 'action' => 'index']);
     }
 
 }

@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 {% set islogin=1 %}
+{% set username=(name)%}
+{%set
+listItems=[{name:'Home',url:'/student',icon:'fa fa-home'},{name:'Profile',url:'#',icon:'fa
+fa-user'},{name:'Attendance',url:'#',icon:'fa fa-clock'},{name:'Timetable',url:'/student/timetable/',icon:'fa
+fa-calendar'},{name:'Logout',url:'/logout',icon:'fa fa-sign-out-alt'}]%}
 {% block title %}dashboard{% endblock %} {% block body %}
-
-    <div class="flex flex-col sm:flex-row md:flex-row">
-        <a href="student/attendance/">
+<div class="flex flex-col sm:flex-row md:flex-row">
+    <a href="student/attendance/">
         <div>
             <div
                 class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
@@ -17,9 +21,9 @@
                 </div>
             </div>
         </div>
-        </a>
-        <div>
-            <a href="student/timetable/">
+    </a>
+    <div>
+        <a href="student/timetable/">
             <div
                 class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
 
@@ -70,65 +74,65 @@
                     </p>
                 </div>
             </div>
-            </a>
-        </div>
-        <div>
-            <div
-                class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
+        </a>
+    </div>
+    <div>
+        <div
+            class="cursor-pointer max-w-sm rounded-sm overflow-hidden shadow-lg m-16 group border-indigo-500 hover:bg-white hover:shadow-lg hover:border-transparent ...">
 
-                <div class="h-64 bg-cover hover:bg-gray">
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="250" height="250"
-                        viewBox="0 0 172 172" style=" fill:#000000;">
-                        <defs>
-                            <linearGradient x1="125.41667" y1="158.2185" x2="154.08333" y2="158.2185"
-                                gradientUnits="userSpaceOnUse" id="color-1_T5ATsUangzQW_gr1">
-                                <stop offset="0" stop-color="#3498db"></stop>
-                                <stop offset="1" stop-color="#3498db"></stop>
-                            </linearGradient>
-                        </defs>
-                        <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
-                            stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
-                            font-family="none" font-weight="none" font-size="none" text-anchor="none"
-                            style="mix-blend-mode: normal">
-                            <path d="M0,172v-172h172v172z" fill="none"></path>
-                            <g>
-                                <path
-                                    d="M139.75,25.08333v121.83333c0,3.95958 -3.20708,7.16667 -7.16667,7.16667h-93.16667c-3.95958,0 -7.16667,-3.20708 -7.16667,-7.16667v-121.83333c0,-3.95958 3.20708,-7.16667 7.16667,-7.16667h93.16667c3.95958,0 7.16667,3.20708 7.16667,7.16667z"
-                                    fill="#ecf0f1"></path>
-                                <path
-                                    d="M151.489,171.81008l-11.739,-5.87308l-11.739,5.8695c-1.19325,0.59842 -2.59433,-0.26875 -2.59433,-1.60175v-25.76775h28.66667v25.76775c0,1.333 -1.40108,2.20017 -2.59433,1.60533z"
-                                    fill="url(#color-1_T5ATsUangzQW_gr1)"></path>
-                                <path
-                                    d="M142.674,104.67992l3.12467,1.75225l3.57975,0.043c2.08192,0.02508 4.00258,1.13233 5.06325,2.924l1.8275,3.07808l3.07808,1.8275c1.79167,1.06425 2.89892,2.98133 2.924,5.06325l0.043,3.57975l1.75225,3.12467c1.01767,1.81675 1.01767,4.03125 0,5.848l-1.75225,3.12467l-0.043,3.57975c-0.02508,2.08192 -1.13233,4.00258 -2.924,5.06325l-3.07808,1.8275l-1.8275,3.08525c-1.06425,1.79167 -2.98133,2.89892 -5.06325,2.924l-3.57975,0.043l-3.12467,1.75225c-1.81675,1.01767 -4.03125,1.01767 -5.848,0l-3.12467,-1.75225l-3.57975,-0.043c-2.08192,-0.02508 -4.00258,-1.13233 -5.06325,-2.924l-1.8275,-3.07808l-3.07808,-1.8275c-1.79167,-1.06425 -2.89892,-2.98133 -2.924,-5.06325l-0.043,-3.57975l-1.75225,-3.12467c-1.01767,-1.81675 -1.01767,-4.03125 0,-5.848l1.75225,-3.12467l0.043,-3.57975c0.02508,-2.08192 1.13233,-4.00258 2.924,-5.06325l3.07808,-1.8275l1.8275,-3.07808c1.06425,-1.79167 2.98133,-2.89892 5.06325,-2.924l3.57975,-0.043l3.12467,-1.75225c1.81675,-1.02483 4.03125,-1.02483 5.848,-0.00717z"
-                                    fill="#3498db"></path>
-                                <circle cx="39" cy="36" transform="scale(3.58333,3.58333)" r="5.353" fill="#ffffff">
-                                </circle>
-                                <path
-                                    d="M123.625,50.16667h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-7.16667c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v7.16667c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
-                                    fill="#3498db"></path>
-                                <path
-                                    d="M123.625,75.25h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
-                                    fill="#3498db"></path>
-                                <path
-                                    d="M84.20833,132.58333h-35.83333c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h35.83333c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
-                                    fill="#3498db"></path>
-                                <path
-                                    d="M123.625,89.58333h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
-                                    fill="#3498db"></path>
-                                <path
-                                    d="M123.625,103.91667h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
-                                    fill="#3498db"></path>
-                            </g>
+            <div class="h-64 bg-cover hover:bg-gray">
+                <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="250" height="250" viewBox="0 0 172 172"
+                    style=" fill:#000000;">
+                    <defs>
+                        <linearGradient x1="125.41667" y1="158.2185" x2="154.08333" y2="158.2185"
+                            gradientUnits="userSpaceOnUse" id="color-1_T5ATsUangzQW_gr1">
+                            <stop offset="0" stop-color="#3498db"></stop>
+                            <stop offset="1" stop-color="#3498db"></stop>
+                        </linearGradient>
+                    </defs>
+                    <g fill="none" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt"
+                        stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0"
+                        font-family="none" font-weight="none" font-size="none" text-anchor="none"
+                        style="mix-blend-mode: normal">
+                        <path d="M0,172v-172h172v172z" fill="none"></path>
+                        <g>
+                            <path
+                                d="M139.75,25.08333v121.83333c0,3.95958 -3.20708,7.16667 -7.16667,7.16667h-93.16667c-3.95958,0 -7.16667,-3.20708 -7.16667,-7.16667v-121.83333c0,-3.95958 3.20708,-7.16667 7.16667,-7.16667h93.16667c3.95958,0 7.16667,3.20708 7.16667,7.16667z"
+                                fill="#ecf0f1"></path>
+                            <path
+                                d="M151.489,171.81008l-11.739,-5.87308l-11.739,5.8695c-1.19325,0.59842 -2.59433,-0.26875 -2.59433,-1.60175v-25.76775h28.66667v25.76775c0,1.333 -1.40108,2.20017 -2.59433,1.60533z"
+                                fill="url(#color-1_T5ATsUangzQW_gr1)"></path>
+                            <path
+                                d="M142.674,104.67992l3.12467,1.75225l3.57975,0.043c2.08192,0.02508 4.00258,1.13233 5.06325,2.924l1.8275,3.07808l3.07808,1.8275c1.79167,1.06425 2.89892,2.98133 2.924,5.06325l0.043,3.57975l1.75225,3.12467c1.01767,1.81675 1.01767,4.03125 0,5.848l-1.75225,3.12467l-0.043,3.57975c-0.02508,2.08192 -1.13233,4.00258 -2.924,5.06325l-3.07808,1.8275l-1.8275,3.08525c-1.06425,1.79167 -2.98133,2.89892 -5.06325,2.924l-3.57975,0.043l-3.12467,1.75225c-1.81675,1.01767 -4.03125,1.01767 -5.848,0l-3.12467,-1.75225l-3.57975,-0.043c-2.08192,-0.02508 -4.00258,-1.13233 -5.06325,-2.924l-1.8275,-3.07808l-3.07808,-1.8275c-1.79167,-1.06425 -2.89892,-2.98133 -2.924,-5.06325l-0.043,-3.57975l-1.75225,-3.12467c-1.01767,-1.81675 -1.01767,-4.03125 0,-5.848l1.75225,-3.12467l0.043,-3.57975c0.02508,-2.08192 1.13233,-4.00258 2.924,-5.06325l3.07808,-1.8275l1.8275,-3.07808c1.06425,-1.79167 2.98133,-2.89892 5.06325,-2.924l3.57975,-0.043l3.12467,-1.75225c1.81675,-1.02483 4.03125,-1.02483 5.848,-0.00717z"
+                                fill="#3498db"></path>
+                            <circle cx="39" cy="36" transform="scale(3.58333,3.58333)" r="5.353" fill="#ffffff">
+                            </circle>
+                            <path
+                                d="M123.625,50.16667h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-7.16667c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v7.16667c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                fill="#3498db"></path>
+                            <path
+                                d="M123.625,75.25h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                fill="#3498db"></path>
+                            <path
+                                d="M84.20833,132.58333h-35.83333c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h35.83333c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                fill="#3498db"></path>
+                            <path
+                                d="M123.625,89.58333h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                fill="#3498db"></path>
+                            <path
+                                d="M123.625,103.91667h-75.25c-0.989,0 -1.79167,-0.80267 -1.79167,-1.79167v-3.58333c0,-0.989 0.80267,-1.79167 1.79167,-1.79167h75.25c0.989,0 1.79167,0.80267 1.79167,1.79167v3.58333c0,0.989 -0.80267,1.79167 -1.79167,1.79167z"
+                                fill="#3498db"></path>
                         </g>
-                    </svg>
-                </div>
-                <div class="mx-6 my-4 border-b border-gray-light">
-                    <p class="text-blue-900 text-center group-hover:text-gray-500 ...">
-                        Marksheet
-                    </p>
-                </div>
+                    </g>
+                </svg>
+            </div>
+            <div class="mx-6 my-4 border-b border-gray-light">
+                <p class="text-blue-900 text-center group-hover:text-gray-500 ...">
+                    Marksheet
+                </p>
             </div>
         </div>
     </div>
+</div>
 </div>
 {% endblock %}

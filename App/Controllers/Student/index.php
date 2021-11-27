@@ -21,7 +21,6 @@ class Index extends \Core\Controller
         if ($method == Constants::REQUEST_METHOD_POST) {
             $student = new Student();
             $validate = $student->studentAuth($body['email'], $body['password']);
-            print_r($validate);
             if ($validate) {
                 $user = $student->getUser();
                 $studentUser = $student->getStudentUser();

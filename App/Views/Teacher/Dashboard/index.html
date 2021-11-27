@@ -1,8 +1,9 @@
-{% extends "base.html" %} {% block title %}Student | Dashboard{% endblock %} {%
-block body %}
-<h1>Welcome {{name}}</h1>
-
-<a href="/teacher/timeTable">Time Table</a> <br /><br />
-<a href="/logout">Logout</a>
-
+{% extends "base.html" %}
+{%set username=(name)%}
+{%set islogin=1%}
+{%set
+listItems=[{name:'Home',url:'/teacher',icon:'fa fa-home'},{name:'Profile',url:'#',icon:'fa
+fa-user'},{name:'Attendance',url:'#',icon:'fa fa-clock'},{name:'Timetable',url:'/teacher/timetable/',icon:'fa
+fa-calendar'},{name:'Logout',url:'/logout',icon:'fa fa-sign-out-alt'}]%}
+{% block title %}Teacher|dashboard{% endblock %} {% block body %}
 {% endblock %}

@@ -1,30 +1,42 @@
 {% extends "base.html" %}
 {% set islogin=1 %}
+{% set username=(name)%}
+{%set
+listItems=[{name:'Home',url:'/student',icon:'fa fa-home'},{name:'Profile',url:'#',icon:'fa
+fa-user'},{name:'Attendance',url:'#',icon:'fa fa-clock'},{name:'Timetable',url:'/student/timetable/',icon:'fa
+fa-calendar'},{name:'Logout',url:'/logout',icon:'fa fa-sign-out-alt'}]%}
 {% block title %}TimeTable{% endblock %} {%
 block body %}
 
 <h3>Time Table</h3>
 <div class="block w-full overflow-x-auto">
-<table class="items-center bg-transparent w-full border-collapse">
-  <thead>
-    <tr>
-      <th class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">Day/Period</th>
-      {% for period in periods %}
-      <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 " data-value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</th>
+  <table class="items-center bg-transparent w-full border-collapse">
+    <thead>
+      <tr>
+        <th
+          class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
+          Day/Period</th>
+        {% for period in periods %}
+        <th
+          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "
+          data-value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for day in days %}
+      <tr data-value="{{day}}">
+        <th
+          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
+          <b>{{day}}</b></th>
+        {% for period in periods %}
+        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 tableData"
+          id="{{period.id}}-{{day}}">NA</td>
+        {% endfor %}
+      </tr>
       {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for day in days %}
-    <tr data-value="{{day}}">
-      <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "><b>{{day}}</b></th>
-      {% for period in periods %}
-      <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 tableData" id="{{period.id}}-{{day}}">NA</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </tbody>
+  </table>
 </div>
 <script type="text/javascript">
   $(function () {
