@@ -14,13 +14,13 @@ class TeacherController extends TeachertBaseController
     }
     public function before()
     {
-     
+
         parent::before();
         $teacherID = $this->isLoggedIn();
         if ($this->isLoggedIn()) {
             $this->loggedTeacherID = $teacherID;
             $this->teacher = new Teacher($this->loggedTeacherID);
-            $this->setTemplateVars([['islogin', 1], ['name', $this->teacher->getName()]]);
+            $this->setTemplateVars(['islogin' => 1, 'name' => $this->teacher->getName()]);
             return true;
         }
         $this->redirect("/student", ["message" => "You must need to login!", 'type' => Constants::ERROR]);
