@@ -40,7 +40,7 @@ class Attendance extends TeacherController
         $timeTable = new TimeTableModel($this->route_params['id']);
         $res = $timeTable->getOneWithJoin();
         $students = $timeTable->getStudents();
-        $this->setTemplateVars([['ets', json_encode($res)], ['timeTable', $res], ['students', $students]]);
+        $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $res, 'students' => $students]);
         $this->renderTemplate('Teacher/Dashboard/Attendance/index.html');
         return;
     }
@@ -48,7 +48,7 @@ class Attendance extends TeacherController
     {
         $periods = (new Period())->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        $this->setTemplateVars([['periods', $periods], ['days', $days]]);
+        $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
         $this->renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html');
     }
 }

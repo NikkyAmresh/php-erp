@@ -16,7 +16,7 @@ class TimeTable extends TeacherController
     {
         $periods = (new Period())->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        $this->setTemplateVars([['periods', $periods], ['days', $days]]);
+        $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
         $this->renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html');
     }
 }

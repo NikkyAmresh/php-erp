@@ -19,7 +19,7 @@ class StudentController extends StudentBaseController
         if ($studentID) {
             $this->loggedStudentID = $studentID;
             $this->student = new Student($this->loggedStudentID);
-            $this->setTemplateVars([['islogin', 1], ['name', $this->student->getName()]]);
+            $this->setTemplateVars(['islogin' => 1, 'name' => $this->student->getName()]);
             return true;
         }
         $this->setErrorMessage("You must need to login!");

@@ -40,7 +40,7 @@ class Index extends StudentBaseController
     public function indexAction()
     {
         if ($this->isAlreadyLoggedIn()) {
-            $this->setTemplateVars([['name', Session::get(Constants::LOGGED_IN_STUDENT_NAME)],['islogin',1]]);
+            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME), 'islogin' => 1]);
             $this->renderTemplate('Student/Dashboard/Homepage/index.html');
         } else {
             if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {

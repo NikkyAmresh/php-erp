@@ -86,9 +86,7 @@ abstract class Controller
 
     public function setTemplateVars($vars)
     {
-        foreach ($vars as $var) {
-            $this->template_params[$var[0]] = $var[1];
-        }
+        $this->template_params = array_merge($this->template_params, $vars);
     }
 
     public function renderTemplate($template)
