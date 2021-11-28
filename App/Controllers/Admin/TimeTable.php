@@ -2,7 +2,6 @@
 
 namespace App\Controllers\Admin;
 
-use App\Helpers\Constants;
 use App\Models\Classes as ClassModel;
 use App\Models\Period;
 use App\Models\Subject as SubjectModel;

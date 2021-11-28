@@ -4,8 +4,9 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Helpers\Session;
+use App\Models\Admin;
 
-class AdminController extends \Core\Controller
+class AdminController extends AdminBaseController
 {
     public function isLoggedIn()
     {
@@ -13,10 +14,16 @@ class AdminController extends \Core\Controller
     }
     public function before()
     {
-        if ($this->isLoggedIn()) {
+        parent::before();
+        $studentID = $this->isLoggedIn();
+        if ($studentID) {
+            $this->loggedStudentID = $studentID;
+            $this->admin = new Admin($this->loggedStudentID);
+            $this->setTemplateVars(['islogin' => 1, 'name' => $this->admin->getName()]);
             return true;
         }
-        $this->redirect("/admin", ["message" => "You must need to login!", 'type' => Constants::ERROR]);
+        $this->setErrorMessage("You must need to login!");
+        $this->redirect("/admin");
         return false;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Controllers\Student;
 
 class StudentBaseController extends \Core\Controller
+
 {
 
     public function before()

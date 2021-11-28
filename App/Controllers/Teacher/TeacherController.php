@@ -6,7 +6,7 @@ use App\Helpers\Constants;
 use App\Helpers\Session;
 use App\Models\Teacher;
 
-class TeacherController extends TeachertBaseController
+class TeacherController extends TeacherBaseController
 {
     public function isLoggedIn()
     {
@@ -23,7 +23,7 @@ class TeacherController extends TeachertBaseController
             $this->setTemplateVars(['islogin' => 1, 'name' => $this->teacher->getName()]);
             return true;
         }
-        $this->redirect("/student", ["message" => "You must need to login!", 'type' => Constants::ERROR]);
+        $this->redirect("/teacher", ["message" => "You must need to login!", 'type' => Constants::ERROR]);
         return false;
     }
 

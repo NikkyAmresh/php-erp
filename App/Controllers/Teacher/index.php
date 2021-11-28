@@ -6,7 +6,7 @@ use App\Helpers\Constants;
 use App\Helpers\Session;
 use App\Models\Teacher;
 
-class Index extends \Core\Controller
+class Index extends TeacherBaseController
 {
 
     public function isAlreadyLoggedIn()

@@ -5,10 +5,8 @@ namespace App\Controllers\Admin;
 use App\Helpers\Constants;
 use App\Helpers\Session;
 use App\Models\Admin;
-use \Core\View;
 
-class Index extends \Core\Controller
-
+class Index extends AdminBaseController
 {
 
     public function isAlreadyLoggedIn()
@@ -40,10 +38,11 @@ class Index extends \Core\Controller
     public function indexAction()
     {
         if ($this->isAlreadyLoggedIn()) {
-            View::renderTemplate('Admin/Dashboard/index.html', ['name' => Session::get(Constants::LOGGED_IN_ADMIN_NAME)]);
+            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_ADMIN_NAME), 'islogin' => 1]);
+            $this->renderTemplate('Admin/Dashboard/index.html');
         } else {
             if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {
-                View::renderTemplate('Admin/Auth/login.html');
+                $this->renderTemplate('Admin/Auth/login.html');
             }
         }
     }
