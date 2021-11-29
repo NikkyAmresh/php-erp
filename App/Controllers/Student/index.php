@@ -48,4 +48,15 @@ class Index extends StudentBaseController
             }
         }
     }
+    public function profileAction()
+    {
+        if ($this->isAlreadyLoggedIn()) {
+            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME), 'islogin' => 1]);
+            $this->renderTemplate('Student/Dashboard/Homepage/profile.html');
+        } else {
+            if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {
+                $this->renderTemplate('Student/Auth/login.html');
+            }
+        }
+    }
 }

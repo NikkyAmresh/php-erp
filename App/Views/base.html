@@ -39,6 +39,7 @@
   </nav>
   <div class="min-h-screen flex flex-row bg-gray-100">
     {% include 'menu.html' with {'islogin':islogin,'listItems':listItems}%}
+    {% include 'Profile.html' with {'foo':bar}%}
     <div class="container">{% block body %} {% endblock %}</div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script type="text/javascript">
