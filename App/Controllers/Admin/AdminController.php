@@ -15,10 +15,10 @@ class AdminController extends AdminBaseController
     public function before()
     {
         parent::before();
-        $studentID = $this->isLoggedIn();
-        if ($studentID) {
-            $this->loggedStudentID = $studentID;
-            $this->admin = new Admin($this->loggedStudentID);
+        $adminID = $this->isLoggedIn();
+        if ($adminID) {
+            $this->loggedAdminID = $adminID;
+            $this->admin = new Admin($this->loggedAdminID);
             $this->setTemplateVars(['islogin' => 1, 'name' => $this->admin->getName()]);
             return true;
         }

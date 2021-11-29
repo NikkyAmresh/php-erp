@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Batch as BatchModel;
-use \Core\View;
 
 class Batch extends AdminController
 {
@@ -25,7 +24,8 @@ class Batch extends AdminController
         $st = new BatchModel();
         $res = $st->getAll();
         $years = $this->get10Years();
-        View::renderTemplate('Admin/Dashboard/Batch/index.html', ['batches' => $res, 'years' => $years]);
+        $this->setTemplateVars(['batches' => $res, 'years' => $years]);
+        $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }
     public function createAction()
     {
@@ -78,7 +78,8 @@ class Batch extends AdminController
         $res = $st->get();
         $years = $this->get10Years();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/Batch/edit.html', ['batch' => $res, 'years' => $years]);
+            $this->setTemplateVars(['batch' => $res, 'years' => $years]);
+            $this->renderTemplate('Admin/Dashboard/Batch/edit.html');
         } else {
             $this->redirect("/admin/teacher", ["message" => "Invalid Batch id!", 'type' => Constants::ERROR]);
         }

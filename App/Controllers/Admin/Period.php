@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Period as PeriodModel;
-use \Core\View;
 
 class Period extends AdminController
 {
@@ -60,14 +59,16 @@ class Period extends AdminController
     {
         $st = new PeriodModel();
         $res = $st->getAll();
-        View::renderTemplate('Admin/Dashboard/Period/index.html', ['periods' => $res]);
+        $this->setTemplateVars(['periods' => $res]);
+        $this->renderTemplate('Admin/Dashboard/Period/index.html');
     }
     public function editAction()
     {
         $st = new PeriodModel($this->route_params['id']);
         $res = $st->get();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/Period/edit.html', ['period' => $res]);
+            $this->setTemplateVars(['period' => $res]);
+            $this->renderTemplate('Admin/Dashboard/Period/edit.html');
         } else {
             $this->redirect("/admin/period", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }

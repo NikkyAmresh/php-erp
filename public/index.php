@@ -14,6 +14,8 @@
 //  phpinfo();
 // echo $_SERVER['QUERY_STRING'] ;
 // echo $_GET['url'] ;
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 // /**

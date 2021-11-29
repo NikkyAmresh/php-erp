@@ -6,7 +6,6 @@ use App\Helpers\Constants;
 use App\Models\Department;
 use App\Models\Teacher as TeacherModel;
 use App\Models\User;
-use \Core\View;
 
 class Teacher extends AdminController
 {
@@ -71,7 +70,8 @@ class Teacher extends AdminController
         $st = new TeacherModel();
         $res = $st->getWithJoin();
         $depts = (new Department())->getAll();
-        View::renderTemplate('Admin/Dashboard/Teacher/index.html', ['teacher' => $res, 'deps' => $depts]);
+        $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);
+        $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }
     public function editAction()
     {
@@ -79,7 +79,8 @@ class Teacher extends AdminController
         $res = $st->getOneWithJoin();
         if ($res) {
             $depts = (new Department())->getAll();
-            View::renderTemplate('Admin/Dashboard/Teacher/edit.html', ['teacher' => $res, 'deps' => $depts]);
+            $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);
+            $this->renderTemplate('Admin/Dashboard/Teacher/edit.html');
         } else {
             $this->redirect("/admin/teacher", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }

@@ -8,7 +8,6 @@ use App\Models\Classes;
 use App\Models\Course;
 use App\Models\Student as StudentModel;
 use App\Models\User;
-use \Core\View;
 
 class Student extends AdminController
 {
@@ -109,12 +108,13 @@ class Student extends AdminController
         foreach ($classes as $key => $r) {
             $classes[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Admin/Dashboard/Student/index.html', [
+        $this->setTemplateVars([
             'students' => $res,
             'courses' => $courses,
             'batches' => $batches,
             'classes' => $classes,
         ]);
+        $this->renderTemplate('Admin/Dashboard/Student/index.html');
     }
     public function editAction()
     {
@@ -127,12 +127,13 @@ class Student extends AdminController
             foreach ($classes as $key => $r) {
                 $classes[$key]['name'] = $this->className($r);
             }
-            View::renderTemplate('Admin/Dashboard/Student/edit.html', [
+            $this->setTemplateVars([
                 'student' => $res,
                 'courses' => $courses,
                 'batches' => $batches,
                 'classes' => $classes,
             ]);
+            $this->renderTemplate('Admin/Dashboard/Student/edit.html');
         } else {
             $this->redirect("/admin/student", ["message" => "Invalid StudentID!", 'type' => Constants::ERROR]);
         }

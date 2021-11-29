@@ -3,7 +3,6 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Semester as SemesterModel;
-use \Core\View;
 
 class Semester extends AdminController
 {
@@ -11,7 +10,8 @@ class Semester extends AdminController
     {
         $st = new SemesterModel();
         $res = $st->getAll();
-        View::renderTemplate('Admin/Dashboard/Semester/index.html', ['semesters' => $res]);
+        $this->setTemplateVars(['semesters' => $res]);
+        $this->renderTemplate('Admin/Dashboard/Semester/index.html');
     }
     public function createAction()
     {
@@ -57,7 +57,8 @@ class Semester extends AdminController
         $st = new SemesterModel($this->route_params['id']);
         $res = $st->get();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/semester/edit.html', ['semester' => $res]);
+            $this->setTemplateVars(['semester' => $res]);
+            $this->renderTemplate('Admin/Dashboard/semester/edit.html');
         } else {
             $this->redirect("/admin/semester", ["message" => "Invalid semester id!", 'type' => Constants::ERROR]);
         }

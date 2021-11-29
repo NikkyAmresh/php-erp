@@ -6,6 +6,7 @@ class Admin extends \Core\Model
 
 {
     protected static $table = 'admin';
+    protected static $tableJOIN = 'select admin.*,users.name as name,users.email as email,users.mobile as mobile from admin join users on users.id=admin.userID';
 
     public function adminAuth($email, $pass)
     {

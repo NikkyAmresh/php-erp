@@ -5,7 +5,6 @@ namespace App\Controllers\Admin;
 use App\Helpers\Constants;
 use App\Models\Branch as BranchModel;
 use App\Models\Department;
-use \Core\View;
 
 class Branch extends AdminController
 {
@@ -63,7 +62,8 @@ class Branch extends AdminController
         $st = new BranchModel();
         $res = $st->getWithJoin();
         $depts = (new Department())->getAll();
-        View::renderTemplate('Admin/Dashboard/Branch/index.html', ['branches' => $res, 'deps' => $depts]);
+        $this->setTemplateVars(['branches' => $res, 'deps' => $depts]);
+        $this->renderTemplate('Admin/Dashboard/Branch/index.html');
     }
     public function editAction()
     {
@@ -71,7 +71,8 @@ class Branch extends AdminController
         $res = $st->getOneWithJoin();
         if ($res) {
             $depts = (new Department())->getAll();
-            View::renderTemplate('Admin/Dashboard/Branch/edit.html', ['branch' => $res, 'deps' => $depts]);
+            $this->setTemplateVars(['branch' => $res, 'deps' => $depts]);
+            $this->renderTemplate('Admin/Dashboard/Branch/edit.html');
         } else {
             $this->redirect("/admin/branch", ["message" => "Invalid BranchID!", 'type' => Constants::ERROR]);
         }

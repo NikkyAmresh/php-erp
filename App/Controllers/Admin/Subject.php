@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 use App\Helpers\Constants;
 use App\Models\Department as DepartmentModel;
 use App\Models\Subject as SubjectModel;
-use \Core\View;
 
 class Subject extends AdminController
 {
@@ -14,7 +13,8 @@ class Subject extends AdminController
         $dep = new DepartmentModel();
         $deps = $dep->getAll();
         $res = $st->getWithJoin();
-        View::renderTemplate('Admin/Dashboard/Subject/index.html', ['subjects' => $res, 'deps' => $deps]);
+        $this->setTemplateVars(['subjects' => $res, 'deps' => $deps]);
+        $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }
     public function createAction()
     {
@@ -66,7 +66,8 @@ class Subject extends AdminController
         $dep = new DepartmentModel();
         $deps = $dep->getAll();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/subject/edit.html', ['subject' => $res, 'deps' => $deps]);
+            $this->setTemplateVars(['subject' => $res, 'deps' => $deps]);
+            $this->renderTemplate('Admin/Dashboard/subject/edit.html');
         } else {
             $this->redirect("/admin/subject", ["message" => "Invalid subject id!", 'type' => Constants::ERROR]);
         }

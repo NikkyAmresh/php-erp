@@ -28,8 +28,7 @@ abstract class Model
         }
         $this->initDb();
         if ($id) {
-            $data = $this->getOneWithJoin();
-            $this->setData($data);
+            $this->getOneWithJoin();
         } elseif ($cond) {
             $data = $this->db->where($cond['field'], $cond['value'])->orderBy("id", "asc")->get(static::$table);
             $this->setData($data);
@@ -47,6 +46,8 @@ abstract class Model
                 $this->_data[lcfirst($field)] = $params[0];
                 return $this;
             }
+        } else {
+            $func($params);
         }
     }
 

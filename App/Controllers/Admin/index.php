@@ -25,6 +25,7 @@ class Index extends AdminBaseController
                 Session::set(Constants::LOGGED_IN_ADMIN_NAME, $adminUser['name']);
                 Session::set(Constants::LOGGED_IN_ADMIN_EMAIL, $adminUser['email']);
                 $this->setSuccessMessage("logined admin in as " . $adminUser['name']);
+                $this->setTemplateVars(['islogin' => 1, 'name' => Session::get(Constants::LOGGED_IN_ADMIN_NAME)]);
                 $this->redirect("/admin");
                 return true;
             } else {
@@ -46,12 +47,5 @@ class Index extends AdminBaseController
             }
         }
     }
-    public function profileAction()
-    {
-        $admin = new Admin();
-        $res = $admin->getAdminUser();
-        print_r($res);
-        $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_ADMIN_NAME), 'islogin' => 1, 'admin' => $res]);
-        $this->renderTemplate('Admin/Dashboard/profile.html');
-    }
+
 }
