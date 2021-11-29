@@ -3,6 +3,7 @@
 namespace App\Models;
 
 class Admin extends \Core\Model
+
 {
     protected static $table = 'admin';
 
@@ -15,7 +16,7 @@ class Admin extends \Core\Model
             if ($adminUser) {
                 $this->adminUser = $usr->getUser();
                 return true;
-            }else{
+            } else {
                 return false;
             }
         } else {
@@ -27,5 +28,5 @@ class Admin extends \Core\Model
     {
         return $this->adminUser;
     }
-    
+
 }

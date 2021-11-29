@@ -46,4 +46,12 @@ class Index extends AdminBaseController
             }
         }
     }
+    public function profileAction()
+    {
+        $admin = new Admin();
+        $res = $admin->getAdminUser();
+        print_r($res);
+        $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_ADMIN_NAME), 'islogin' => 1, 'admin' => $res]);
+        $this->renderTemplate('Admin/Dashboard/profile.html');
+    }
 }

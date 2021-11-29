@@ -22,6 +22,7 @@ class Index extends StudentBaseController
             if ($validate) {
                 $user = $student->getUser();
                 $studentUser = $student->getStudentUser();
+                print_r($studentUser);
                 Session::set(Constants::LOGGED_IN_STUDENT_USER_ID, $user['id']);
                 Session::set(Constants::LOGGED_IN_STUDENT_ID, $studentUser['id']);
                 Session::set(Constants::LOGGED_IN_STUDENT_NAME, $user['name']);
@@ -51,7 +52,9 @@ class Index extends StudentBaseController
     public function profileAction()
     {
         if ($this->isAlreadyLoggedIn()) {
-            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME), 'islogin' => 1]);
+            $student = new Student(Session::get(Constants::LOGGED_IN_STUDENT_ID));
+            $res = $student->getOneWithJoin();
+            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME), 'islogin' => 1, 'student' => $res]);
             $this->renderTemplate('Student/Dashboard/Homepage/profile.html');
         } else {
             if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {

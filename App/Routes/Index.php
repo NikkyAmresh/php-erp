@@ -48,6 +48,7 @@ class Index
         $this->router->add("admin/getTimeTable/{id:\d+}", ['controller' => 'Admin\TimeTable', 'action' => 'get']);
         $this->router->add("admin/showTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'show']);
         $this->router->add("admin/setTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'updateByClass']);
+        $this->router->add("admin/profile", ['controller' => 'Admin\Index', 'action' => 'profile']);
 
         $this->router->add("student", ['controller' => 'Student\Index', 'action' => 'index']);
         $this->router->add("student/getTimeTable", ['controller' => 'Student\TimeTable', 'action' => 'get']);
@@ -58,6 +59,7 @@ class Index
         $this->router->add("teacher/getTimeTable", ['controller' => 'teacher\TimeTable', 'action' => 'get']);
         $this->router->add("teacher/timeTable", ['controller' => 'teacher\TimeTable', 'action' => 'show']);
         $this->router->add("teacher/attendance/{id:\d+}", ['controller' => 'teacher\Attendance', 'action' => 'mark']);
+        $this->router->add("teacher/profile", ['controller' => 'Teacher\Index', 'action' => 'profile']);
     }
 
 }

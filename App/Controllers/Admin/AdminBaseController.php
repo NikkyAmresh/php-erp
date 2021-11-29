@@ -11,6 +11,7 @@ class AdminBaseController extends \Core\Controller
         $this->setTemplateVars(
             ['listItems' => [
                 ['name' => 'Home', 'url' => '/admin', 'icon' => 'fa fa-home'],
+                ['name' => 'Profile', 'url' => '/admin/profile', 'icon' => 'fa fa-user'],
                 ['name' => 'Department', 'url' => '/admin/department', 'icon' => 'fa fa-user'],
                 ['name' => 'Teachers', 'url' => '/admin/teacher', 'icon' => 'fa fa-clock'],
                 ['name' => 'Batches', 'url' => '/admin/batch', 'icon' => 'fa fa-calendar'],
