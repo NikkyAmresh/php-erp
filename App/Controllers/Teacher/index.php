@@ -48,17 +48,4 @@ class Index extends TeacherBaseController
             }
         }
     }
-    public function profileAction()
-    {
-        if ($this->isAlreadyLoggedIn()) {
-            $teacher = new Teacher(Session::get(Constants::LOGGED_IN_TEACHER_ID));
-            $res = $teacher->getOneWithJoin();
-            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_TEACHER_NAME), 'islogin' => 1, 'teacher' => $res]);
-            $this->renderTemplate('Teacher/Dashboard/profile.html');
-        } else {
-            if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {
-                $this->renderTemplate('Teacher/Auth/login.html');
-            }
-        }
-    }
 }

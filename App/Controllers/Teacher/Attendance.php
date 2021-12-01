@@ -12,11 +12,6 @@ use \Core\View;
 
 class Attendance extends TeacherController
 {
-
-    // public function __construct()
-    // {
-    //     parent::__construct();
-    // }
     public function indexAction()
     {
         $st = new TimeTableModel();
