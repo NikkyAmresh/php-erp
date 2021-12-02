@@ -2,13 +2,11 @@
 
 namespace App\Controllers\Admin;
 
-use App\Helpers\Constants;
 use App\Models\Classes as ClassModel;
 use App\Models\Period;
 use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use App\Models\TimeTable as TimeTableModel;
-use \Core\View;
 
 class TimeTable extends AdminController
 {
@@ -143,6 +141,7 @@ class TimeTable extends AdminController
         foreach ($classRes as $key => $r) {
             $classRes[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Admin/Dashboard/TimeTable/index.html', ['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
+        $this->setTemplateVars(['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
+        $this->renderTemplate('Admin/Dashboard/TimeTable/index.html');
     }
 }

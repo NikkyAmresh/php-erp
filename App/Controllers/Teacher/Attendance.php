@@ -5,7 +5,6 @@ namespace App\Controllers\Teacher;
 use App\Controllers\Teacher\TeacherController;
 use App\Models\Classes as ClassModel;
 use App\Models\Period;
-use App\Models\Student;
 use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use App\Models\TimeTable as TimeTableModel;
@@ -13,7 +12,6 @@ use \Core\View;
 
 class Attendance extends TeacherController
 {
-
     public function indexAction()
     {
         $st = new TimeTableModel();
@@ -37,13 +35,15 @@ class Attendance extends TeacherController
         $timeTable = new TimeTableModel($this->route_params['id']);
         $res = $timeTable->getOneWithJoin();
         $students = $timeTable->getStudents();
-        View::renderTemplate('Teacher/Dashboard/Attendance/index.html', ['ets' => json_encode($res),'timeTable'=>$res,'students'=>$students]);
+        $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $res, 'students' => $students]);
+        $this->renderTemplate('Teacher/Dashboard/Attendance/index.html');
         return;
     }
     public function showAction()
     {
         $periods = (new Period())->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        View::renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html', ['periods' => $periods, 'days' => $days]);
+        $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
+        $this->renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html');
     }
 }

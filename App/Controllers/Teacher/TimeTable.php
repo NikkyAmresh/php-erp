@@ -3,11 +3,9 @@
 namespace App\Controllers\Teacher;
 
 use App\Models\Period;
-use \Core\View;
 
 class TimeTable extends TeacherController
 {
-
     public function getAction()
     {
         $res = $this->teacher->getTimeTable();
@@ -18,6 +16,7 @@ class TimeTable extends TeacherController
     {
         $periods = (new Period())->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        View::renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html', ['periods' => $periods, 'days' => $days]);
+        $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
+        $this->renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Department as DepartmentModel;
-use \Core\View;
 
 class Department extends AdminController
 {
@@ -56,7 +55,9 @@ class Department extends AdminController
     {
         $st = new DepartmentModel();
         $res = $st->getWithJoin();
-        View::renderTemplate('Admin/Dashboard/Department/index.html', ['department' => $res]);
+        $this->setTemplateVars(['department' => $res]);
+        $this->renderTemplate('Admin/Dashboard/Department/index.html');
+
     }
     public function editAction()
     {
@@ -64,7 +65,8 @@ class Department extends AdminController
         $res = $st->get();
         if ($res) {
             $hods = $st->getTeachers();
-            View::renderTemplate('Admin/Dashboard/Department/edit.html', ['department' => $res, 'hods' => $hods]);
+            $this->setTemplateVars(['department' => $res, 'hods' => $hods]);
+            $this->renderTemplate('Admin/Dashboard/Department/edit.html');
         } else {
             $this->redirect("/admin/department", ["message" => "Invalid DepartmentID!", 'type' => Constants::ERROR]);
         }

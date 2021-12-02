@@ -8,7 +8,6 @@ use App\Models\Classes as ClassModel;
 use App\Models\Department;
 use App\Models\Semester;
 use App\Models\Teacher;
-use \Core\View;
 
 class Classes extends AdminController
 {
@@ -94,7 +93,7 @@ class Classes extends AdminController
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Admin/Dashboard/Classes/index.html', [
+        $this->setTemplateVars([
             'classes' => $res,
             'deps' => $depts,
             'branches' => $branches,
@@ -102,6 +101,7 @@ class Classes extends AdminController
             'semesters' => $semesters,
             'sections' => $sections,
         ]);
+        $this->renderTemplate('Admin/Dashboard/Classes/index.html');
     }
     public function editAction()
     {
@@ -114,7 +114,7 @@ class Classes extends AdminController
             $semesters = (new Semester)->getWithJoin();
             $res['name'] = $this->className($res);
             $sections = $this->getSections();
-            View::renderTemplate('Admin/Dashboard/Classes/edit.html', [
+            $this->setTemplateVars([
                 'class' => $res,
                 'deps' => $depts,
                 'branches' => $branches,
@@ -122,6 +122,7 @@ class Classes extends AdminController
                 'semesters' => $semesters,
                 'sections' => $sections,
             ]);
+            $this->renderTemplate('Admin/Dashboard/Classes/edit.html');
         } else {
             $this->redirect("/admin/classes", ["message" => "Invalid ClassID!", 'type' => Constants::ERROR]);
         }

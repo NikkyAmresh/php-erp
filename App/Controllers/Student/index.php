@@ -5,9 +5,8 @@ namespace App\Controllers\Student;
 use App\Helpers\Constants;
 use App\Helpers\Session;
 use App\Models\Student;
-use \Core\View;
 
-class Index extends \Core\Controller
+class Index extends StudentBaseController
 {
 
     public function isAlreadyLoggedIn()
@@ -41,10 +40,11 @@ class Index extends \Core\Controller
     public function indexAction()
     {
         if ($this->isAlreadyLoggedIn()) {
-            View::renderTemplate('Student/Dashboard/index.html', ['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME)]);
+            $this->setTemplateVars(['name' => Session::get(Constants::LOGGED_IN_STUDENT_NAME), 'islogin' => 1]);
+            $this->renderTemplate('Student/Dashboard/Homepage/index.html');
         } else {
             if (!$this->login($_SERVER["REQUEST_METHOD"], $_REQUEST)) {
-                View::renderTemplate('Student/Auth/login.html');
+                $this->renderTemplate('Student/Auth/login.html');
             }
         }
     }

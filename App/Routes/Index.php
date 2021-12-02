@@ -29,7 +29,6 @@ class Index
     public function setRoutes()
     {
         $this->router->add('', ['controller' => 'Home', 'action' => 'index']);
-        // $this->router->add('{controller}/{action}');
         $this->router->add('login', ['controller' => 'Auth\Login', 'action' => 'index']);
         $this->router->add('logout', ['controller' => 'Auth\Logout', 'action' => 'index']);
         $this->router->add("admin", ['controller' => 'Admin\Index', 'action' => 'index']);
@@ -49,16 +48,18 @@ class Index
         $this->router->add("admin/getTimeTable/{id:\d+}", ['controller' => 'Admin\TimeTable', 'action' => 'get']);
         $this->router->add("admin/showTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'show']);
         $this->router->add("admin/setTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'updateByClass']);
-        
+        $this->router->add("admin/profile", ['controller' => 'Admin\Profile', 'action' => 'index']);
+
         $this->router->add("student", ['controller' => 'Student\Index', 'action' => 'index']);
         $this->router->add("student/getTimeTable", ['controller' => 'Student\TimeTable', 'action' => 'get']);
         $this->router->add("student/timeTable", ['controller' => 'Student\TimeTable', 'action' => 'show']);
-        
+        $this->router->add("student/profile", ['controller' => 'Student\Profile', 'action' => 'index']);
+
         $this->router->add("teacher", ['controller' => 'teacher\Index', 'action' => 'index']);
         $this->router->add("teacher/getTimeTable", ['controller' => 'teacher\TimeTable', 'action' => 'get']);
         $this->router->add("teacher/timeTable", ['controller' => 'teacher\TimeTable', 'action' => 'show']);
         $this->router->add("teacher/attendance/{id:\d+}", ['controller' => 'teacher\Attendance', 'action' => 'mark']);
-
+        $this->router->add("teacher/profile", ['controller' => 'Teacher\Profile', 'action' => 'index']);
     }
 
 }

@@ -3,7 +3,6 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Course as CourseModel;
-use \Core\View;
 
 class Course extends AdminController
 {
@@ -11,7 +10,8 @@ class Course extends AdminController
     {
         $st = new CourseModel();
         $res = $st->getAll();
-        View::renderTemplate('Admin/Dashboard/Course/index.html', ['courses' => $res]);
+        $this->setTemplateVars(['courses' => $res]);
+        $this->renderTemplate('Admin/Dashboard/Course/index.html');
     }
     public function createAction()
     {
@@ -59,7 +59,8 @@ class Course extends AdminController
         $st = new CourseModel($this->route_params['id']);
         $res = $st->get();
         if ($res) {
-            View::renderTemplate('Admin/Dashboard/course/edit.html', ['course' => $res]);
+            $this->setTemplateVars(['courses' => $res]);
+            $this->renderTemplate('Admin/Dashboard/course/edit.html', ['course' => $res]);
         } else {
             $this->redirect("/admin/course", ["message" => "Invalid course id!", 'type' => Constants::ERROR]);
         }

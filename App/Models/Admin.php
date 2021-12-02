@@ -3,8 +3,10 @@
 namespace App\Models;
 
 class Admin extends \Core\Model
+
 {
     protected static $table = 'admin';
+    protected static $tableJOIN = 'select admin.*,users.name as name,users.email as email,users.mobile as mobile from admin join users on users.id=admin.userID';
 
     public function adminAuth($email, $pass)
     {
@@ -15,7 +17,7 @@ class Admin extends \Core\Model
             if ($adminUser) {
                 $this->adminUser = $usr->getUser();
                 return true;
-            }else{
+            } else {
                 return false;
             }
         } else {
@@ -27,5 +29,5 @@ class Admin extends \Core\Model
     {
         return $this->adminUser;
     }
-    
+
 }

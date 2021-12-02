@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block title %}TimeTable{% endblock %} {% block body
-%}
+{% extends "base.html" %}
+{% block title %}TimeTable{% endblock %}
+{% block body %}
 
 <h3>Time Table</h3>
 <table>
@@ -48,7 +49,7 @@
       const self = this;
       $(this).on("click", function () {
         if ($(self).attr("data-timeTable"))
-          window.open("attendance/" + $(self).attr("data-timeTable"));
+          window.open("/teacher/attendance/" + $(self).attr("data-timeTable"));
       });
     });
     console.log("read");

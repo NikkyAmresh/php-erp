@@ -17,16 +17,18 @@ abstract class Model
         $this->db = new \MysqliDb(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
     }
 
-    public function __construct($id = null, $cond = null,  $orderBy = null ,$numRows = null)
+    public function __construct($id = null, $cond = null, $orderBy = null, $numRows = null)
     {
         $this->id = $id;
         $this->cond = $cond;
         $this->orderBy = $orderBy;
         $this->numRows = $numRows;
+        if (!static::$tableJOIN) {
+            self::$tableJOIN = "SELECT * FROM " . static::$table;
+        }
         $this->initDb();
         if ($id) {
-            $data = $this->db->where("id", $id)->getOne(static::$table);
-            $this->setData($data);
+            $this->getOneWithJoin();
         } elseif ($cond) {
             $data = $this->db->where($cond['field'], $cond['value'])->orderBy("id", "asc")->get(static::$table);
             $this->setData($data);
@@ -44,6 +46,8 @@ abstract class Model
                 $this->_data[lcfirst($field)] = $params[0];
                 return $this;
             }
+        } else {
+            $func($params);
         }
     }
 

@@ -19,6 +19,8 @@ abstract class Controller
      */
     protected $route_params = [];
 
+    protected $template_params = [];
+
     /**
      * Class constructor
      *
@@ -80,6 +82,16 @@ abstract class Controller
             Session::set(Constants::MESSAGE_TYPE[$messageObject['type']], $messageObject['message']);
         }
         header('location: ' . $path);
+    }
+
+    public function setTemplateVars($vars)
+    {
+        $this->template_params = array_merge($this->template_params, $vars);
+    }
+
+    public function renderTemplate($template)
+    {
+        View::renderTemplate($template, $this->template_params);
     }
 
     public function setSuccessMessage($message)
