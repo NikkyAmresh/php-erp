@@ -1,13 +1,39 @@
 {% extends "base.html" %} {% block title %}Admin | Class{% endblock %} {% block
 body %}
-<h1>Classes</h1>
-{% for class in classes%} {{class.id}}.{{class.name}} - {{class.teacher}}
-<a class="btn bg-red" href="/admin/classes/{{class.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteClasses/{{class.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
+<div class="flex m-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            <th class="p-3 lg:w-4 text-left">Serial no.</th>
+            <th class="p-3 text-center">Class Name</th>
+            <th class="p-3 text-center">Teacher Name</th>
+            <th class="p-3 text-left">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for class in classes%}
+          <tr class="bg-blue-100 lg:text-black">
+            <td class="p-3 font-medium capitalize">{{class.id}}</td>
+            <td class="p-3 text-center">{{class.name}}</td>
+            <td class="p-3 text-center">{{class.teacher}}</td>
 
+            <td class="p-3">
+              <a href="/admin/classes/{{class.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                <i class="material-icons-outlined text-base">edit</i>
+              </a>
+              <a href="/admin/deleteClasses/{{class.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                <i class="material-icons-round text-base">delete_outline</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <h4>New Class</h4>
 <form action="/admin/createClasses" method="post">
   <div class="input-field">

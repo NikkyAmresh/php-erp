@@ -1,13 +1,36 @@
 {% extends "base.html" %} {% block title %}Admin | Branch{% endblock %} {% block
 body %}
-<h1>Branches</h1>
-{% for branch in branches%} {{branch.id}}.{{branch.name}} - {{branch.code}}
-<a class="btn bg-red" href="/admin/branch/{{branch.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteBranch/{{branch.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
-
+<div class="flex m-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            <th class="p-3 lg:w-4 text-left">Serial no.</th>
+            <th class="p-3 text-center">Branch name</th>
+            <th class="p-3 text-left">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for branch in branches%}
+          <tr class="bg-blue-100 lg:text-black">
+            <td class="p-3 font-medium capitalize">{{branch.id}}</td>
+            <td class="p-3 text-center">{{branch.name}}</td> - {{branch.code}} </td>
+            <td class="p-3">
+              <a href="/admin/branch/{{branch.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                <i class="material-icons-outlined text-base">edit</i>
+              </a>
+              <a href="/admin/deleteBranch/{{branch.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                <i class="material-icons-round text-base">delete_outline</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <h4>New Branch</h4>
 <form action="/admin/createBranch" method="post">
   <div class="input-field">

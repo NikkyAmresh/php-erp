@@ -1,13 +1,39 @@
 {% extends "base.html" %} {% block title %}Admin | Department{% endblock %} {%
 block body %}
-<h1>Departments</h1>
-{% for dept in department%}
- {{dept.id}} ({{dept.name}}) - HOD [{{dept.hod}}]
-<a class="btn bg-red" href="/admin/department/{{dept.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteDepartment/{{dept.id}}">Delete</a>
- <br />
- <br />
-{% endfor %}
+<div class="flex m-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate text-sm">
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            <th class="p-3 lg:w-4 text-left">Serial no.</th>
+            <th class="p-3 text-center">Department name</th>
+            <th class="p-3 text-center">Hod</th>
+            <th class="p-3 text-left">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for dept in department%}
+          <tr class="bg-blue-100 lg:text-black">
+            <td class="p-3 font-medium capitalize">{{dept.id}}</td>
+            <td class="p-3 text-center">{{dept.name}}</td>
+            <td class="p-3 text-center">{{dept.hod}}</td>
+
+            <td class="p-3">
+              <a href="/admin/department/{{dept.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                <i class="material-icons-outlined text-base">edit</i>
+              </a>
+              <a href="/admin/deleteDepartment/{{dept.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                <i class="material-icons-round text-base">delete_outline</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
 <form action="/admin/createDepartment" method="post">
   <div class="input-field">

@@ -1,12 +1,36 @@
 {% extends "base.html" %} {% block title %}Admin | Department{% endblock %}
 {%block body %}
-<h3>Batches</h3>
-{% for batch in batches %} {{batch.code}} <br />
-<a class="btn bg-red" href="/admin/batch/{{batch.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteBatch/{{batch.id}}">Delete</a>
-<br />
-{% endfor %}
-
+<div class="flex m-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            <th class="p-3 lg:w-4 text-center">Serial no.</th>
+            <th class="p-3 text-center">Batch</th>
+            <th class="p-3 text-left">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for batch in batches%}
+          <tr class="bg-blue-100 lg:text-black">
+            <td class="p-3 font-medium capitalize">{{batch.id}}</td>
+            <td class="p-3 text-center">{{batch.code}} </td>
+            <td class="p-3">
+              <a href="/admin/batch/{{batch.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                <i class="material-icons-outlined text-base">edit</i>
+              </a>
+              <a href="/admin/deleteBatch/{{batch.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                <i class="material-icons-round text-base">delete_outline</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <br />
 <form action="/admin/createBatch" method="post">
   <h4>Create Batch</h4>

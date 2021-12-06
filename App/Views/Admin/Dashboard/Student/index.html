@@ -1,13 +1,36 @@
 {% extends "base.html" %} {% block title %}Admin | Student{% endblock %} {% block
 body %}
-<h1>Students</h1>
-{% for student in students%} {{student.id}}.{{student.name}} - {{student.teacher}}
-<a class="btn bg-red" href="/admin/student/{{student.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteStudent/{{student.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
-
+<div class="flex m-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            <th class="p-3 lg:w-4 text-left">Serial no.</th>
+            <th class="p-3 text-center">Name</th>
+            <th class="p-3 text-left">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for students in students%}
+          <tr class="bg-blue-100 lg:text-black">
+            <td class="p-3 font-medium capitalize">{{students.id}}</td>
+            <td class="p-3 text-center">{{students.name}}</td>
+            <td class="p-3">
+              <a href="/admin/student/{{students.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                <i class="material-icons-outlined text-base">edit</i>
+              </a>
+              <a href="/admin/deleteStudent/{{students.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                <i class="material-icons-round text-base">delete_outline</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 <h4>New Student</h4>
 <form action="/admin/createStudent" method="post">
   <div class="input-field">
