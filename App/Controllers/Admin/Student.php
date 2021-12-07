@@ -138,4 +138,19 @@ class Student extends AdminController
             $this->redirect("/admin/student", ["message" => "Invalid StudentID!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $courses = (new Course())->getWithJoin();
+        $batches = (new Batch())->getWithJoin();
+        $classes = (new Classes())->getWithJoin(null, null, null, ['semester', 'asc']);
+        foreach ($classes as $key => $r) {
+            $classes[$key]['name'] = $this->className($r);
+        }
+        $this->setTemplateVars([
+            'courses' => $courses,
+            'batches' => $batches,
+            'classes' => $classes,
+        ]);
+        $this->renderTemplate('Admin/Dashboard/Student/new.html');
+    }
 }

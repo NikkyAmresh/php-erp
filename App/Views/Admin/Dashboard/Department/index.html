@@ -1,5 +1,11 @@
 {% extends "base.html" %} {% block title %}Admin | Department{% endblock %} {%
 block body %}
+<a href="/admin/newDepartment">
+  <button
+    class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
+    New
+  </button>
+</a>
 <div class="flex m-5">
   <div class="col-span-12">
     <div class="overflow-auto lg:overflow-visible">
@@ -34,15 +40,4 @@ block body %}
     </div>
   </div>
 </div>
-
-<form action="/admin/createDepartment" method="post">
-  <div class="input-field">
-    <label for="name">Department Name</label>
-    <input type="text" id="name" name="name" />
-  </div>
-  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br>
-<a href="/admin">Back to Admin Dashboard</a>
-
 {% endblock %}

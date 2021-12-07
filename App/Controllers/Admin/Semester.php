@@ -63,4 +63,8 @@ class Semester extends AdminController
             $this->redirect("/admin/semester", ["message" => "Invalid semester id!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Semester/new.html');
+    }
 }

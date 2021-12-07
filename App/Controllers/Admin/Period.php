@@ -73,4 +73,8 @@ class Period extends AdminController
             $this->redirect("/admin/period", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Period/new.html');
+    }
 }

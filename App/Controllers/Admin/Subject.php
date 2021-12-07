@@ -72,4 +72,11 @@ class Subject extends AdminController
             $this->redirect("/admin/subject", ["message" => "Invalid subject id!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $dep = new DepartmentModel();
+        $deps = $dep->getAll();
+        $this->setTemplateVars(['deps' => $deps]);
+        $this->renderTemplate('Admin/Dashboard/Subject/new.html');
+    }
 }

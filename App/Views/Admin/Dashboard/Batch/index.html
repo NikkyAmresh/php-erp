@@ -1,5 +1,11 @@
 {% extends "base.html" %} {% block title %}Admin | Department{% endblock %}
 {%block body %}
+<a href="/admin/newBatch">
+  <button
+    class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
+    New
+  </button>
+</a>
 <div class="flex m-5">
   <div class="col-span-12">
     <div class="overflow-auto lg:overflow-visible">
@@ -31,29 +37,4 @@
     </div>
   </div>
 </div>
-<br />
-<form action="/admin/createBatch" method="post">
-  <h4>Create Batch</h4>
-  <div class="input-field col s12">
-    <h4>From</h4>
-    <select name="fromYear" class="browser-default" id="hod">
-      {% for year in years.from %}
-      <option value="{{year}}">{{year}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <div class="input-field col s12">
-    <h4 for="toYear">To</h4>
-    <select name="toYear" class="browser-default" id="hod">
-      {% for year in years.to %}
-      <option value="{{year}}">{{year}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <button class="btn bg-orange lighten-1 z-depth-0">create</button>
-</form>
-<br />
-<a href="/admin">Back to list</a>
 {% endblock %}

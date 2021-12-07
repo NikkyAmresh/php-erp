@@ -71,4 +71,8 @@ class Department extends AdminController
             $this->redirect("/admin/department", ["message" => "Invalid DepartmentID!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Department/new.html');
+    }
 }

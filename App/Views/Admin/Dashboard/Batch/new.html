@@ -1,0 +1,24 @@
+{% extends "base.html" %} {% block body %}
+<form action="/admin/createBatch" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
+    <h4>Create Batch</h4>
+    <div class="input-field col s12">
+        <h4>From</h4>
+        <select name="fromYear" class="browser-default" id="hod">
+            {% for year in years.from %}
+            <option value="{{year}}">{{year}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <div class="input-field col s12">
+        <h4 for="toYear">To</h4>
+        <select name="toYear" class="browser-default" id="hod">
+            {% for year in years.to %}
+            <option value="{{year}}">{{year}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">create</button>
+</form>
+{% endblock %}

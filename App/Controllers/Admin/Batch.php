@@ -84,4 +84,11 @@ class Batch extends AdminController
             $this->redirect("/admin/teacher", ["message" => "Invalid Batch id!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $years = $this->get10Years();
+        $this->setTemplateVars(['years' => $years]);
+        $this->renderTemplate('Admin/Dashboard/Batch/new.html');
+
+    }
 }

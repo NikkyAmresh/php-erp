@@ -85,4 +85,10 @@ class Teacher extends AdminController
             $this->redirect("/admin/teacher", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $depts = (new Department())->getAll();
+        $this->setTemplateVars(['deps' => $depts]);
+        $this->renderTemplate('Admin/Dashboard/Teacher/new.html');
+    }
 }

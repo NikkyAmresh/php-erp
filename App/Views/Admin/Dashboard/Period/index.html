@@ -1,5 +1,12 @@
 {% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {%
 block body %}
+<a href="/admin/newPeriod">
+    <button
+        class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
+        New
+    </button>
+</a>
+
 <div class="flex m-5">
     <div class="col-span-12">
         <div class="overflow-auto lg:overflow-visible">
@@ -31,21 +38,5 @@ block body %}
         </div>
     </div>
 </div>
-<h4>New Period</h4>
-<form action="/admin/createPeriod" method="post">
-    <h5>Timing</h5>
-    <div class="input-field">
-        <label for="fromTime">From</label>
-        <input type="time" id="appt" name="fromTime" min="09:00" max="18:00" required>
-    </div>
-    <div class="input-field">
-        <label for="toTime">To</label>
-        <input type="time" id="appt" name="toTime" min="09:00" max="18:00" required>
-    </div>
-
-    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
 
 {% endblock %}

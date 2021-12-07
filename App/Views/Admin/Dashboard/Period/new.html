@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block body %}
+<form action="/admin/createPeriod" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
+    <h5>Timing</h5>
+    <div class="input-field">
+        <label for="fromTime">From</label>
+        <input type="time" id="appt" name="fromTime" min="09:00" max="18:00" required>
+    </div>
+    <div class="input-field">
+        <label for="toTime">To</label>
+        <input type="time" id="appt" name="toTime" min="09:00" max="18:00" required>
+    </div>
+
+    <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">Create</button>
+</form>
+{% endblock %}

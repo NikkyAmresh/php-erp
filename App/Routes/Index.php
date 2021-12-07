@@ -24,6 +24,7 @@ class Index
         $this->router->add("admin/create$_type", ['controller' => $controller, 'action' => 'create']);
         $this->router->add("admin/update$_type", ['controller' => $controller, 'action' => 'update']);
         $this->router->add("admin/delete$_type/{id:\d+}", ['controller' => $controller, 'action' => 'delete']);
+        $this->router->add("admin/new$_type", ['controller' => $controller, 'action' => 'new']);
     }
 
     public function setRoutes()

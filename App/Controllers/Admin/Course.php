@@ -65,4 +65,8 @@ class Course extends AdminController
             $this->redirect("/admin/course", ["message" => "Invalid course id!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Course/new.html');
+    }
 }

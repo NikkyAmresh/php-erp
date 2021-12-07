@@ -77,4 +77,10 @@ class Branch extends AdminController
             $this->redirect("/admin/branch", ["message" => "Invalid BranchID!", 'type' => Constants::ERROR]);
         }
     }
+    public function newAction()
+    {
+        $depts = (new Department())->getAll();
+        $this->setTemplateVars(['deps' => $depts]);
+        $this->renderTemplate('Admin/Dashboard/Branch/new.html');
+    }
 }

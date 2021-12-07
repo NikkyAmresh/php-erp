@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block title %}Admin | Department{% endblock %}
+{%block body %}
+<div class="flex m-5">
+    <div class="col-span-12">
+        <div class="overflow-auto lg:overflow-visible">
+            <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
+                <thead class="bg-blue-900 text-white">
+                    <tr>
+                        <th class="p-3 lg:w-4 text-center">Serial no.</th>
+                        <th class="p-3 text-center">{%block thead%}{% endblock %}</th>
+                        <th class="p-3 text-left">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-blue-100 lg:text-black">
+                        <td class="p-3 font-medium capitalize">{% block serial%}{% endblock %}</td>
+                        <td class="p-3 text-center">{%block tbody%}{% endblock %} </td>
+                        <td class="p-3">
+                            <a href="/admin/batch/{{batch.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                                <i class="material-icons-outlined text-base">edit</i>
+                            </a>
+                            <a href="/admin/deleteBatch/{{batch.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                                <i class="material-icons-round text-base">delete_outline</i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<br />
+<form action="/admin/createBatch" method="post">
+    <h4>Create Batch</h4>
+    <div class="input-field col s12">
+        <h4>From</h4>
+        <select name="fromYear" class="browser-default" id="hod">
+            {% for year in years.from %}
+            <option value="{{year}}">{{year}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <div class="input-field col s12">
+        <h4 for="toYear">To</h4>
+        <select name="toYear" class="browser-default" id="hod">
+            {% for year in years.to %}
+            <option value="{{year}}">{{year}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <button class="btn bg-orange lighten-1 z-depth-0">create</button>
+</form>
+<br />
+<a href="/admin">Back to list</a>
+{% endblock %}

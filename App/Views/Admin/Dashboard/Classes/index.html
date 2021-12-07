@@ -1,5 +1,10 @@
 {% extends "base.html" %} {% block title %}Admin | Class{% endblock %} {% block
 body %}
+<a href="/admin/newClasses">
+  <button
+    class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
+    New
+  </button></a>
 <div class="flex m-5">
   <div class="col-span-12">
     <div class="overflow-auto lg:overflow-visible">
@@ -34,66 +39,4 @@ body %}
     </div>
   </div>
 </div>
-<h4>New Class</h4>
-<form action="/admin/createClasses" method="post">
-  <div class="input-field">
-    <label for="name">Department</label>
-    <br />
-    <div class="input-field col s12">
-      <select name="department" class="browser-default" id="dept">
-        {% for dep in deps %}
-        <option value="{{dep.id}}">{{dep.name}}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
-  <div class="input-field">
-    <label for="name">Branch</label>
-    <br />
-    <div class="input-field col s12">
-      <select name="branch" class="browser-default" id="branch">
-        {% for branch in branches %}
-        <option value="{{branch.id}}">{{branch.code}}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
-  <div class="input-field">
-    <label for="name">Semester</label>
-    <br />
-    <div class="input-field col s12">
-      <select name="semester" class="browser-default" id="Semester">
-        {% for semester in semesters %}
-        <option value="{{semester.id}}">{{semester.name}}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
-  <div class="input-field">
-    <label for="name">Section</label>
-    <br />
-    <div class="input-field col s12">
-      <select name="section" class="browser-default" id="section">
-        {% for section in sections %}
-        <option value="{{section.id}}">{{section.code}}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
-  <div class="input-field">
-    <label for="name">Class Teacher</label>
-    <br />
-    <div class="input-field col s12">
-      <select name="teacher" class="browser-default" id="teacher">
-        {% for teacher in teachers %}
-        <option value="{{teacher.id}}">{{teacher.name}}</option>
-        {% endfor %}
-      </select>
-    </div>
-  </div>
-  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
-
 {% endblock %}

@@ -1,5 +1,11 @@
 {% extends "base.html" %} {% block title %}Admin | Teacher{% endblock %} {%
 block body %}
+<a href="/admin/newTeacher">
+  <button
+    class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
+    New
+  </button>
+</a>
 <div class="flex m-5">
   <div class="col-span-12">
     <div class="overflow-auto lg:overflow-visible">
@@ -34,37 +40,4 @@ block body %}
     </div>
   </div>
 </div>
-
-<h4>New Teacher</h4>
-<form action="/admin/createTeacher" method="post">
-  <div class="input-field">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" />
-  </div>
-  <div class="input-field">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" />
-  </div>
-  <div class="input-field">
-    <label for="mobile">Mobile</label>
-    <input type="tel" id="mobile" name="mobile" />
-  </div>
-  <div class="input-field">
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" />
-  </div>
-  <label for="hod">Department</label>
-  <div class="input-field col s12">
-    <select name="department" class="browser-default" id="hod">
-      {% for dep in deps %}
-      <option value="{{dep.id}}">{{dep.name}}</option>
-      {% endfor %}
-    </select>
-    <br />
-  </div>
-  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
-
 {% endblock %}

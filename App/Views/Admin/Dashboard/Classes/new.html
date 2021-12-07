@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block body %}
+<form action="/admin/createClasses" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
+    <div class="input-field">
+        <label for="name">Department</label>
+        <br />
+        <div class="input-field col s12">
+            <select name="department" class="browser-default" id="dept">
+                {% for dep in deps %}
+                <option value="{{dep.id}}">{{dep.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="input-field">
+        <label for="name">Branch</label>
+        <br />
+        <div class="input-field col s12">
+            <select name="branch" class="browser-default" id="branch">
+                {% for branch in branches %}
+                <option value="{{branch.id}}">{{branch.code}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="input-field">
+        <label for="name">Semester</label>
+        <br />
+        <div class="input-field col s12">
+            <select name="semester" class="browser-default" id="Semester">
+                {% for semester in semesters %}
+                <option value="{{semester.id}}">{{semester.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="input-field">
+        <label for="name">Section</label>
+        <br />
+        <div class="input-field col s12">
+            <select name="section" class="browser-default" id="section">
+                {% for section in sections %}
+                <option value="{{section.id}}">{{section.code}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="input-field">
+        <label for="name">Class Teacher</label>
+        <br />
+        <div class="input-field col s12">
+            <select name="teacher" class="browser-default" id="teacher">
+                {% for teacher in teachers %}
+                <option value="{{teacher.id}}">{{teacher.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">Create</button>
+</form>
+{% endblock %}
