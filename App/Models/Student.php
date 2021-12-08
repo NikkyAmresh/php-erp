@@ -3,7 +3,6 @@
 namespace App\Models;
 
 class Student extends \Core\Model
-
 {
     protected static $table = 'students';
 
@@ -43,4 +42,22 @@ class Student extends \Core\Model
         return $timeTable->getWithJoin();
     }
 
+    public function getAllAttendance()
+    {
+        $attendance = new Attendance(null, ['field' => 'studentID', 'value' => $this->getId()]);
+        return $attendance->getWithJoin();
+    }
+
+    public function getAttendanceBySubject($subjectCode)
+    {
+        $attendance = new Attendance(null, [['field' => 'studentID', 'value' => $this->getId()], ['field' => 'subjects.subjectCode', 'value' => $subjectCode]]);
+        return $attendance->getWithJoin();
+    }
+
+    public function getAttendanceByDay($day)
+    {
+        $attendance = new Attendance(null, [['field' => 'studentID', 'value' => $this->getId()], ['field' => 'date', 'value' => $day]]);
+        return $attendance->getWithJoin();
+
+    }
 }
