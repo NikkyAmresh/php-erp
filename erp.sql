@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 18, 2021 at 04:08 AM
+-- Generation Time: Dec 07, 2021 at 10:02 PM
 -- Server version: 5.7.27
 -- PHP Version: 7.1.32
 
@@ -39,6 +39,27 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`id`, `userID`) VALUES
 (1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendances`
+--
+
+CREATE TABLE `attendances` (
+  `id` int(11) NOT NULL,
+  `studentID` int(11) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) NOT NULL,
+  `timeTableID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `attendances`
+--
+
+INSERT INTO `attendances` (`id`, `studentID`, `date`, `status`, `timeTableID`) VALUES
+(1, 1, '2021-12-08 05:59:43', 1, 415);
 
 -- --------------------------------------------------------
 
@@ -106,13 +127,8 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `departmentID`, `branchID`, `section`, `semesterID`, `teacherID`) VALUES
-(1, 1, 1, 'a', 1, 1),
-(2, 1, 1, 'b', 1, 1),
-(3, 1, 1, 'a', 3, 1),
-(4, 2, 2, 'a', 3, 2),
-(5, 1, 1, 'a', 6, 1),
-(7, 1, 4, 'c', 3, 7),
-(8, 2, 2, 'd', 2, 2);
+(9, 1, 1, 'a', 4, 10),
+(10, 1, 1, 'b', 6, 9);
 
 -- --------------------------------------------------------
 
@@ -152,9 +168,9 @@ CREATE TABLE `departments` (
 --
 
 INSERT INTO `departments` (`id`, `name`, `hodID`) VALUES
-(1, 'Computer Science', 1),
-(2, 'Electrical', 1),
-(24, 'CIVIL', 7);
+(1, 'Computer Science', 14),
+(2, 'Electrical', 9),
+(24, 'CIVIL', 11);
 
 -- --------------------------------------------------------
 
@@ -174,9 +190,13 @@ CREATE TABLE `periods` (
 --
 
 INSERT INTO `periods` (`id`, `fromTime`, `toTime`, `isExtra`) VALUES
-(1, '9:30', '10:40', NULL),
-(2, '10:15', '11:18', NULL),
-(3, '17:16', '11:11', NULL);
+(4, '09:20', '10:10', NULL),
+(5, '10:10', '11:00', NULL),
+(6, '11:20', '12:10', NULL),
+(7, '12:10', '13:00', NULL),
+(8, '14:00', '14:50', NULL),
+(9, '14:50', '15:40', NULL),
+(10, '15:40', '16:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -220,9 +240,9 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `classID`, `rollNum`) VALUES
-(1, 1, 4, 3, 3, '190240101065'),
-(2, 3, 5, 3, 3, '190240101016'),
-(3, 4, 4, 3, 8, '1902ECE');
+(1, 1, 4, 3, 9, '190240101065'),
+(2, 3, 5, 3, 9, '190240101016'),
+(3, 4, 4, 3, 10, '1902ECE');
 
 -- --------------------------------------------------------
 
@@ -242,8 +262,15 @@ CREATE TABLE `subjects` (
 --
 
 INSERT INTO `subjects` (`id`, `name`, `subjectCode`, `departmentID`) VALUES
-(1, 'database management system', 'dbms', 1),
-(2, 'applied physics', 'ap', 1);
+(4, 'Operating System', 'BCST-501', 1),
+(5, 'Computer Network', 'BCST-502', 1),
+(6, 'DAA', 'BCST-503', 1),
+(7, 'Java Programming', 'BCSt-504 D', 1),
+(8, 'PPL', 'BOCS-505 A', 1),
+(9, 'DAA Lab', 'BCSP-503', 1),
+(10, 'JAVA Lab', 'BCST-506', 1),
+(11, 'CN LAB', 'BCSP-501', 1),
+(12, 'OS LAB', 'BCSP-502', 1);
 
 -- --------------------------------------------------------
 
@@ -262,10 +289,13 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`id`, `userID`, `departmentID`) VALUES
-(1, 5, 2),
-(2, 6, 2),
-(3, 17, 1),
-(8, 21, 1);
+(9, 22, 1),
+(10, 23, 1),
+(11, 24, 1),
+(12, 25, 1),
+(13, 26, 1),
+(14, 27, 1),
+(15, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -287,11 +317,56 @@ CREATE TABLE `timetables` (
 --
 
 INSERT INTO `timetables` (`id`, `periodID`, `day`, `classID`, `subjectID`, `teacherID`) VALUES
-(5, 1, 'thursday', 5, 2, 3),
-(6, 2, 'monday', 3, 1, 1),
-(7, 3, 'wednesday', 1, 1, 1),
-(8, 1, 'friday', 2, 1, 3),
-(9, 1, 'thursday', 4, 1, 1);
+(254, 4, 'monday', 10, 9, 11),
+(259, 9, 'monday', 10, 7, 12),
+(261, 4, 'tuesday', 10, 6, 11),
+(275, 6, 'wednesday', 10, 6, 10),
+(285, 4, 'monday', 10, 9, 11),
+(290, 9, 'monday', 10, 7, 12),
+(292, 4, 'tuesday', 10, 6, 11),
+(306, 6, 'wednesday', 10, 6, 10),
+(346, 4, 'monday', 10, 9, 11),
+(351, 9, 'monday', 10, 7, 12),
+(353, 4, 'tuesday', 10, 6, 11),
+(367, 6, 'wednesday', 10, 6, 10),
+(378, 4, 'monday', 10, 9, 11),
+(379, 9, 'monday', 10, 7, 12),
+(380, 4, 'tuesday', 10, 6, 11),
+(381, 6, 'wednesday', 10, 6, 10),
+(411, 4, 'monday', 10, 9, 11),
+(412, 9, 'monday', 10, 7, 12),
+(413, 4, 'tuesday', 10, 6, 11),
+(414, 6, 'wednesday', 10, 6, 10),
+(415, 5, 'monday', 9, 5, 10),
+(416, 6, 'monday', 9, 6, 11),
+(417, 7, 'monday', 9, 7, 12),
+(418, 8, 'monday', 9, 8, 13),
+(419, 10, 'monday', 9, 9, 11),
+(420, 5, 'tuesday', 9, 10, 12),
+(421, 6, 'tuesday', 9, 6, 11),
+(422, 7, 'tuesday', 9, 7, 12),
+(423, 8, 'tuesday', 9, 8, 13),
+(424, 9, 'tuesday', 9, 7, 11),
+(425, 4, 'wednesday', 9, 4, 9),
+(426, 5, 'thursday', 9, 5, 10),
+(427, 4, 'friday', 9, 4, 9),
+(428, 5, 'saturday', 9, 5, 10),
+(429, 4, 'thursday', 9, 4, 9),
+(430, 5, 'friday', 9, 5, 10),
+(431, 4, 'saturday', 9, 4, 9),
+(432, 5, 'wednesday', 9, 5, 10),
+(433, 7, 'wednesday', 9, 7, 12),
+(434, 6, 'thursday', 9, 12, 9),
+(435, 7, 'thursday', 9, 11, 10),
+(436, 6, 'friday', 9, 6, 11),
+(437, 7, 'friday', 9, 6, 11),
+(438, 6, 'saturday', 9, 6, 11),
+(439, 7, 'saturday', 9, 6, 11),
+(440, 9, 'friday', 9, 9, 13),
+(441, 10, 'wednesday', 9, 7, 14),
+(442, 9, 'thursday', 9, 8, 14),
+(443, 8, 'thursday', 9, 7, 15),
+(444, 8, 'wednesday', 9, 8, 14);
 
 -- --------------------------------------------------------
 
@@ -323,7 +398,14 @@ INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `lastLogin`) V
 (18, 'Anuk', 'nik.ky.amresh.8@gmail.com', '89237', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 16:31:17'),
 (19, 'Nikky Amresh', 'kjhdrtykj@dfghjkk.fdgh', '+91880900692', '045cbbfb5d0ea613f5f487aa25e5495c', '2021-11-14 16:41:40'),
 (20, 'Anushree', 'asjjh@jh.asdf', '3874982374', '098f6bcd4621d373cade4e832627b4f6', '2021-11-14 18:27:50'),
-(21, 'Nikky Amresh', '8800900692@fd.hg', '91880900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 11:55:07');
+(21, 'Nikky Amresh', '8800900692@fd.hg', '91880900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 11:55:07'),
+(22, 'Mrs Taruna Chhabra', 'MrsTarunaChhabra@gmail.com', '7868768767', '2adf7c12befeb2de8bd153bb0c3413f6', '2021-11-18 18:06:28'),
+(23, 'Mrs Bhanu Priya', 'bhanup@gmail.com', '8739587982345', '098f6bcd4621d373cade4e832627b4f6', '2021-11-18 18:06:58'),
+(24, 'Mr Gaurav Gupta', 'ashdkfjha@gmail.com', '817498782', '098f6bcd4621d373cade4e832627b4f6', '2021-11-18 18:07:26'),
+(25, 'Mr Durga Prasad Roy', '8374982374@hgs.sdf', '376287465', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 18:07:55'),
+(26, 'Mr Ravindra Kumar', 'kjasdhfj@jkhksdjf.sjdhf', '8743958752', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 18:08:22'),
+(27, 'Mr Deepak Arya', '918800900692@gmail.com', '84757864375', '927a0354df56b565ff387e339d4ddf80', '2021-11-19 05:38:15'),
+(28, 'Nikky Amresh', 'nikkyamresh8@gmail.com', '+91880900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-20 06:28:02');
 
 --
 -- Indexes for dumped tables
@@ -333,7 +415,16 @@ INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `lastLogin`) V
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `AdminUser` (`userID`);
+
+--
+-- Indexes for table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `timeTable_Attendance` (`timeTableID`),
+  ADD KEY `student_Attendace` (`studentID`);
 
 --
 -- Indexes for table `batches`
@@ -345,13 +436,18 @@ ALTER TABLE `batches`
 -- Indexes for table `branches`
 --
 ALTER TABLE `branches`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `departMentBranch` (`departmentID`);
 
 --
 -- Indexes for table `classes`
 --
 ALTER TABLE `classes`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `classDepartment` (`departmentID`),
+  ADD KEY `ClassBranch` (`branchID`),
+  ADD KEY `classSemester` (`semesterID`),
+  ADD KEY `classTeacher` (`teacherID`);
 
 --
 -- Indexes for table `courses`
@@ -363,7 +459,8 @@ ALTER TABLE `courses`
 -- Indexes for table `departments`
 --
 ALTER TABLE `departments`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `hod` (`hodID`);
 
 --
 -- Indexes for table `periods`
@@ -381,7 +478,8 @@ ALTER TABLE `semesters`
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `studentUser` (`userID`);
 
 --
 -- Indexes for table `subjects`
@@ -418,22 +516,28 @@ ALTER TABLE `admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `attendances`
+--
+ALTER TABLE `attendances`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `batches`
 --
 ALTER TABLE `batches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `branches`
 --
 ALTER TABLE `branches`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `courses`
@@ -445,13 +549,13 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `departments`
 --
 ALTER TABLE `departments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `periods`
 --
 ALTER TABLE `periods`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -463,31 +567,75 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `timetables`
 --
 ALTER TABLE `timetables`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `AdminUser` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `attendances`
+--
+ALTER TABLE `attendances`
+  ADD CONSTRAINT `student_Attendace` FOREIGN KEY (`studentID`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `timeTable_Attendance` FOREIGN KEY (`timeTableID`) REFERENCES `timetables` (`id`);
+
+--
+-- Constraints for table `branches`
+--
+ALTER TABLE `branches`
+  ADD CONSTRAINT `departMentBranch` FOREIGN KEY (`departmentID`) REFERENCES `departments` (`id`);
+
+--
+-- Constraints for table `classes`
+--
+ALTER TABLE `classes`
+  ADD CONSTRAINT `ClassBranch` FOREIGN KEY (`branchID`) REFERENCES `branches` (`id`),
+  ADD CONSTRAINT `classDepartment` FOREIGN KEY (`departmentID`) REFERENCES `departments` (`id`),
+  ADD CONSTRAINT `classSemester` FOREIGN KEY (`semesterID`) REFERENCES `semesters` (`id`),
+  ADD CONSTRAINT `classTeacher` FOREIGN KEY (`teacherID`) REFERENCES `teachers` (`id`);
+
+--
+-- Constraints for table `departments`
+--
+ALTER TABLE `departments`
+  ADD CONSTRAINT `hod` FOREIGN KEY (`hodID`) REFERENCES `teachers` (`id`) ON DELETE SET NULL;
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `studentUser` FOREIGN KEY (`userID`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

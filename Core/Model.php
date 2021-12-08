@@ -11,6 +11,7 @@ abstract class Model
     protected static $table = '';
     protected static $tableJOIN = '';
     protected $_data = [];
+    protected $dbCall = null;
 
     public function initDb()
     {
@@ -30,8 +31,16 @@ abstract class Model
         if ($id) {
             $this->getOneWithJoin();
         } elseif ($cond) {
-            $data = $this->db->where($cond['field'], $cond['value'])->orderBy("id", "asc")->get(static::$table);
-            $this->setData($data);
+            $this->dbCall = $this->db;
+            if (isset($cond[0])) {
+                foreach ($cond as $condition) {
+                    $this->dbCall = $this->dbCall->where($condition['field'], $condition['value']);
+                }
+            } else {
+                $this->dbCall = $this->dbCall->where($cond['field'], $cond['value'])->orderBy("id", "asc");
+                $data = $this->dbCall->get(static::$table);
+                $this->setData($data);
+            }
         }
 
     }
@@ -58,6 +67,9 @@ abstract class Model
 
     public function get()
     {
+        if (!count($this->_data)) {
+            return $this->dbCall->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
+        }
         return $this->_data;
     }
 
@@ -70,7 +82,7 @@ abstract class Model
     public function getWithJoin()
     {
         if ($this->cond) {
-            return $this->db->where(static::$table . ".{$this->cond['field']}", $this->cond['value'])->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
+            return $this->dbCall->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
         }
         if (!static::$tableJOIN) {
             return $this->db->getWithJoin("SELECT * FROM " . static::$table, $this->numRows, $this->orderBy);
