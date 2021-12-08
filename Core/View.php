@@ -57,6 +57,17 @@ class View
             Constants::MESSAGE_TYPE[Constants::INFO] => self::getInfoMessage()];
         $finalArgs = array_merge($args, $messages);
         $twig->addFilter(new \Twig\TwigFilter('ucf', 'ucfirst'));
+        $twig->addFilter(new \Twig\TwigFilter('ft', function ($data, $sqn) {
+            $fdata = [];
+            foreach ($data as $dt) {
+                $obj = [];
+                foreach ($sqn as $sq) {
+                    $obj[$sq] = $dt[$sq];
+                }
+                array_push($fdata, $obj);
+            }
+            return $fdata;
+        }));
         echo $twig->render($template, $finalArgs);
         self::resetMessages();
     }
