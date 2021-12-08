@@ -85,6 +85,7 @@ class Classes extends AdminController
     {
         $st = new ClassModel(null, null, ['semester', 'asc']);
         $res = $st->getWithJoin();
+        $columns = array('serial no', 'name', 'teacher', 'edit');
         $depts = (new Department())->getWithJoin();
         $branches = (new Branch())->getWithJoin();
         $teachers = (new Teacher())->getWithJoin();
@@ -94,6 +95,7 @@ class Classes extends AdminController
             $res[$key]['name'] = $this->className($r);
         }
         $this->setTemplateVars([
+            'columns' => $columns,
             'classes' => $res,
             'deps' => $depts,
             'branches' => $branches,

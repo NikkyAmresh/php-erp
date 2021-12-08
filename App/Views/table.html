@@ -1,57 +1,62 @@
-{% extends "base.html" %} {% block title %}Admin | Department{% endblock %}
-{%block body %}
 <div class="flex m-5">
     <div class="col-span-12">
         <div class="overflow-auto lg:overflow-visible">
             <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
                 <thead class="bg-blue-900 text-white">
                     <tr>
-                        <th class="p-3 lg:w-4 text-center">Serial no.</th>
-                        <th class="p-3 text-center">{%block thead%}{% endblock %}</th>
-                        <th class="p-3 text-left">Edit</th>
+                        {% for item in columns %}
+                        <th class="p-3 lg:w-4 text-left">{{item}}</th>
+                        {% endfor %}
                     </tr>
                 </thead>
                 <tbody>
+                    {% for item in tableItems %}
                     <tr class="bg-blue-100 lg:text-black">
-                        <td class="p-3 font-medium capitalize">{% block serial%}{% endblock %}</td>
-                        <td class="p-3 text-center">{%block tbody%}{% endblock %} </td>
+                        {% if item.id %}
+                        <td class="p-3 font-medium capitalize lg:w-4">{{item.id}}</td>
+                        {% endif %}
+                        {% if item.name %}
+                        <td class="p-3 text-center">{{item.name}}</td>
+                        {% endif %}
+                        {% if item.code %}
+                        <td class="p-3 text-center">{{item.code}}</td>
+                        {% endif %}
+                        {% if item.branchCode %}
+                        <td class="p-3 text-center">{{item.branchCode}}</td>
+                        {% endif %}
+                        {% if item.teacher %}
+                        <td class="p-3 text-center">{{item.teacher}}</td>
+                        {% endif %}
+                        {% if item.duration %}
+                        <td class="p-3 text-center">{{item.duration}}</td>
+                        {% endif %}
+                        {% if item.hod %}
+                        <td class="p-3 text-center">{{item.hod}}</td>
+                        {% endif %}
+                        {% if item.fromTime and item.toTime %}
+                        <td class="p-3 text-center">{{item.fromTime}}-{{item.toTime}}</td>
+                        {% endif %}
+                        {% if item.subjectCode %}
+                        <td class="p-3 text-center">{{item.subjectCode}}</td>
+                        {% endif %}
+                        {% if item.subjectDepartment %}
+                        <td class="p-3 text-center">{{item.subjectDepartment}}</td>
+                        {% endif %}
+                        {% if item.teacherDepartment %}
+                        <td class="p-3 text-center">{{item.teacherDepartment}}</td>
+                        {% endif %}
                         <td class="p-3">
-                            <a href="/admin/batch/{{batch.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
+                            <a href="/admin/{{type}}/{{item.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
                                 <i class="material-icons-outlined text-base">edit</i>
                             </a>
-                            <a href="/admin/deleteBatch/{{batch.id}}" class="text-red-400 hover:text-red-500 ml-2">
+                            <a href="/admin/{{delType}}/{{item.id}}" class="text-red-400 hover:text-red-500 ml-2">
                                 <i class="material-icons-round text-base">delete_outline</i>
                             </a>
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-<br />
-<form action="/admin/createBatch" method="post">
-    <h4>Create Batch</h4>
-    <div class="input-field col s12">
-        <h4>From</h4>
-        <select name="fromYear" class="browser-default" id="hod">
-            {% for year in years.from %}
-            <option value="{{year}}">{{year}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <div class="input-field col s12">
-        <h4 for="toYear">To</h4>
-        <select name="toYear" class="browser-default" id="hod">
-            {% for year in years.to %}
-            <option value="{{year}}">{{year}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <button class="btn bg-orange lighten-1 z-depth-0">create</button>
-</form>
-<br />
-<a href="/admin">Back to list</a>
-{% endblock %}

@@ -55,7 +55,8 @@ class Department extends AdminController
     {
         $st = new DepartmentModel();
         $res = $st->getWithJoin();
-        $this->setTemplateVars(['department' => $res]);
+        $columns = array('serial no', 'department', 'hod', 'edit');
+        $this->setTemplateVars(['department' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Department/index.html');
 
     }

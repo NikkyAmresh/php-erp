@@ -7,5 +7,5 @@ use Core\Model;
 class Subject extends Model
 {
     protected static $table = 'subjects';
-    protected static $tableJOIN = 'SELECT subjects.*,dept.name as department from subjects join departments as dept on subjects.departmentID=dept.id';
+    protected static $tableJOIN = 'SELECT subjects.*,dept.name as subjectDepartment from subjects join departments as dept on subjects.departmentID=dept.id';
 }

@@ -10,7 +10,8 @@ class Semester extends AdminController
     {
         $st = new SemesterModel();
         $res = $st->getAll();
-        $this->setTemplateVars(['semesters' => $res]);
+        $columns = array('serial no', 'name', 'edit');
+        $this->setTemplateVars(['semesters' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Semester/index.html');
     }
     public function createAction()

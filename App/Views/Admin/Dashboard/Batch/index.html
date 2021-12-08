@@ -1,40 +1,10 @@
-{% extends "base.html" %} {% block title %}Admin | Department{% endblock %}
-{%block body %}
+{% extends "base.html" %}
+{% block body %}
 <a href="/admin/newBatch">
   <button
     class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
     New
   </button>
 </a>
-<div class="flex m-5">
-  <div class="col-span-12">
-    <div class="overflow-auto lg:overflow-visible">
-      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
-        <thead class="bg-blue-900 text-white">
-          <tr>
-            <th class="p-3 lg:w-4 text-center">Serial no.</th>
-            <th class="p-3 text-center">Batch</th>
-            <th class="p-3 text-left">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for batch in batches%}
-          <tr class="bg-blue-100 lg:text-black">
-            <td class="p-3 font-medium capitalize">{{batch.id}}</td>
-            <td class="p-3 text-center">{{batch.code}} </td>
-            <td class="p-3">
-              <a href="/admin/batch/{{batch.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
-                <i class="material-icons-outlined text-base">edit</i>
-              </a>
-              <a href="/admin/deleteBatch/{{batch.id}}" class="text-red-400 hover:text-red-500 ml-2">
-                <i class="material-icons-round text-base">delete_outline</i>
-              </a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+{% include "table.html" with {'tableItems':batches,'columns':columns,'type':'batch','delType':'deleteBatch'}%}
 {% endblock %}

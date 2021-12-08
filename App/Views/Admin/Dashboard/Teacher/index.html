@@ -6,38 +6,5 @@ block body %}
     New
   </button>
 </a>
-<div class="flex m-5">
-  <div class="col-span-12">
-    <div class="overflow-auto lg:overflow-visible">
-      <table class="table lg:h-full lg:w-screen text-gray-400 border-separate space-y-6 text-sm">
-        <thead class="bg-blue-900 text-white">
-          <tr>
-            <th class="p-3 lg:w-4 text-left">Serial no.</th>
-            <th class="p-3 text-center">Name</th>
-            <th class="p-3 text-center">Department</th>
-            <th class="p-3 text-left">Edit</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for tcher in teacher%}
-          <tr class="bg-blue-100 lg:text-black">
-            <td class="p-3 font-medium capitalize">{{tcher.id}}</td>
-            <td class="p-3 text-center">{{tcher.name}}</td>
-            <td class="p-3 text-center">{{tcher.department}}</td>
-
-            <td class="p-3">
-              <a href="/admin/teacher/{{tcher.id}}" class="text-yellow-400 hover:text-yellow-500 mx-2">
-                <i class="material-icons-outlined text-base">edit</i>
-              </a>
-              <a href="/admin/deleteTeacher/{{tcher.id}}" class="text-red-400 hover:text-red-500 ml-2">
-                <i class="material-icons-round text-base">delete_outline</i>
-              </a>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+{% include "table.html" with{'columns':columns,'tableItems':teacher,'type':'teacher','delType':'deleteTeacher'} %}
 {% endblock %}
