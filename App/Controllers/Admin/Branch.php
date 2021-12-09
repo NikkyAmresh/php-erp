@@ -61,9 +61,8 @@ class Branch extends AdminController
     {
         $st = new BranchModel();
         $res = $st->getWithJoin();
-        $depts = (new Department())->getAll();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
-        $this->setTemplateVars(['branches' => $res, 'deps' => $depts, 'columns' => $columns]);
+        $this->setTemplateVars(['branches' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Branch/index.html');
     }
     public function editAction()

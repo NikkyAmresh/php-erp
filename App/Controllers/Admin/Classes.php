@@ -86,10 +86,6 @@ class Classes extends AdminController
         $st = new ClassModel(null, null, ['semester', 'asc']);
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
-        $depts = (new Department())->getWithJoin();
-        $branches = (new Branch())->getWithJoin();
-        $teachers = (new Teacher())->getWithJoin();
-        $semesters = (new Semester)->getWithJoin();
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->className($r);
@@ -97,10 +93,6 @@ class Classes extends AdminController
         $this->setTemplateVars([
             'columns' => $columns,
             'classes' => $res,
-            'deps' => $depts,
-            'branches' => $branches,
-            'teachers' => $teachers,
-            'semesters' => $semesters,
             'sections' => $sections,
         ]);
         $this->renderTemplate('Admin/Dashboard/Classes/index.html');
