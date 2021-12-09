@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Core\Model;
 
-class Batch extends Model{
-    protected static $table = 'batches'; 
+class Batch extends Model
+{
+    protected $table = 'batches';
 }

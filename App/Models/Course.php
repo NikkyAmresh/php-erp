@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Core\Model;
 
-class Course extends Model{
-    protected static $table = 'courses'; 
+class Course extends Model
+{
+    protected $table = 'courses';
 }

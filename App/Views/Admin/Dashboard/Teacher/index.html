@@ -1,4 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Teacher{% endblock %} {%
-block body %} {% set type="teacher" %} {% include "tableHeading.html" %} {%
-include "table.html" with{ 'headings':columns,
+block body %} {% include "tableHeading.html" %} {% include "table.html" with{
+'headings':columns,
 'items':teachers,'columns':['id','name','teacherDepartment']} %} {% endblock %}

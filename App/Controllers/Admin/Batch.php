@@ -7,6 +7,8 @@ use App\Models\Batch as BatchModel;
 
 class Batch extends AdminController
 {
+    protected $pageType = 'batch';
+
     public function get10Years()
     {
         $currentYear = date("Y");

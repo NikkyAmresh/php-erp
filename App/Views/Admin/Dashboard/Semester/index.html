@@ -1,4 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | semester{% endblock %} {%
-block body %} {% set type = "semester" %} {% include "tableHeading.html" %} {%
-include 'table.html' with{'headings':columns,'items':semesters,
-'columns':['id','name']}%} {% endblock %}
+block body %}{% include "tableHeading.html" %} {% include 'table.html'
+with{'headings':columns,'items':semesters, 'columns':['id','name']}%} {%
+endblock %}

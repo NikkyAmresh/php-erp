@@ -4,11 +4,11 @@ namespace App\Models;
 
 class User extends \Core\Model
 {
-    protected static $table = 'users';
+    protected $table = 'users';
 
     public function auth($email, $pass)
     {
-        $result = $this->db->where('email', $email)->where('password', md5($pass))->getOne(static::$table);
+        $result = $this->db->where('email', $email)->where('password', md5($pass))->getOne($this->table);
         if ($result && isset($result['id'])) {
             // $this->get($result['id']);
             $this->user = $result;

@@ -7,6 +7,7 @@ use App\Models\Period as PeriodModel;
 
 class Period extends AdminController
 {
+    protected $pageType = 'period';
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {

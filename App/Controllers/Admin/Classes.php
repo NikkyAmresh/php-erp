@@ -12,6 +12,8 @@ use App\Models\Teacher;
 class Classes extends AdminController
 {
 
+    protected $pageType = 'classes';
+
     public function className($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);

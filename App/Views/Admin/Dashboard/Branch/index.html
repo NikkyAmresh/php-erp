@@ -1,4 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Branch{% endblock %} {% block
-body %} {% set type = "branch"%} {% include "tableHeading.html" %} {% include
-"table.html" with{'headings':columns,'items':branches,'columns':['id', 'name',
-'code', 'department'],} %} {% endblock %}
+body %} {% include "tableHeading.html" %} {% include "table.html"
+with{'headings':columns,'items':branches,'columns':['id', 'name', 'code',
+'department'],} %} {% endblock %}

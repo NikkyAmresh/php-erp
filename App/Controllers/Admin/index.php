@@ -9,6 +9,7 @@ use App\Models\Admin;
 class Index extends AdminBaseController
 {
 
+    protected $pageType = 'home';
     public function isAlreadyLoggedIn()
     {
         return Session::get(Constants::LOGGED_IN_ADMIN_ID);

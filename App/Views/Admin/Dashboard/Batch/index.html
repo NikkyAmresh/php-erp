@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block body %} {% set type = "batch"%} {% include
-"tableHeading.html" %} {% include "table.html" with
+{% extends "base.html" %} {% block body %} {% include "tableHeading.html" %} {%
+include "table.html" with
 {'items':batches,'headings':columns,'columns':['id','code','fromYear','toYear']}%}
 {% endblock %}

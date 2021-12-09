@@ -1,5 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Subject{% endblock %} {%
-block body %} {% set type = "subject"%} {% include "tableHeading.html" %} {%
-include "table.html"
+block body %} {% include "tableHeading.html" %} {% include "table.html"
 with{'headings':columns,'items':subjects,'columns':['id','name','subjectCode','department']}
 %} {% endblock %}

@@ -10,6 +10,8 @@ use App\Models\TimeTable as TimeTableModel;
 
 class TimeTable extends AdminController
 {
+    protected $pageType = 'timetable';
+
     public function className($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);

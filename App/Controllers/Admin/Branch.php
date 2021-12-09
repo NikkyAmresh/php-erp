@@ -8,6 +8,8 @@ use App\Models\Department;
 
 class Branch extends AdminController
 {
+    protected $pageType = 'branch';
+
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {

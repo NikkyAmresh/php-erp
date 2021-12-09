@@ -1,4 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Department{% endblock %} {%
-block body %} {% set type = "department" %} {% include "tableHeading.html" %} {%
-include "table.html" with{ 'headings':columns, 'items':departments, 'columns':
-['id','name','hod']} %} {% endblock %}
+block body %} {% include "tableHeading.html" %} {% include "table.html" with{
+'headings':columns, 'items':departments, 'columns': ['id','name','hod']} %} {%
+endblock %}

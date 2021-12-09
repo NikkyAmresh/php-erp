@@ -1,5 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Class{% endblock %} {% block
-body %} {% set type = "class"%} {% include "tableHeading.html" %} {% include
-"table.html"
+body %} {% include "tableHeading.html" %} {% include "table.html"
 with{'headings':columns,'items':classes,'columns':['id','name','teacher']} %} {%
 endblock %}

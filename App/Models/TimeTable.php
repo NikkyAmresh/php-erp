@@ -6,8 +6,8 @@ use Core\Model;
 
 class TimeTable extends Model
 {
-    protected static $table = 'timetables';
-    protected static $tableJOIN = 'SELECT timetables.*,
+    protected $table = 'timetables';
+    protected $tableJOIN = 'SELECT timetables.*,
     departments.name as department,
     departments.id as departmentID,
     branches.name as branch,
@@ -33,11 +33,10 @@ class TimeTable extends Model
 '
     ;
 
-
     public function getStudents()
     {
-        if($this->id){
-            $students = new Student(null,['field'=>'classID','value'=>$this->getClassID()]);
+        if ($this->id) {
+            $students = new Student(null, ['field' => 'classID', 'value' => $this->getClassID()]);
             $students = $students->getWithJoin();
         }
         return;

@@ -6,6 +6,8 @@ use App\Models\Course as CourseModel;
 
 class Course extends AdminController
 {
+    protected $pageType = 'course';
+
     public function indexAction()
     {
         $st = new CourseModel();

@@ -8,8 +8,8 @@ use App\Config;
 abstract class Model
 {
 
-    protected static $table = '';
-    protected static $tableJOIN = '';
+    protected $table = '';
+    protected $tableJOIN = '';
     protected $_data = [];
     protected $dbCall = null;
 
@@ -24,8 +24,8 @@ abstract class Model
         $this->cond = $cond;
         $this->orderBy = $orderBy;
         $this->numRows = $numRows;
-        if (!static::$tableJOIN) {
-            self::$tableJOIN = "SELECT * FROM " . static::$table;
+        if (!$this->tableJOIN) {
+            $this->tableJOIN = "SELECT * FROM " . $this->table;
         }
         $this->initDb();
         if ($id) {
@@ -60,40 +60,34 @@ abstract class Model
 
     public function getAll($numRows = null)
     {
-        return $this->db->orderBy("id", "asc")->get(static::$table, $numRows);
+        return $this->db->orderBy("id", "asc")->get($this->table, $numRows);
     }
 
     public function get()
     {
         if (!count($this->_data)) {
-            return $this->dbCall->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
+            return $this->dbCall->getWithJoin($this->tableJOIN, $this->numRows, $this->orderBy);
         }
         return $this->_data;
     }
 
     public function delete()
     {
-        return $this->db->where("id", $this->id)->delete(static::$table);
+        return $this->db->where("id", $this->id)->delete($this->table);
 
     }
 
     public function getWithJoin()
     {
-        if ($this->cond) {
-            return $this->dbCall->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
-        }
-        if (!static::$tableJOIN) {
-            return $this->db->getWithJoin("SELECT * FROM " . static::$table, $this->numRows, $this->orderBy);
-        }
         if ($this->id) {
-            return $this->db->where(static::$table . '.id', $this->id)->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
+            return $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN, $this->numRows, $this->orderBy);
         }
-        return $this->db->getWithJoin(static::$tableJOIN, $this->numRows, $this->orderBy);
+        return $this->db->getWithJoin($this->tableJOIN, $this->numRows, $this->orderBy);
     }
 
     public function getOneWithJoin()
     {
-        $data = $this->db->where(static::$table . '.id', $this->id)->getWithJoin(static::$tableJOIN);
+        $data = $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN);
         $this->setData($data[0]);
         return $this->_data;
 
@@ -109,19 +103,19 @@ abstract class Model
             }
         }
         if (isset($this->_data['id'])) {
-            return $this->db->where('id', $this->_data['id'])->update(static::$table, $dataToInsert);
+            return $this->db->where('id', $this->_data['id'])->update($this->table, $dataToInsert);
         }
-        return $this->db->insert(static::$table, $dataToInsert);
+        return $this->db->insert($this->table, $dataToInsert);
     }
 
     public function deleteMany($cond, $numRows = null)
     {
-        $this->db->where(static::$table . ".{$cond['field']}", $cond['value'])->delete(static::$table, $numRows);
+        $this->db->where($this->table . ".{$cond['field']}", $cond['value'])->delete($this->table, $numRows);
     }
 
     public function insertMulti($dataArray)
     {
-        $this->db->insertMulti(static::$table, $dataArray);
+        $this->db->insertMulti($this->table, $dataArray);
     }
 
     public function setData($data)
@@ -141,6 +135,6 @@ abstract class Model
 
     public function getTableStructure()
     {
-        return $this->db->query('DESC ' . static::$table);
+        return $this->db->query('DESC ' . $this->table);
     }
 }

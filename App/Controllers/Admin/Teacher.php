@@ -9,6 +9,8 @@ use App\Models\User;
 
 class Teacher extends AdminController
 {
+    protected $pageType = 'teacher';
+
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {

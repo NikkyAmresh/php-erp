@@ -6,6 +6,7 @@ use App\Controllers\Student\StudentController;
 
 class Attendance extends StudentController
 {
+    protected $pageType = 'attendance';
     public function indexAction()
     {
         $res = $this->student->getAttendanceBySubject('BCST-502');

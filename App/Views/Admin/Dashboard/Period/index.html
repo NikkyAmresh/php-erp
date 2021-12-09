@@ -1,5 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {% block
-body %} {% set type = "period"%} {% include "tableHeading.html" %} {% include
-"table.html"
+body %} {% include "tableHeading.html" %} {% include "table.html"
 with{'headings':columns,'items':periods,columns:['id','fromTime','toTime']} %}
 {% endblock %}
