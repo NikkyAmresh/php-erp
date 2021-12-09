@@ -8,7 +8,7 @@ use App\Models\Department;
 
 class Branch extends AdminController
 {
-    protected $pageType = 'branch';
+    protected $pageCode = 'branch';
 
     public function createAction()
     {

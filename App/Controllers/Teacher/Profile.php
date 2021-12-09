@@ -7,7 +7,7 @@ use App\Models\Teacher;
 
 class Profile extends TeacherController
 {
-    protected $pageType = 'profile';
+    protected $pageCode = 'profile';
 
     public function indexAction()
     {

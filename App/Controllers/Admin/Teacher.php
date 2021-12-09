@@ -9,7 +9,7 @@ use App\Models\User;
 
 class Teacher extends AdminController
 {
-    protected $pageType = 'teacher';
+    protected $pageCode = 'teacher';
 
     public function createAction()
     {

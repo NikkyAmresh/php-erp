@@ -7,7 +7,7 @@ use App\Models\Subject as SubjectModel;
 
 class Subject extends AdminController
 {
-    protected $pageType = 'subject';
+    protected $pageCode = 'subject';
     public function indexAction()
     {
         $st = new SubjectModel();

@@ -6,7 +6,7 @@ use App\Controllers\Student\StudentController;
 
 class Profile extends StudentController
 {
-    protected $pageType = 'profile';
+    protected $pageCode = 'profile';
 
     public function indexAction()
     {

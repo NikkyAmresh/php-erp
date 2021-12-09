@@ -6,7 +6,7 @@ use App\Models\Semester as SemesterModel;
 
 class Semester extends AdminController
 {
-    protected $pageType = 'semester';
+    protected $pageCode = 'semester';
     public function indexAction()
     {
         $st = new SemesterModel();

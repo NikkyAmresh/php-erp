@@ -12,7 +12,7 @@ use \Core\View;
 
 class Attendance extends TeacherController
 {
-    protected $pageType = 'attendance';
+    protected $pageCode = 'attendance';
 
     public function indexAction()
     {

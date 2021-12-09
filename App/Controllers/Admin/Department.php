@@ -7,7 +7,7 @@ use App\Models\Department as DepartmentModel;
 
 class Department extends AdminController
 {
-    protected $pageType = 'department';
+    protected $pageCode = 'department';
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {

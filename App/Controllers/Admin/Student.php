@@ -12,7 +12,7 @@ use App\Models\User;
 class Student extends AdminController
 {
 
-    protected $pageType = 'student';
+    protected $pageCode = 'student';
     public function className($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);

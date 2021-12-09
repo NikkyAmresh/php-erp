@@ -7,7 +7,7 @@ use App\Models\Batch as BatchModel;
 
 class Batch extends AdminController
 {
-    protected $pageType = 'batch';
+    protected $pageCode = 'batch';
 
     public function get10Years()
     {

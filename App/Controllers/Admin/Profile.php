@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 class Profile extends AdminController
 {
-    protected $pageType = 'profile';
+    protected $pageCode = 'profile';
     public function indexAction()
     {
         $this->setTemplateVars(['admin' => $this->admin->get()]);

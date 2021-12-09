@@ -10,7 +10,7 @@ use App\Models\TimeTable as TimeTableModel;
 
 class TimeTable extends AdminController
 {
-    protected $pageType = 'timetable';
+    protected $pageCode = 'timetable';
 
     public function className($array)
     {

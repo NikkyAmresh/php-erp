@@ -12,7 +12,7 @@ use App\Models\Teacher;
 class Classes extends AdminController
 {
 
-    protected $pageType = 'classes';
+    protected $pageCode = 'classes';
 
     public function className($array)
     {

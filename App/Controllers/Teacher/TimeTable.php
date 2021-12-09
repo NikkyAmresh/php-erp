@@ -6,7 +6,7 @@ use App\Models\Period;
 
 class TimeTable extends TeacherController
 {
-    protected $pageType = 'timetable';
+    protected $pageCode = 'timetable';
     public function getAction()
     {
         $res = $this->teacher->getTimeTable();

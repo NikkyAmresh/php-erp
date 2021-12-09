@@ -13,7 +13,7 @@ use App\Helpers\Session;
 abstract class Controller
 {
 
-    protected $pageType = 'index';
+    protected $pageCode = 'index';
     /**
      * Parameters from the matched route
      * @var array
@@ -51,7 +51,7 @@ abstract class Controller
 
         if (method_exists($this, $method)) {
             if ($this->before() !== false) {
-                $this->setTemplateVars(['type' => $this->pageType]);
+                $this->setTemplateVars(['type' => $this->pageCode]);
                 call_user_func_array([$this, $method], $args);
                 $this->after();
             }
