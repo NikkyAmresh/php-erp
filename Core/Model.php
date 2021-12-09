@@ -38,8 +38,6 @@ abstract class Model
                 }
             } else {
                 $this->dbCall = $this->dbCall->where($cond['field'], $cond['value'])->orderBy("id", "asc");
-                $data = $this->dbCall->get(static::$table);
-                $this->setData($data);
             }
         }
 
@@ -103,10 +101,17 @@ abstract class Model
 
     public function save()
     {
-        if (isset($this->_data['id'])) {
-            return $this->db->where('id', $this->_data['id'])->update(static::$table, $this->_data);
+        $dataToInsert = $this->_data;
+        $columns = array_column($this->getTableStructure(), 'Field');
+        foreach (array_keys($dataToInsert) as $key) {
+            if (!(in_array($key, $columns))) {
+                unset($dataToInsert[$key]);
+            }
         }
-        return $this->db->insert(static::$table, $this->_data);
+        if (isset($this->_data['id'])) {
+            return $this->db->where('id', $this->_data['id'])->update(static::$table, $dataToInsert);
+        }
+        return $this->db->insert(static::$table, $dataToInsert);
     }
 
     public function deleteMany($cond, $numRows = null)
@@ -129,4 +134,13 @@ abstract class Model
         return $this->db->getLastError();
     }
 
+    public function runQuery($query)
+    {
+        return $this->db->query($query);
+    }
+
+    public function getTableStructure()
+    {
+        return $this->db->query('DESC ' . static::$table);
+    }
 }

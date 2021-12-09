@@ -24,7 +24,7 @@ class Batch extends AdminController
         $st = new BatchModel();
         $res = $st->getAll();
         $years = $this->get10Years();
-        $columns = array('serial no', 'batch', 'edit');
+        $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
         $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }

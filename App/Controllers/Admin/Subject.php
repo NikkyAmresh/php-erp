@@ -13,7 +13,7 @@ class Subject extends AdminController
         $dep = new DepartmentModel();
         $deps = $dep->getAll();
         $res = $st->getWithJoin();
-        $columns = array('serial no', 'name', 'code', 'department', 'edit');
+        $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
         $this->setTemplateVars(['subjects' => $res, 'deps' => $deps, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }

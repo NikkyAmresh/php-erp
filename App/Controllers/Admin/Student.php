@@ -108,7 +108,7 @@ class Student extends AdminController
         foreach ($classes as $key => $r) {
             $classes[$key]['name'] = $this->className($r);
         }
-        $columns = array('serial no', 'name', 'edit');
+        $columns = array('Serial no', 'Name', 'Edit');
         $this->setTemplateVars([
             'columns' => $columns,
             'students' => $res,

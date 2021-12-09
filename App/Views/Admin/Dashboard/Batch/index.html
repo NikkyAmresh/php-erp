@@ -1,10 +1,4 @@
-{% extends "base.html" %}
-{% block body %}
-<a href="/admin/newBatch">
-  <button
-    class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
-    New
-  </button>
-</a>
-{% include "table.html" with {'tableItems':batches,'columns':columns,'type':'batch','delType':'deleteBatch'}%}
+{% extends "base.html" %} {% block body %} {% set type = "batch"%} {% include
+"tableHeading.html" %} {% include "table.html" with
+{'items':batches,'headings':columns,'columns':['id','code','fromYear','toYear']}%}
 {% endblock %}

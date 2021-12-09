@@ -1,9 +1,5 @@
 {% extends "base.html" %} {% block title %}Admin | Class{% endblock %} {% block
-body %}
-<a href="/admin/newClasses">
-  <button
-    class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
-    New
-  </button></a>
-{% include "table.html" with{'columns':columns,'tableItems':classes,'type':'classes','delType':'deleteClasses'} %}
-{% endblock %}
+body %} {% set type = "class"%} {% include "tableHeading.html" %} {% include
+"table.html"
+with{'headings':columns,'items':classes,'columns':['id','name','teacher']} %} {%
+endblock %}

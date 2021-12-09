@@ -1,10 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | semester{% endblock %} {%
-block body %}
-<a href="/admin/newSemester">
-    <button
-        class="bg-transparent hover:bg-blue-900 mx-5 my-2 text-blue-900 font-semibold hover:text-white py-2 px-4 border border-blue-900 hover:border-transparent rounded">
-        New
-    </button>
-</a>
-{% include 'table.html' with{'columns':columns,'tableItems':semesters,'type':'semester','delType':'deleteSemester'}%}
-{% endblock %}
+block body %} {% set type = "semester" %} {% include "tableHeading.html" %} {%
+include 'table.html' with{'headings':columns,'items':semesters,
+'columns':['id','name']}%} {% endblock %}

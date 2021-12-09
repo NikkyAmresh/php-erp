@@ -85,7 +85,7 @@ class Classes extends AdminController
     {
         $st = new ClassModel(null, null, ['semester', 'asc']);
         $res = $st->getWithJoin();
-        $columns = array('serial no', 'name', 'teacher', 'edit');
+        $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
         $depts = (new Department())->getWithJoin();
         $branches = (new Branch())->getWithJoin();
         $teachers = (new Teacher())->getWithJoin();

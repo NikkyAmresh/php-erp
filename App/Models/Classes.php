@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Core\Model;
 use App\Models\Student;
+use Core\Model;
 
 class Classes extends Model
 {
@@ -12,7 +12,13 @@ class Classes extends Model
 
     public function getStudents()
     {
-        $st = new Student(null,['field'=>'classID','value'=>$this->id]);
+        $st = new Student(null, ['field' => 'classID', 'value' => $this->id]);
         return $st->getWithJoin();
+    }
+
+    public function getTimeTable()
+    {
+        $st = new TimeTable(null, ['field' => 'classID', 'value' => $this->id]);
+        return $res = $st->get();
     }
 }

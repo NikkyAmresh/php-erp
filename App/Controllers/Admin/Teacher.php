@@ -70,8 +70,8 @@ class Teacher extends AdminController
         $st = new TeacherModel();
         $res = $st->getWithJoin();
         $depts = (new Department())->getAll();
-        $columns = array('serial no', 'name', 'department', 'edit');
-        $this->setTemplateVars(['teacher' => $res, 'deps' => $depts, 'columns' => $columns]);
+        $columns = array('Serial no', 'Name', 'Department', 'Edit');
+        $this->setTemplateVars(['teachers' => $res, 'deps' => $depts, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }
     public function editAction()

@@ -10,7 +10,7 @@ class Course extends AdminController
     {
         $st = new CourseModel();
         $res = $st->getAll();
-        $columns = array('serial no', 'course', 'duration', 'edit');
+        $columns = array('Serial no', 'Course', 'Duration', 'Edit');
         $this->setTemplateVars(['courses' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Course/index.html');
     }
