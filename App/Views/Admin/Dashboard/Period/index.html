@@ -1,29 +1,4 @@
-{% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {%
-block body %}
-<h4>Periods</h4>
-{% for period in periods%}
-Timing {{period.fromTime}}-{{period.toTime}} <br>
-<a class="btn bg-red" href="/admin/period/{{period.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deletePeriod/{{period.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
-
-<h4>New Period</h4>
-<form action="/admin/createPeriod" method="post">
-    <h5>Timing</h5>
-    <div class="input-field">
-        <label for="fromTime">From</label>
-        <input type="time" id="appt" name="fromTime" min="09:00" max="18:00" required>
-    </div>
-    <div class="input-field">
-        <label for="toTime">To</label>
-        <input type="time" id="appt" name="toTime" min="09:00" max="18:00" required>
-    </div>
-
-    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
-
+{% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {% block
+body %} {% include "tableHeading.html" %} {% include "table.html"
+with{'headings':columns,'items':periods,columns:['id','fromTime','toTime']} %}
 {% endblock %}

@@ -7,6 +7,8 @@ use App\Models\Teacher;
 
 class Profile extends TeacherController
 {
+    protected $pageCode = 'profile';
+
     public function indexAction()
     {
         $res = $this->teacher->getOneWithJoin();

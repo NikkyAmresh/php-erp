@@ -9,6 +9,8 @@ use App\Models\User;
 
 class Teacher extends AdminController
 {
+    protected $pageCode = 'teacher';
+
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
@@ -69,8 +71,8 @@ class Teacher extends AdminController
     {
         $st = new TeacherModel();
         $res = $st->getWithJoin();
-        $depts = (new Department())->getAll();
-        $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);
+        $columns = array('Serial no', 'Name', 'Department', 'Edit');
+        $this->setTemplateVars(['teachers' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }
     public function editAction()
@@ -84,5 +86,11 @@ class Teacher extends AdminController
         } else {
             $this->redirect("/admin/teacher", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $depts = (new Department())->getAll();
+        $this->setTemplateVars(['deps' => $depts]);
+        $this->renderTemplate('Admin/Dashboard/Teacher/new.html');
     }
 }

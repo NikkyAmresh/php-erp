@@ -1,9 +1,9 @@
-#!/Applications/mampstack-7.1.32-0/php/bin/php
+#!/Applications/mampstack-7.3.32-0/php/bin/php
 <?php
 
 echo "Updating db";
 
-$db = new mysqli('localhost', 'root', 'MyNewPass');
+$db = new mysqli('localhost', 'root', 'root03');
 
 $database = 'erp';
 $db->query('use information_schema');

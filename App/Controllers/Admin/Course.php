@@ -6,11 +6,14 @@ use App\Models\Course as CourseModel;
 
 class Course extends AdminController
 {
+    protected $pageCode = 'course';
+
     public function indexAction()
     {
         $st = new CourseModel();
         $res = $st->getAll();
-        $this->setTemplateVars(['courses' => $res]);
+        $columns = array('Serial no', 'Course', 'Duration', 'Edit');
+        $this->setTemplateVars(['courses' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Course/index.html');
     }
     public function createAction()
@@ -64,5 +67,9 @@ class Course extends AdminController
         } else {
             $this->redirect("/admin/course", ["message" => "Invalid course id!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Course/new.html');
     }
 }

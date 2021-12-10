@@ -6,5 +6,5 @@ use Core\Model;
 
 class Period extends Model
 {
-    protected static $table = 'periods';
+    protected $table = 'periods';
 }

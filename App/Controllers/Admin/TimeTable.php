@@ -10,52 +10,14 @@ use App\Models\TimeTable as TimeTableModel;
 
 class TimeTable extends AdminController
 {
+    protected $pageCode = 'timetable';
+
     public function className($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);
         $year = ceil($result / 2);
         return $array['branch'] . ' (' . $year . ")year [sem - ${array['semester']}] | section " . ucfirst($array['section']);
     }
-
-    // public function createAction()
-    // {
-    //     if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-    //         $timeTable = new TimeTableModel();
-    //         $timeTable->setPeriodID($_REQUEST['period']);
-    //         $timeTable->setDay($_REQUEST['day']);
-    //         $timeTable->setClassID($_REQUEST['class']);
-    //         $timeTable->setSubjectID($_REQUEST['subject']);
-    //         $timeTable->setTeacherID($_REQUEST['teacher']);
-
-    //         if ($timeTable->save()) {
-    //             $this->setSuccessMessage("TimeTable created successfully");
-    //         } else {
-    //             $this->setErrorMessage("Unable to create TimeTable");
-    //         }
-    //     } else {
-    //         $this->setErrorMessage("Invalid Request!");
-    //     }
-    //     return $this->redirect('/admin/timeTable');
-    // }
-    // public function updateAction()
-    // {
-    //     if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['period']))) {
-    //         $timeTable = new TimeTableModel($_REQUEST['id']);
-    //         $timeTable->setPeriodID($_REQUEST['period']);
-    //         $timeTable->setDay($_REQUEST['day']);
-    //         $timeTable->setClassID($_REQUEST['class']);
-    //         $timeTable->setSubjectID($_REQUEST['subject']);
-    //         $timeTable->setTeacherID($_REQUEST['teacher']);
-    //         if ($timeTable->save()) {
-    //             $this->setSuccessMessage("TimeTable {$_REQUEST['period']} updated successfully");
-    //         } else {
-    //             $this->setErrorMessage("Unable to update TimeTable");
-    //         }
-    //     } else {
-    //         $this->setErrorMessage("Invalid Request!");
-    //     }
-    //     return $this->redirect('/admin/timeTable');
-    // }
 
     public function updateByClassAction()
     {
@@ -67,61 +29,10 @@ class TimeTable extends AdminController
 
     }
 
-    // public function deleteAction()
-    // {
-    //     $timeTable = new TimeTableModel($this->route_params['id']);
-    //     $res = $timeTable->delete();
-    //     if ($res) {
-    //         $this->setSuccessMessage("TimeTable delete successfully");
-    //     } else {
-    //         $this->setErrorMessage("Unable to create TimeTable");
-    //     }
-    //     return $this->redirect('/admin/timeTable');
-    // }
-
-    // public function indexAction()
-    // {
-    //     $st = new TimeTableModel();
-    //     $res = $st->getWithJoin();
-    //     $subjects = new SubjectModel();
-    //     $subRes = $subjects->getAll();
-    //     $periods = (new Period())->getAll();
-    //     $classes = new ClassModel();
-    //     $classRes = $classes->getWithJoin();
-    //     $teacher = new TeacherModel();
-    //     $teacherRes = $teacher->getWithJoin();
-    //     $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    //     foreach ($classRes as $key => $r) {
-    //         $classRes[$key]['name'] = $this->className($r);
-    //     }
-    //     View::renderTemplate('Admin/Dashboard/TimeTable/index.html', ['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
-    // }
-    // public function editAction()
-    // {
-    //     $st = new TimeTableModel($this->route_params['id']);
-    //     $res = $st->get();
-    //     $subjects = new SubjectModel();
-    //     $periods = (new Period())->getAll();
-    //     $subRes = $subjects->getAll();
-    //     $classes = new ClassModel();
-    //     $classRes = $classes->getWithJoin();
-    //     $teacher = new TeacherModel();
-    //     $teacherRes = $teacher->getWithJoin();
-    //     $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-    //     foreach ($classRes as $key => $r) {
-    //         $classRes[$key]['name'] = $this->className($r);
-    //     }
-    //     if ($res) {
-    //         View::renderTemplate('Admin/Dashboard/TimeTable/edit.html', ['timeTable' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
-    //     } else {
-    //         $this->redirect("/admin/timeTable", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR));
-    //     }
-    // }
-
     public function getAction()
     {
-        $st = new TimeTableModel();
-        $res = $st->getWithJoin(null, null, ['field' => 'classID', 'value' => $this->route_params['id']], null);
+        $st = new ClassModel($this->route_params['id']);
+        $res = $st->getTimeTable();
         echo json_encode($res);
         return;
     }
@@ -129,7 +40,6 @@ class TimeTable extends AdminController
     {
         $st = new TimeTableModel();
         $res = $st->getWithJoin();
-        // var_dump($st->db->rawQuery("DESC Users",1));
         $subjects = new SubjectModel();
         $subRes = $subjects->getAll();
         $periods = (new Period())->getAll();

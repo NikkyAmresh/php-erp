@@ -7,6 +7,7 @@ use App\Models\Period as PeriodModel;
 
 class Period extends AdminController
 {
+    protected $pageCode = 'period';
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
@@ -59,7 +60,8 @@ class Period extends AdminController
     {
         $st = new PeriodModel();
         $res = $st->getAll();
-        $this->setTemplateVars(['periods' => $res]);
+        $columns = array('Serial no', 'from', 'to', 'Edit');
+        $this->setTemplateVars(['periods' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Period/index.html');
     }
     public function editAction()
@@ -72,5 +74,9 @@ class Period extends AdminController
         } else {
             $this->redirect("/admin/period", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Period/new.html');
     }
 }

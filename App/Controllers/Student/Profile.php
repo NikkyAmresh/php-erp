@@ -3,10 +3,11 @@
 namespace App\Controllers\Student;
 
 use App\Controllers\Student\StudentController;
-use App\Models\Student;
 
 class Profile extends StudentController
 {
+    protected $pageCode = 'profile';
+
     public function indexAction()
     {
         $res = $this->student->getOneWithJoin();

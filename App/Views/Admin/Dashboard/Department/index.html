@@ -1,22 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Department{% endblock %} {%
-block body %}
-<h1>Departments</h1>
-{% for dept in department%}
- {{dept.id}} ({{dept.name}}) - HOD [{{dept.hod}}]
-<a class="btn bg-red" href="/admin/department/{{dept.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteDepartment/{{dept.id}}">Delete</a>
- <br />
- <br />
-{% endfor %}
-
-<form action="/admin/createDepartment" method="post">
-  <div class="input-field">
-    <label for="name">Department Name</label>
-    <input type="text" id="name" name="name" />
-  </div>
-  <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br>
-<a href="/admin">Back to Admin Dashboard</a>
-
-{% endblock %}
+block body %} {% include "tableHeading.html" %} {% include "table.html" with{
+'headings':columns, 'items':departments, 'columns': ['id','name','hod']} %} {%
+endblock %}

@@ -8,6 +8,8 @@ use App\Models\Department;
 
 class Branch extends AdminController
 {
+    protected $pageCode = 'branch';
+
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
@@ -61,8 +63,8 @@ class Branch extends AdminController
     {
         $st = new BranchModel();
         $res = $st->getWithJoin();
-        $depts = (new Department())->getAll();
-        $this->setTemplateVars(['branches' => $res, 'deps' => $depts]);
+        $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
+        $this->setTemplateVars(['branches' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Branch/index.html');
     }
     public function editAction()
@@ -76,5 +78,11 @@ class Branch extends AdminController
         } else {
             $this->redirect("/admin/branch", ["message" => "Invalid BranchID!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $depts = (new Department())->getAll();
+        $this->setTemplateVars(['deps' => $depts]);
+        $this->renderTemplate('Admin/Dashboard/Branch/new.html');
     }
 }

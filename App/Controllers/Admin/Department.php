@@ -7,6 +7,7 @@ use App\Models\Department as DepartmentModel;
 
 class Department extends AdminController
 {
+    protected $pageCode = 'department';
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
@@ -55,7 +56,8 @@ class Department extends AdminController
     {
         $st = new DepartmentModel();
         $res = $st->getWithJoin();
-        $this->setTemplateVars(['department' => $res]);
+        $columns = array('Serial no', 'Department', 'HOD', 'Edit');
+        $this->setTemplateVars(['departments' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Department/index.html');
 
     }
@@ -70,5 +72,9 @@ class Department extends AdminController
         } else {
             $this->redirect("/admin/department", ["message" => "Invalid DepartmentID!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Department/new.html');
     }
 }

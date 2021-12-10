@@ -6,8 +6,8 @@ use Core\Model;
 
 class Attendance extends Model
 {
-    protected static $table = 'attendances';
-    protected static $tableJOIN = 'SELECT
+    protected $table = 'attendances';
+    protected $tableJOIN = 'SELECT
         attendances.*,users.name,classes.section,branches.name,branches.code,timetables.teacherID,teacherUser.name,timetables.day,periods.fromTime,periods.toTime,subjects.name,subjects.subjectCode
         FROM `attendances`
         join students on students.id=attendances.studentID

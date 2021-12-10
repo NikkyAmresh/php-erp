@@ -1,0 +1,52 @@
+<div class="flex m-5 my-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <table
+        class="
+          table
+          lg:h-full lg-80vw
+          text-gray-400
+          border-separate
+          space-y-6
+          text-sm
+          border-collapse border-2 border-double border-blue-300
+        "
+      >
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            {% for heading in headings %}
+            <th class="p-3 lg:w-4 text-center border border-solid border-white">
+              {{heading|ucf}}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items|ft(columns) %}
+          <tr class="bg-blue-100 lg:text-black">
+            {% for key, data in item %}
+            <td class="p-3 text-right border border-solid border-white">
+              {{data}}
+            </td>
+            {% endfor %}
+            <td class="p-3 text-right border border-solid border-white">
+              <a
+                href="/admin/{{type}}/{{item.id}}"
+                class="text-yellow-400 hover:text-yellow-500 mx-2"
+              >
+                <i class="material-icons-outlined text-base">edit</i>
+              </a>
+              <a
+                href="/admin/delete{{type|ucf}}/{{item.id}}"
+                class="text-red-400 hover:text-red-500 ml-2"
+              >
+                <i class="material-icons-round text-base">delete_outline</i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

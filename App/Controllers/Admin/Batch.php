@@ -7,6 +7,8 @@ use App\Models\Batch as BatchModel;
 
 class Batch extends AdminController
 {
+    protected $pageCode = 'batch';
+
     public function get10Years()
     {
         $currentYear = date("Y");
@@ -24,7 +26,8 @@ class Batch extends AdminController
         $st = new BatchModel();
         $res = $st->getAll();
         $years = $this->get10Years();
-        $this->setTemplateVars(['batches' => $res, 'years' => $years]);
+        $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
+        $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }
     public function createAction()
@@ -83,5 +86,12 @@ class Batch extends AdminController
         } else {
             $this->redirect("/admin/teacher", ["message" => "Invalid Batch id!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $years = $this->get10Years();
+        $this->setTemplateVars(['years' => $years]);
+        $this->renderTemplate('Admin/Dashboard/Batch/new.html');
+
     }
 }

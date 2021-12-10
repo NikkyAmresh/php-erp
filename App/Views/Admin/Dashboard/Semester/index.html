@@ -1,23 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | semester{% endblock %} {%
-block body %}
-<h1>Semesters</h1>
-{% for semester in semesters%} Semester Name: {{semester.name}}
-<br>
-<a class="btn bg-red" href="/admin/semester/{{semester.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteSemester/{{semester.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
-
-<h4>New semester</h4>
-<form action="/admin/createSemester" method="post">
-    <div class="input-field">
-        <label for="name">Semester Name</label>
-        <input type="text" id="name" name="name" />
-    </div>
-    <button class="btn bg-orange lighten-1 z-depth-0">Create</button>
-</form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
-
-{% endblock %}
+block body %}{% include "tableHeading.html" %} {% include 'table.html'
+with{'headings':columns,'items':semesters, 'columns':['id','name']}%} {%
+endblock %}

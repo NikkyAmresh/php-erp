@@ -6,11 +6,13 @@ use App\Models\Semester as SemesterModel;
 
 class Semester extends AdminController
 {
+    protected $pageCode = 'semester';
     public function indexAction()
     {
         $st = new SemesterModel();
         $res = $st->getAll();
-        $this->setTemplateVars(['semesters' => $res]);
+        $columns = array('Serial no', 'Name', 'Edit');
+        $this->setTemplateVars(['semesters' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Semester/index.html');
     }
     public function createAction()
@@ -62,5 +64,9 @@ class Semester extends AdminController
         } else {
             $this->redirect("/admin/semester", ["message" => "Invalid semester id!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $this->renderTemplate('Admin/Dashboard/Semester/new.html');
     }
 }

@@ -1,37 +1,4 @@
 {% extends "base.html" %} {% block title %}Admin | Subject{% endblock %} {%
-block body %}
-<h4>Subjects</h4>
-{% for subject in subjects%} {{subject.id}}.{{subject.name}} <br>
-Code - {{subject.subjectCode}} <br>
-Deparment - {{subject.department}}
-<a class="btn bg-red" href="/admin/subject/{{subject.id}}">Edit</a>
-<a class="btn bg-red" href="/admin/deleteSubject/{{subject.id}}">Delete</a>
-<br />
-<br />
-{% endfor %}
-
-<h4>New Subject</h4>
-<form action="/admin/createSubject" method="post">
-    <div class="input-field">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" />
-    </div>
-    <div class="input-field">
-        <label for="subjectCode">Code</label>
-        <input type="text" id="name" name="subjectCode" />
-    </div>
-    <label for="hod">Department</label>
-    <div class="input-field col s12">
-        <select name="department" class="browser-default" id="hod">
-            {% for dep in deps %}
-            <option value="{{dep.id}}">{{dep.name}}</option>
-            {% endfor %}
-        </select>
-        <br />
-    </div>
-    <button class="btn bg-orange lighten-1 z-subjecth-0">Create</button>
-</form>
-<br />
-<a href="/admin">Back to Admin Dashboard</a>
-
-{% endblock %}
+block body %} {% include "tableHeading.html" %} {% include "table.html"
+with{'headings':columns,'items':subjects,'columns':['id','name','subjectCode','department']}
+%} {% endblock %}

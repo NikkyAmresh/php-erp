@@ -8,7 +8,7 @@ use App\Models\Teacher;
 
 class Index extends TeacherBaseController
 {
-
+    protected $pageCode = 'home';
     public function isAlreadyLoggedIn()
     {
         return Session::get(Constants::LOGGED_IN_TEACHER_ID);

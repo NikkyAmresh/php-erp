@@ -6,15 +6,15 @@ use Core\Model;
 
 class Teacher extends Model
 {
-    protected static $table = 'teachers';
-    protected static $tableJOIN = 'SELECT teachers.*,departments.name as department, users.name as name,users.email as email,users.mobile as mobile FROM `teachers` join departments on departments.id=teachers.departmentID left JOIN users on users.id = teachers.userID';
+    protected $table = 'teachers';
+    protected $tableJOIN = 'SELECT teachers.*,departments.name as teacherDepartment, users.name as name,users.email as email,users.mobile as mobile FROM `teachers` join departments on departments.id=teachers.departmentID left JOIN users on users.id = teachers.userID';
 
     public function teacherAuth($email, $pass)
     {
         $usr = new User();
         $validate = $usr->auth($email, $pass);
         if ($validate) {
-            $teacher = $this->db->where('userID', $usr->getUser()['id'])->getOne(static::$table);
+            $teacher = $this->db->where('userID', $usr->getUser()['id'])->getOne($this->table);
             if ($teacher) {
                 $this->user = $usr->getUser();
                 $this->teacher = $teacher;
@@ -39,7 +39,7 @@ class Teacher extends Model
 
     public function getTimeTable()
     {
-        $timeTable = new TimeTable(null, ['field' => 'teacherID', 'value' => $this->getId()]);
+        $timeTable = new TimeTable(null, ['field' => 'timetables.teacherID', 'value' => $this->getId()]);
         return $timeTable->getWithJoin();
     }
 }

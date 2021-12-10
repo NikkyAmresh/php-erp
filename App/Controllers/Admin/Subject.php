@@ -7,13 +7,13 @@ use App\Models\Subject as SubjectModel;
 
 class Subject extends AdminController
 {
+    protected $pageCode = 'subject';
     public function indexAction()
     {
         $st = new SubjectModel();
-        $dep = new DepartmentModel();
-        $deps = $dep->getAll();
         $res = $st->getWithJoin();
-        $this->setTemplateVars(['subjects' => $res, 'deps' => $deps]);
+        $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
+        $this->setTemplateVars(['subjects' => $res, 'columns' => $columns]);
         $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }
     public function createAction()
@@ -71,5 +71,12 @@ class Subject extends AdminController
         } else {
             $this->redirect("/admin/subject", ["message" => "Invalid subject id!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $dep = new DepartmentModel();
+        $deps = $dep->getAll();
+        $this->setTemplateVars(['deps' => $deps]);
+        $this->renderTemplate('Admin/Dashboard/Subject/new.html');
     }
 }

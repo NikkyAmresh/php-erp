@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block body %}
+<form action="/admin/createTeacher" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
+    <div class="input-field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" />
+    </div>
+    <div class="input-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" />
+    </div>
+    <div class="input-field">
+        <label for="mobile">Mobile</label>
+        <input type="tel" id="mobile" name="mobile" />
+    </div>
+    <div class="input-field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" />
+    </div>
+    <label for="hod">Department</label>
+    <div class="input-field col s12">
+        <select name="department" class="browser-default" id="hod">
+            {% for dep in deps %}
+            <option value="{{dep.id}}">{{dep.name}}</option>
+            {% endfor %}
+        </select>
+        <br />
+    </div>
+    <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">Create</button>
+</form>
+{% endblock %}

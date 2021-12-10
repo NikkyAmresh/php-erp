@@ -3,17 +3,16 @@
 namespace App\Models;
 
 class Admin extends \Core\Model
-
 {
-    protected static $table = 'admin';
-    protected static $tableJOIN = 'select admin.*,users.name as name,users.email as email,users.mobile as mobile from admin join users on users.id=admin.userID';
+    protected $table = 'admin';
+    protected $tableJOIN = 'select admin.*,users.name as name,users.email as email,users.mobile as mobile from admin join users on users.id=admin.userID';
 
     public function adminAuth($email, $pass)
     {
         $usr = new User();
         $validate = $usr->auth($email, $pass);
         if ($validate) {
-            $adminUser = $this->db->where('userID', $usr->getUser()['id'])->getOne(static::$table);
+            $adminUser = $this->db->where('userID', $usr->getUser()['id'])->getOne($this->table);
             if ($adminUser) {
                 $this->adminUser = $usr->getUser();
                 return true;

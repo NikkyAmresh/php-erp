@@ -12,6 +12,7 @@ use App\Models\User;
 class Student extends AdminController
 {
 
+    protected $pageCode = 'student';
     public function className($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);
@@ -102,17 +103,10 @@ class Student extends AdminController
     {
         $st = new StudentModel(null, null, ['users.name', 'asc']);
         $res = $st->getWithJoin();
-        $courses = (new Course())->getWithJoin();
-        $batches = (new Batch())->getWithJoin();
-        $classes = (new Classes())->getWithJoin(null, null, null, ['semester', 'asc']);
-        foreach ($classes as $key => $r) {
-            $classes[$key]['name'] = $this->className($r);
-        }
+        $columns = array('Serial no.', 'Roll no.', 'Name', 'Mobile', 'Email', 'Batch', 'Course', 'Branch', 'Semester', 'Edit');
         $this->setTemplateVars([
+            'columns' => $columns,
             'students' => $res,
-            'courses' => $courses,
-            'batches' => $batches,
-            'classes' => $classes,
         ]);
         $this->renderTemplate('Admin/Dashboard/Student/index.html');
     }
@@ -121,8 +115,10 @@ class Student extends AdminController
         $st = new StudentModel($this->route_params['id']);
         $res = $st->getOneWithJoin();
         if ($res) {
-            $courses = (new Course())->getWithJoin();
-            $batches = (new Batch())->getWithJoin();
+            $courseModel = new Course();
+            $courses = $courseModel->getWithJoin();
+            $batchesModel = new Batch();
+            $batches = $batchesModel->getWithJoin();
             $classes = (new Classes())->getWithJoin(null, null, ['semester', 'asc']);
             foreach ($classes as $key => $r) {
                 $classes[$key]['name'] = $this->className($r);
@@ -137,5 +133,20 @@ class Student extends AdminController
         } else {
             $this->redirect("/admin/student", ["message" => "Invalid StudentID!", 'type' => Constants::ERROR]);
         }
+    }
+    public function newAction()
+    {
+        $courses = (new Course())->getWithJoin();
+        $batches = (new Batch())->getWithJoin();
+        $classes = (new Classes())->getWithJoin(null, null, null, ['semester', 'asc']);
+        foreach ($classes as $key => $r) {
+            $classes[$key]['name'] = $this->className($r);
+        }
+        $this->setTemplateVars([
+            'courses' => $courses,
+            'batches' => $batches,
+            'classes' => $classes,
+        ]);
+        $this->renderTemplate('Admin/Dashboard/Student/new.html');
     }
 }
