@@ -80,7 +80,7 @@ class Student extends \Core\Model
     public function getExperiencedetails()
     {
         $experiencedetails = new Experiencedetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
-        return $educationdetails->getAll();
+        return $experiencedetails->getAll();
     }
     public function getProjects()
     {
