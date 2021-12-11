@@ -60,4 +60,10 @@ class Student extends \Core\Model
         return $attendance->getWithJoin();
 
     }
+
+    public function getCertifications()
+    {
+        $certification = new Certification(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $certification->getAll();
+    }
 }
