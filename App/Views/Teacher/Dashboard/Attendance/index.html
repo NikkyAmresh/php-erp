@@ -36,11 +36,11 @@ block body %}
       <td>{{student.rollNum}}</td>
       <td>{{student.name}}</td>
       <td>
-        <button
+        <button onclick="addP(this)"
           class="pres btn bg-gray-200 text-black hover:text-white hover:bg-green-600"
         >
           Present</button
-        ><button
+        ><button onclick="addA(this)"
           class="abs btn bg-gray-200 text-black hover:text-white hover:bg-red-600"
         >
           Absent
@@ -66,20 +66,33 @@ block body %}
     console.log('jQuery init');
   });
 
-  function allP() {
-    $('.pres').each(function (e) {
-      $(e).addClass('text-white bg-green-600');
+  function addP(e){
+    $(e).addClass('text-white bg-green-600');
+    $(e).siblings().each(function(){
+      removeA(this);
     })
-    $('.abs').each(function (e) {
-      $(e).removeClass('text-white bg-red-600');
+  }
+  function addA(e){
+    $(e).addClass('text-white bg-red-600');
+    $(e).siblings().each(function(){
+      removeP(this);
+    })
+  }
+  function removeP(e){
+    $(e).removeClass('text-white bg-green-600');
+  }
+  function removeA(e){
+    $(e).removeClass('text-white bg-red-600');
+  }
+
+  function allP() {
+    $('.pres').each(function () {
+      addP(this);
     })
   }
   function allA() {
-    $('.abs').each(function (e) {
-      $(e).addClass('text-white bg-red-600');
-    })
-    $('.pres').each(function (e) {
-      $(e).removeClass('text-white bg-green-600');
+    $('.abs').each(function () {
+      addA(this);
     })
   }
 </script>
