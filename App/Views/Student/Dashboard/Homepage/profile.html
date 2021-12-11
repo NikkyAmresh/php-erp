@@ -44,7 +44,10 @@
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Guardian's Email</div>
-                                <div class="px-4 py-2">{{studentpersonaldetails[0].fatherEmail}}</div>
+                                <div class="px-4 py-2">
+                                    <a
+                                        href="mailto:studentpersonaldetails[0].fatherEmail">{{studentpersonaldetails[0].fatherEmail}}</a>
+                                </div>
                             </div>
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Address</div>
@@ -54,7 +57,7 @@
                             <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Email.</div>
                                 <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="{{student.email}}">{{student.email}}</a>
+                                    <a class="text-blue-800" href="mailto:{{student.email}}">{{student.email}}</a>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +65,7 @@
                 </div>
 
                 <div class="my-4"></div>
-                <div class="overflow-auto h-96">
+                <div>
                     <div class="bg-white p-3 shadow-sm rounded-sm">
 
                         <div class="grid grid-cols-2">
@@ -116,6 +119,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="bg-white p-3 shadow-sm rounded-sm">
 
                         <div class="grid grid-cols-2">
@@ -135,6 +139,7 @@
                                         <span class="tracking-wide">Previous Education</span>
                                     </div>
                                     <div>
+                                        {% if educationdetails|length %}
                                         {% for education in educationdetails %}
                                         <div>
                                             <div class="px-4 py-2 font-semibold">{{education.school}}
@@ -147,6 +152,13 @@
 
                                         </div>
                                         {% endfor %}
+                                        {% else %}
+
+                                        <div class="px-4 py-2">
+                                            No results for previous education.
+                                        </div>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -164,6 +176,7 @@
                                         <span class="tracking-wide">Experiences</span>
                                     </div>
                                     <div class="grid md:grid-cols-2 text-sm">
+                                        {% if experience|length %}
                                         {% for exp in experience %}
                                         <div>
                                             <div class="px-4 py-2 font-semibold">{{exp.title|ucf}}
@@ -178,12 +191,16 @@
 
                                         </div>
                                         {% endfor %}
+                                        {% else %}
+                                        <div class="px-4 py-2">
+                                            No experience till now.
+                                        </div>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <div class="bg-white p-3 shadow-sm rounded-sm">
 
                         <div class="grid grid-cols-2">
@@ -195,6 +212,7 @@
                                         </span>
                                         <span class="tracking-wide">Skills and Endornments</span>
                                     </div>
+                                    {% if achivements|length %}
                                     {% for achievement in achivements %}
                                     <div>
                                         <div>
@@ -207,7 +225,15 @@
                                         </div>
                                     </div>
                                     {% endfor %}
+                                    {% else %}
+                                    <div>
+                                        <div class="px-4 py-2">
+                                            No updates yet.
+                                        </div>
+                                    </div>
+                                    {% endif %}
 
+                                    {% if certificate|length %}
                                     {% for certificate in certification %}
                                     <div>
                                         <div>
@@ -222,7 +248,11 @@
                                         </div>
                                     </div>
                                     {% endfor %}
-
+                                    {% else %}
+                                    <div class="px-4 py-2">
+                                        No updates yet
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
@@ -238,6 +268,7 @@
                                         </span>
                                         <span class="tracking-wide">Projects and works</span>
                                     </div>
+                                    {% if projects|length %}
                                     {% for project in projects %}
                                     <div>
                                         <div>
@@ -252,6 +283,12 @@
                                         </div>
                                     </div>
                                     {% endfor %}
+                                    {% else %}
+                                    <div class="px-4 py-2">
+                                        No projects yet
+                                    </div>
+                                    {% endif %}
+
                                 </div>
                             </div>
                         </div>
