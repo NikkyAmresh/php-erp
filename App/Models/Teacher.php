@@ -42,4 +42,24 @@ class Teacher extends Model
         $timeTable = new TimeTable(null, ['field' => 'timetables.teacherID', 'value' => $this->getId()]);
         return $timeTable->getWithJoin();
     }
+    public function getCertifications()
+    {
+        $certification = new Certification(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $certification->getAll();
+    }
+    public function getAchievementdetails()
+    {
+        $achivementdetails = new Achivementdetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $achivementdetails->getAll();
+    }
+    public function getExperiencedetails()
+    {
+        $experiencedetails = new Experiencedetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $experiencedetails->getAll();
+    }
+    public function getProjects()
+    {
+        $projects = new Project(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $projects->getAll();
+    }
 }
