@@ -96,6 +96,7 @@ class Classes extends AdminController
             'columns' => $columns,
             'classes' => $res,
             'sections' => $sections,
+            'result' => $st->result()
         ]);
         $this->renderTemplate('Admin/Dashboard/Classes/index.html');
     }

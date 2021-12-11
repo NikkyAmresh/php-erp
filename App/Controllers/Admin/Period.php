@@ -59,9 +59,9 @@ class Period extends AdminController
     public function indexAction()
     {
         $st = new PeriodModel();
-        $res = $st->getAll();
+        $res = $st->getWithJoin();
         $columns = array('Serial no', 'from', 'to', 'Edit');
-        $this->setTemplateVars(['periods' => $res, 'columns' => $columns]);
+        $this->setTemplateVars(['periods' => $res, 'columns' => $columns,'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Period/index.html');
     }
     public function editAction()

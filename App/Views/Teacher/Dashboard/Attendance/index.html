@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block title %}Student | Dashboard{% endblock %} {%
+{% extends "base.html" %} {% block title %}Teacher | Attendance{% endblock %} {%
 block body %}
 
 <h3>
@@ -22,9 +22,9 @@ block body %}
       <th></th>
       <th></th>
       <th>
-        <button class="btn bg-gray-200 text-white bg-green-600">
+        <button onclick="allP()" class="btn bg-gray-200 text-white bg-green-600">
           All Present</button
-        ><button class="btn bg-gray-200 text-white bg-red-600">
+        ><button onclick="allA()" class="btn bg-gray-200 text-white bg-red-600">
           All Absent
         </button>
       </th>
@@ -37,11 +37,11 @@ block body %}
       <td>{{student.name}}</td>
       <td>
         <button
-          class="btn bg-gray-200 text-black hover:text-white hover:bg-green-600"
+          class="pres btn bg-gray-200 text-black hover:text-white hover:bg-green-600"
         >
           Present</button
         ><button
-          class="btn bg-gray-200 text-black hover:text-white hover:bg-red-600"
+          class="abs btn bg-gray-200 text-black hover:text-white hover:bg-red-600"
         >
           Absent
         </button>
@@ -60,5 +60,27 @@ block body %}
     {% endfor %}
   </tbody>
 </table>
+<script>
 
+  $(document).ready(function(){
+    console.log('jQuery init');
+  });
+
+  function allP() {
+    $('.pres').each(function (e) {
+      $(e).addClass('text-white bg-green-600');
+    })
+    $('.abs').each(function (e) {
+      $(e).removeClass('text-white bg-red-600');
+    })
+  }
+  function allA() {
+    $('.abs').each(function (e) {
+      $(e).addClass('text-white bg-red-600');
+    })
+    $('.pres').each(function (e) {
+      $(e).removeClass('text-white bg-green-600');
+    })
+  }
+</script>
 {% endblock %}
