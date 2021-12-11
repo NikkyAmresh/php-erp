@@ -31,9 +31,30 @@
                             </div>
 
                             <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Father's Name</div>
+                                <div class="px-4 py-2">{{studentpersonaldetails[0].fatherName}}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Mother's Name</div>
+                                <div class="px-4 py-2">{{studentpersonaldetails[0].motherName}}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Guardian No.</div>
+                                <div class="px-4 py-2">{{studentpersonaldetails[0].fatherMobile}}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Guardian's Email</div>
+                                <div class="px-4 py-2">{{studentpersonaldetails[0].fatherEmail}}</div>
+                            </div>
+                            <div class="grid grid-cols-2">
+                                <div class="px-4 py-2 font-semibold">Address</div>
+                                <div class="px-4 py-2">{{studentpersonaldetails[0].address}}</div>
+                            </div>
+
+                            <div class="grid grid-cols-2">
                                 <div class="px-4 py-2 font-semibold">Email.</div>
                                 <div class="px-4 py-2">
-                                    <a class="text-blue-800" href="mailto:jane@example.com">{{student.email}}</a>
+                                    <a class="text-blue-800" href="{{student.email}}">{{student.email}}</a>
                                 </div>
                             </div>
                         </div>
@@ -41,61 +62,204 @@
                 </div>
 
                 <div class="my-4"></div>
+                <div class="overflow-auto h-96">
+                    <div class="bg-white p-3 shadow-sm rounded-sm">
 
-                <div class="bg-white p-3 shadow-sm rounded-sm">
-
-                    <div class="grid grid-cols-2">
-                        <div>
+                        <div class="grid grid-cols-2">
                             <div>
-                                <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                                    <span clas="text-green-500">
-                                        <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
-                                            <path fill="#fff"
-                                                d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
-                                        </svg>
-                                    </span>
-                                    <span class="tracking-wide">Education</span>
-                                </div>
-                                <div class="grid md:grid-cols-2 text-sm">
+                                <div>
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                        <span clas="text-green-500">
+                                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                                <path fill="#fff"
+                                                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                                            </svg>
+                                        </span>
+                                        <span class="tracking-wide">Current Education</span>
+                                    </div>
+                                    <div class="grid md:grid-cols-2 text-sm">
 
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Course</div>
-                                        <div class="px-4 py-2">{{student.courseName}}</div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Course</div>
+                                            <div class="px-4 py-2">{{student.courseName|ucf}}</div>
+                                        </div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Duration</div>
+                                            <div class="px-4 py-2">{{student.courseDuration}}</div>
+                                        </div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Batch</div>
+                                            <div class="px-4 py-2">{{student.batchCode}}</div>
+                                        </div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Semester</div>
+                                            <div class="px-4 py-2">{{student.semester}}</div>
+                                        </div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Section</div>
+                                            <div class="px-4 py-2">{{student.section|ucf}}</div>
+                                        </div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Branch Name</div>
+                                            <div class="px-4 py-2">{{student.branchName}}</div>
+                                        </div>
+                                        <div class="grid grid-cols-2">
+                                            <div class="px-4 py-2 font-semibold">Department</div>
+                                            <div class="px-4 py-2">{{student.department}}</div>
+                                        </div>
                                     </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Duration</div>
-                                        <div class="px-4 py-2">{{student.courseDuration}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3 shadow-sm rounded-sm">
+
+                        <div class="grid grid-cols-2">
+                            <div>
+                                <div>
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                        <span clas="text-green-500">
+                                            <svg class="h-5" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path fill="#fff" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                                <path fill="#fff"
+                                                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                                            </svg>
+                                        </span>
+                                        <span class="tracking-wide">Previous Education</span>
                                     </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Batch</div>
-                                        <div class="px-4 py-2">{{student.batchCode}}</div>
+                                    <div>
+                                        {% for education in educationdetails %}
+                                        <div>
+                                            <div class="px-4 py-2 font-semibold">{{education.school}}
+                                            </div>
+                                            <div class="px-4 py-2">
+                                                {{education.field|ucf}}
+                                                <br>
+                                                {{education.fromDate}}-{{education.toDate}}
+                                            </div>
+
+                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Semester</div>
-                                        <div class="px-4 py-2">{{student.semester}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3 shadow-sm rounded-sm">
+
+                        <div class="grid grid-cols-2">
+                            <div>
+                                <div>
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                        <span clas="text-green-500">
+                                            <i class="fas fa-briefcase"></i>
+                                        </span>
+                                        <span class="tracking-wide">Experiences</span>
                                     </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Section</div>
-                                        <div class="px-4 py-2">{{student.section|ucf}}</div>
+                                    <div class="grid md:grid-cols-2 text-sm">
+                                        {% for exp in experience %}
+                                        <div>
+                                            <div class="px-4 py-2 font-semibold">{{exp.title|ucf}}
+                                            </div>
+                                            <div class="px-4 py-2">
+                                                {{exp.companyName|ucf}}.{{exp.employmentType|ucf}}
+                                                <br>
+                                                {{exp.location|ucf}}
+                                                <br>
+                                                {{exp.fromDate}}-{{exp.toDate}}
+                                            </div>
+
+                                        </div>
+                                        {% endfor %}
                                     </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Branch Name</div>
-                                        <div class="px-4 py-2">{{student.branchName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 shadow-sm rounded-sm">
+
+                        <div class="grid grid-cols-2">
+                            <div>
+                                <div>
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                        <span clas="text-green-500">
+                                            <i class="fas fa-certificate"></i>
+                                        </span>
+                                        <span class="tracking-wide">Skills and Endornments</span>
                                     </div>
-                                    <div class="grid grid-cols-2">
-                                        <div class="px-4 py-2 font-semibold">Department</div>
-                                        <div class="px-4 py-2">{{student.department}}</div>
+                                    {% for achievement in achivements %}
+                                    <div>
+                                        <div>
+                                            <div class="px-4 py-2 font-semibold">{{achievement.title|ucf}}</div>
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            {{achievement.description|ucf}}
+                                            <br>
+                                            {{achievement.date}}
+                                        </div>
                                     </div>
+                                    {% endfor %}
+
+                                    {% for certificate in certification %}
+                                    <div>
+                                        <div>
+                                            <div class="px-4 py-2 font-semibold">{{certificate.title|ucf}}</div>
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            {{certificate.description|ucf}}
+                                            <br>
+                                            {{certificate.date}}
+                                            <br>
+                                            <a href="{{certificate.link}}">{{certificate.link}}</a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white p-3 shadow-sm rounded-sm">
+
+                        <div class="grid grid-cols-2">
+                            <div>
+                                <div>
+                                    <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
+                                        <span clas="text-green-500">
+                                            <i class="fas fa-project-diagram"></i>
+                                        </span>
+                                        <span class="tracking-wide">Projects and works</span>
+                                    </div>
+                                    {% for project in projects %}
+                                    <div>
+                                        <div>
+                                            <div class="px-4 py-2 font-semibold">{{project.title|ucf}}</div>
+                                        </div>
+                                        <div class="px-4 py-2">
+                                            {{project.description|ucf}}
+                                            <br>
+                                            {{project.fromDate}}-{{project.toDate}}
+                                            <br>
+                                            <a href="{{project.link}}">{{project.link}}</a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
-    {%endblock%}
+</div>
+{%endblock%}

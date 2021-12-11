@@ -89,7 +89,7 @@ class Student extends \Core\Model
     }
     public function getStudentpersonaldetatils()
     {
-        $studentpersonaldetails = new Studentpersonaldetail(null, [['field' => 'studentID', 'value' => $this->getID()]]);
+        $studentpersonaldetails = new Studentpersonaldetail(null, [['field' => 'studentID', 'value' => $this->getId()]]);
         return $studentpersonaldetails->getAll();
     }
 }
