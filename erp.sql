@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 07, 2021 at 10:02 PM
+-- Generation Time: Dec 10, 2021 at 11:39 PM
 -- Server version: 5.7.27
 -- PHP Version: 7.1.32
 
@@ -21,6 +21,20 @@ SET time_zone = "+00:00";
 --
 -- Database: `erp`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `achivementdetails`
+--
+
+CREATE TABLE `achivementdetails` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `title` int(11) NOT NULL,
+  `date` date NOT NULL,
+  `description` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -49,7 +63,7 @@ INSERT INTO `admin` (`id`, `userID`) VALUES
 CREATE TABLE `attendances` (
   `id` int(11) NOT NULL,
   `studentID` int(11) NOT NULL,
-  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date` date DEFAULT NULL,
   `status` int(11) NOT NULL,
   `timeTableID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -59,7 +73,8 @@ CREATE TABLE `attendances` (
 --
 
 INSERT INTO `attendances` (`id`, `studentID`, `date`, `status`, `timeTableID`) VALUES
-(1, 1, '2021-12-08 05:59:43', 1, 415);
+(1, 1, '2021-12-08', 1, 415),
+(2, 1, '2021-12-09', 1, 416);
 
 -- --------------------------------------------------------
 
@@ -106,6 +121,22 @@ INSERT INTO `branches` (`id`, `departmentID`, `name`, `code`) VALUES
 (1, 1, 'Computer Science Engineering', 'CSE'),
 (2, 2, 'Electronics and Communications Engineering', 'ECE'),
 (4, 24, 'Nikky Amresh', '2132');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `certifications`
+--
+
+CREATE TABLE `certifications` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `org` varchar(50) NOT NULL,
+  `description` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `link` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -175,6 +206,42 @@ INSERT INTO `departments` (`id`, `name`, `hodID`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `educationdetails`
+--
+
+CREATE TABLE `educationdetails` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `school` varchar(50) NOT NULL,
+  `degree` varchar(20) NOT NULL,
+  `fromDate` date NOT NULL,
+  `toDate` date NOT NULL,
+  `field` varchar(50) NOT NULL,
+  `grade` varchar(10) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `experiencedetails`
+--
+
+CREATE TABLE `experiencedetails` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `employmentType` varchar(20) NOT NULL,
+  `companyName` varchar(20) NOT NULL,
+  `location` varchar(20) NOT NULL,
+  `fromDate` date NOT NULL,
+  `toDate` date DEFAULT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `periods`
 --
 
@@ -201,6 +268,22 @@ INSERT INTO `periods` (`id`, `fromTime`, `toTime`, `isExtra`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `id` int(11) NOT NULL,
+  `userID` int(11) NOT NULL,
+  `title` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `fromDate` date NOT NULL,
+  `toDate` date NOT NULL,
+  `link` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `semesters`
 --
 
@@ -219,6 +302,24 @@ INSERT INTO `semesters` (`id`, `name`) VALUES
 (3, '3rd'),
 (4, '4th'),
 (6, '5th');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `studentpersonaldetails`
+--
+
+CREATE TABLE `studentpersonaldetails` (
+  `id` int(11) NOT NULL,
+  `studentID` int(11) NOT NULL,
+  `fatherName` varchar(50) NOT NULL,
+  `fatherMobile` varchar(15) NOT NULL,
+  `fatherEmail` varchar(50) NOT NULL,
+  `motherName` varchar(50) NOT NULL,
+  `motherEmail` varchar(50) NOT NULL,
+  `motherMobile` varchar(15) NOT NULL,
+  `address` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -242,7 +343,57 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`id`, `userID`, `courseID`, `batchID`, `classID`, `rollNum`) VALUES
 (1, 1, 4, 3, 9, '190240101065'),
 (2, 3, 5, 3, 9, '190240101016'),
-(3, 4, 4, 3, 10, '1902ECE');
+(3, 4, 4, 3, 10, '1902ECE'),
+(4, 30, 4, 3, 10, '9391'),
+(5, 31, 4, 3, 10, '11459'),
+(6, 32, 4, 3, 10, '16798'),
+(7, 33, 4, 3, 10, '19745'),
+(8, 34, 4, 3, 10, '19780'),
+(9, 35, 4, 3, 10, '19786'),
+(10, 36, 4, 3, 10, '19840'),
+(11, 37, 4, 3, 10, '19857'),
+(12, 38, 4, 3, 10, '23668'),
+(13, 39, 4, 3, 10, '25197'),
+(14, 40, 4, 3, 10, '28831'),
+(15, 41, 4, 3, 10, '29042'),
+(16, 42, 4, 3, 10, '29921'),
+(17, 43, 4, 3, 10, '30040'),
+(18, 44, 4, 3, 10, '30045'),
+(19, 45, 4, 3, 10, '30046'),
+(20, 46, 4, 3, 10, '30048'),
+(21, 47, 4, 3, 10, '30056'),
+(22, 48, 4, 3, 10, '30066'),
+(23, 49, 4, 3, 10, '30067'),
+(24, 50, 4, 3, 10, '30070'),
+(25, 51, 4, 3, 10, '30075'),
+(26, 52, 4, 3, 10, '30076'),
+(27, 53, 4, 3, 10, '30077'),
+(28, 54, 4, 3, 10, '30079'),
+(29, 55, 4, 3, 10, '30081'),
+(30, 56, 4, 3, 10, '30083'),
+(31, 57, 4, 3, 10, '30085'),
+(32, 58, 4, 3, 10, '30093'),
+(33, 59, 4, 3, 10, '30096'),
+(34, 60, 4, 3, 10, '30098'),
+(35, 61, 4, 3, 10, '30099'),
+(36, 62, 4, 3, 10, '30105'),
+(37, 63, 4, 3, 10, '30108'),
+(38, 64, 4, 3, 10, '30110'),
+(39, 65, 4, 3, 10, '30115'),
+(40, 66, 4, 3, 10, '30121'),
+(41, 67, 4, 3, 10, '30126'),
+(42, 68, 4, 3, 10, '30128'),
+(43, 69, 4, 3, 10, '30137'),
+(44, 70, 4, 3, 10, '30146'),
+(45, 71, 4, 3, 10, '30154'),
+(46, 72, 4, 3, 10, '30158'),
+(47, 73, 4, 3, 10, '30165'),
+(48, 74, 4, 3, 10, '30167'),
+(49, 75, 4, 3, 10, '30172'),
+(50, 76, 4, 3, 10, '30173'),
+(51, 77, 4, 3, 10, '30180'),
+(52, 78, 4, 3, 10, '30182'),
+(53, 79, 4, 3, 10, '30184');
 
 -- --------------------------------------------------------
 
@@ -317,26 +468,6 @@ CREATE TABLE `timetables` (
 --
 
 INSERT INTO `timetables` (`id`, `periodID`, `day`, `classID`, `subjectID`, `teacherID`) VALUES
-(254, 4, 'monday', 10, 9, 11),
-(259, 9, 'monday', 10, 7, 12),
-(261, 4, 'tuesday', 10, 6, 11),
-(275, 6, 'wednesday', 10, 6, 10),
-(285, 4, 'monday', 10, 9, 11),
-(290, 9, 'monday', 10, 7, 12),
-(292, 4, 'tuesday', 10, 6, 11),
-(306, 6, 'wednesday', 10, 6, 10),
-(346, 4, 'monday', 10, 9, 11),
-(351, 9, 'monday', 10, 7, 12),
-(353, 4, 'tuesday', 10, 6, 11),
-(367, 6, 'wednesday', 10, 6, 10),
-(378, 4, 'monday', 10, 9, 11),
-(379, 9, 'monday', 10, 7, 12),
-(380, 4, 'tuesday', 10, 6, 11),
-(381, 6, 'wednesday', 10, 6, 10),
-(411, 4, 'monday', 10, 9, 11),
-(412, 9, 'monday', 10, 7, 12),
-(413, 4, 'tuesday', 10, 6, 11),
-(414, 6, 'wednesday', 10, 6, 10),
 (415, 5, 'monday', 9, 5, 10),
 (416, 6, 'monday', 9, 6, 11),
 (417, 7, 'monday', 9, 7, 12),
@@ -366,7 +497,94 @@ INSERT INTO `timetables` (`id`, `periodID`, `day`, `classID`, `subjectID`, `teac
 (441, 10, 'wednesday', 9, 7, 14),
 (442, 9, 'thursday', 9, 8, 14),
 (443, 8, 'thursday', 9, 7, 15),
-(444, 8, 'wednesday', 9, 8, 14);
+(444, 8, 'wednesday', 9, 8, 14),
+(445, 5, 'monday', 9, 5, 10),
+(446, 6, 'monday', 9, 6, 11),
+(447, 7, 'monday', 9, 7, 12),
+(448, 8, 'monday', 9, 8, 13),
+(449, 10, 'monday', 9, 9, 11),
+(450, 5, 'tuesday', 9, 10, 12),
+(451, 6, 'tuesday', 9, 6, 11),
+(452, 7, 'tuesday', 9, 7, 12),
+(453, 8, 'tuesday', 9, 8, 13),
+(454, 9, 'tuesday', 9, 7, 11),
+(455, 4, 'wednesday', 9, 4, 9),
+(456, 5, 'thursday', 9, 5, 10),
+(457, 4, 'friday', 9, 4, 9),
+(458, 5, 'saturday', 9, 5, 10),
+(459, 4, 'thursday', 9, 4, 9),
+(460, 5, 'friday', 9, 5, 10),
+(461, 4, 'saturday', 9, 4, 9),
+(462, 5, 'wednesday', 9, 5, 10),
+(463, 7, 'wednesday', 9, 7, 12),
+(464, 6, 'thursday', 9, 12, 9),
+(470, 5, 'monday', 9, 5, 10),
+(471, 6, 'monday', 9, 6, 11),
+(472, 7, 'monday', 9, 7, 12),
+(473, 8, 'monday', 9, 8, 13),
+(474, 10, 'monday', 9, 9, 11),
+(475, 5, 'tuesday', 9, 10, 12),
+(476, 6, 'tuesday', 9, 6, 11),
+(477, 7, 'tuesday', 9, 7, 12),
+(478, 8, 'tuesday', 9, 8, 13),
+(479, 9, 'tuesday', 9, 7, 11),
+(480, 4, 'wednesday', 9, 4, 9),
+(481, 5, 'thursday', 9, 5, 10),
+(482, 4, 'friday', 9, 4, 9),
+(483, 5, 'saturday', 9, 5, 10),
+(484, 4, 'thursday', 9, 4, 9),
+(485, 5, 'friday', 9, 5, 10),
+(486, 4, 'saturday', 9, 4, 9),
+(487, 5, 'wednesday', 9, 5, 10),
+(488, 7, 'wednesday', 9, 7, 12),
+(489, 6, 'thursday', 9, 12, 9),
+(495, 9, 'friday', 9, 10, 12),
+(496, 5, 'monday', 9, 5, 10),
+(497, 6, 'monday', 9, 6, 11),
+(498, 7, 'monday', 9, 7, 12),
+(499, 8, 'monday', 9, 8, 13),
+(500, 10, 'monday', 9, 9, 11),
+(501, 5, 'tuesday', 9, 10, 12),
+(502, 6, 'tuesday', 9, 6, 11),
+(503, 7, 'tuesday', 9, 7, 12),
+(504, 8, 'tuesday', 9, 8, 13),
+(505, 9, 'tuesday', 9, 7, 11),
+(506, 4, 'wednesday', 9, 4, 9),
+(507, 5, 'thursday', 9, 5, 10),
+(508, 4, 'friday', 9, 4, 9),
+(509, 5, 'saturday', 9, 5, 10),
+(510, 4, 'thursday', 9, 4, 9),
+(511, 5, 'friday', 9, 5, 10),
+(512, 4, 'saturday', 9, 4, 9),
+(513, 5, 'wednesday', 9, 5, 10),
+(514, 7, 'wednesday', 9, 7, 12),
+(515, 6, 'thursday', 9, 12, 9),
+(522, 5, 'monday', 9, 5, 10),
+(523, 6, 'monday', 9, 6, 11),
+(524, 7, 'monday', 9, 7, 12),
+(525, 8, 'monday', 9, 8, 13),
+(526, 10, 'monday', 9, 9, 11),
+(527, 5, 'tuesday', 9, 10, 12),
+(528, 6, 'tuesday', 9, 6, 11),
+(529, 7, 'tuesday', 9, 7, 12),
+(530, 8, 'tuesday', 9, 8, 13),
+(531, 9, 'tuesday', 9, 7, 11),
+(532, 4, 'wednesday', 9, 4, 9),
+(533, 5, 'thursday', 10, 10, 12),
+(534, 4, 'friday', 9, 4, 9),
+(535, 5, 'saturday', 9, 5, 10),
+(536, 4, 'thursday', 9, 4, 9),
+(537, 5, 'friday', 9, 5, 10),
+(538, 4, 'saturday', 9, 4, 9),
+(539, 5, 'wednesday', 9, 5, 10),
+(540, 7, 'wednesday', 9, 7, 12),
+(541, 6, 'thursday', 9, 12, 9),
+(542, 4, 'monday', 10, 9, 11),
+(543, 9, 'monday', 10, 7, 12),
+(544, 4, 'tuesday', 10, 6, 11),
+(545, 6, 'wednesday', 10, 6, 10),
+(546, 8, 'wednesday', 10, 8, 10),
+(547, 9, 'thursday', 10, 7, 14);
 
 -- --------------------------------------------------------
 
@@ -405,11 +623,68 @@ INSERT INTO `users` (`id`, `name`, `email`, `mobile`, `password`, `lastLogin`) V
 (25, 'Mr Durga Prasad Roy', '8374982374@hgs.sdf', '376287465', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 18:07:55'),
 (26, 'Mr Ravindra Kumar', 'kjasdhfj@jkhksdjf.sjdhf', '8743958752', '927a0354df56b565ff387e339d4ddf80', '2021-11-18 18:08:22'),
 (27, 'Mr Deepak Arya', '918800900692@gmail.com', '84757864375', '927a0354df56b565ff387e339d4ddf80', '2021-11-19 05:38:15'),
-(28, 'Nikky Amresh', 'nikkyamresh8@gmail.com', '+91880900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-20 06:28:02');
+(28, 'Nikky Amresh', 'nikkyamresh8@gmail.com', '+91880900692', '927a0354df56b565ff387e339d4ddf80', '2021-11-20 06:28:02'),
+(29, 'New Teacher', 'root@test.com', '98394829', 'bed763da5d83dbe09200aa709c4803c7', '2021-12-09 15:37:10'),
+(30, 'devansh dashora', 'sachindashora130@gmail.com', '9636372849', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:24'),
+(31, 'Aman Dubey', 'dubey01aman@gmail.com', '7879694537', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:24'),
+(32, 'karthick h', 'karthick311418104025@gmail.com', '9940385021', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:24'),
+(33, 'Singireddy Bharath', 'singireddybharath99@gmail.com', '917382380428', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:24'),
+(34, 'KAVYA SREE GORRE', 'kavyasreeg999@gmail.com', '9121016104', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:24'),
+(35, 'Pranathi BHONAGIRI', 'pranathisree124@gmail.com', '7013452467', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(36, 'Saiharika Enagala', 'saiharikaenagala2001@gmail.com', '9381594481', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(37, 'Akhila Arvapalli', 'akhilaarvapalli2@gmail.com', '916303531292', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(38, 'Venkata Karthik Golla', 'gollakarthik001@gmail.com', '8688377353', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(39, 'Mohd Asad', 'mohdasadnaseem.man786@gmail.com', '9027623846', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(40, 'chaitanya raju g.l.v', 'chaitanyachaitu325@gmail.com', '9885095988', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(41, 'Gokul H', 'echoserria28@gmail.com', '8610482182', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(42, 'Astha Anni', 'asthaanni7301@gmail.com', '7033102905', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(43, 'Kinshuk Bansal', 'kinshukbansal.cse24@jecrc.ac.in', '8387026256', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(44, 'Yash Bansal', 'yashbansal.cse23@jecrc.ac.in', '8290545090', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(45, 'Deeksha Gupta', 'deekshagupta.it23@jecrc.ac.in', '8955780012', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(46, 'Ankit Goyal', 'ankitgoyal.2cse23@jecrc.ac.in', '9413371104', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(47, 'UTKARSH Dubey', 'utkarshdubey.cse23@jecrc.ac.in', '8303083523', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(48, 'Pushpendra Singh Gurjar', 'pushpendrasinghgurjar.cse22@jecrc.ac.in', '9672407021', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(49, 'Bhunesh Dadheech', 'Bhuneshdadheech362@gmail.com', '9982794604', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(50, 'Khushi Goyal', 'khushigoyal.cse24@jecrc.ac.in', '6377341988', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(51, 'Khushi Garg', 'khushigarg.ai24@jecrc.ac.in', '9785226238', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(52, 'Bhawna Golchha', 'bhawnagolchha03@gmail.com', '9999999999', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(53, 'Anjali Anjali', 'anjali.ece24@jecrc.ac.in', '7764877222', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(54, 'Mohit Gupta', 'mohitgupta.cse24@jecrc.ac.in', '8209649240', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(55, 'Ashish Gupta', 'ashishgupta.ece24@jecrc.ac.in', '9782558727', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(56, 'Sneha Agarwal', 'snehaagarwal.ai24@jecrc.ac.in', '9999999999', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(57, 'Anuj Bhalothia', 'anujbhalothia.cse24@jecrc.ac.in', '9414345812', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(58, 'Nikhil Gautam', 'nikhilgautam.cse23@jecrc.ac.in', '9828413720', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(59, 'SAMARTH AMERA', 'samarthamera2707@gmail.com', '9166334222', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(60, 'Chintan Grover', 'chintangrover.ai24@jecrc.ac.in', '7340322282', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(61, 'Hemant kumar garg', 'hemantkumargarg.cse24@jecrc.ac.in', '7410896906', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(62, 'Arin Goyal', 'aringoyal.cse24@jecrc.ac.in', '9166627203', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(63, 'Harsh Gupta', 'harshgupta.ece24@jecrc.ac.in', '9462830136', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(64, 'Mohan Chandak', 'mohanchandak.cse23@jecrc.ac.in', '8824820074', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(65, 'Chirag Garg', 'chiraggarg.it24@jecrc.ac.in', '8302998044', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(66, 'Mihir Dadhich', 'mihirdadhich.ece23@jecrc.ac.in', '9636040882', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(67, 'Lalit Dhakad', 'Lalitdhakad.ce24@jecrc.ac.in', '7726048421', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(68, 'Manu Garg', 'manugarg.ai24@jecrc.ac.in', '9929813200', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(69, 'Lavkush Bansal', 'lavkushbansal.cse23@jecrc.ac.in', '8740950931', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(70, 'Abhijeet Dadheech', 'abhijeetdadheech.ece24@jecrc.ac.in', '8112284175', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(71, 'Ayushi George', 'ayushigeorge31@gmail.com', '8058184584', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(72, 'Rounak Garg', 'rounakgarg68@gmail.com', '9468584541', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(73, 'Abhay Agrawal', 'abhayagrawal.it24@jecrc.ac.in', '7878053154', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(74, 'Chandra prakash Gupta', 'chandraprakashgupta.ece24@jecrc.ac.in', '7877010702', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(75, 'Rashmi Gaur', 'rashmigaur.cse23@jecrc.ac.in', '7726958662', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:25'),
+(76, 'Vikalp Chaturvedi', 'vikalpchaturvedi.cse23@jecrc.ac.in', '9772551557', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:26'),
+(77, 'Priyanshu Garg', 'Priyanshugarg.it24@jecrc.ac.in', '7597374717', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:26'),
+(78, 'palash gupta', 'palashgupta.cse23@jecrc.ac.in', '7742623453', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:26'),
+(79, 'Harshit Agarwal', 'harshitagarwal.it23@jecrc.ac.in', '9571132601', '098f6bcd4621d373cade4e832627b4f6', '2021-12-10 18:51:26');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `achivementdetails`
+--
+ALTER TABLE `achivementdetails`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `admin`
@@ -440,6 +715,12 @@ ALTER TABLE `branches`
   ADD KEY `departMentBranch` (`departmentID`);
 
 --
+-- Indexes for table `certifications`
+--
+ALTER TABLE `certifications`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `classes`
 --
 ALTER TABLE `classes`
@@ -463,15 +744,33 @@ ALTER TABLE `departments`
   ADD KEY `hod` (`hodID`);
 
 --
+-- Indexes for table `educationdetails`
+--
+ALTER TABLE `educationdetails`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `periods`
 --
 ALTER TABLE `periods`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `semesters`
 --
 ALTER TABLE `semesters`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `studentpersonaldetails`
+--
+ALTER TABLE `studentpersonaldetails`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -510,6 +809,12 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `achivementdetails`
+--
+ALTER TABLE `achivementdetails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
@@ -519,7 +824,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `attendances`
 --
 ALTER TABLE `attendances`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `batches`
@@ -532,6 +837,12 @@ ALTER TABLE `batches`
 --
 ALTER TABLE `branches`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `certifications`
+--
+ALTER TABLE `certifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `classes`
@@ -552,10 +863,22 @@ ALTER TABLE `departments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT for table `educationdetails`
+--
+ALTER TABLE `educationdetails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `periods`
 --
 ALTER TABLE `periods`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -564,10 +887,16 @@ ALTER TABLE `semesters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `studentpersonaldetails`
+--
+ALTER TABLE `studentpersonaldetails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `subjects`
@@ -585,13 +914,13 @@ ALTER TABLE `teachers`
 -- AUTO_INCREMENT for table `timetables`
 --
 ALTER TABLE `timetables`
-  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
+  MODIFY `id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=548;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- Constraints for dumped tables
