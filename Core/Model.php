@@ -18,12 +18,12 @@ abstract class Model
         $this->db = new \MysqliDb(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
     }
 
-    public function __construct($id = null, $cond = null, $orderBy = null, $numRows = null)
+    public function __construct($id = null, $cond = null, $orderBy = null, $page = 1)
     {
         $this->id = $id;
         $this->cond = $cond;
         $this->orderBy = $orderBy;
-        $this->numRows = $numRows;
+        $this->page = $page;
         if (!$this->tableJOIN) {
             $this->tableJOIN = "SELECT * FROM " . $this->table;
         }
@@ -58,15 +58,15 @@ abstract class Model
         }
     }
 
-    public function getAll($numRows = null)
+    public function getAll($page = null)
     {
-        return $this->db->orderBy("id", "asc")->get($this->table, $numRows);
+        return $this->db->orderBy("id", "asc")->get($this->table, $page);
     }
 
     public function get()
     {
         if (!count($this->_data)) {
-            return $this->dbCall->getWithJoin($this->tableJOIN, $this->numRows, $this->orderBy);
+            return $this->dbCall->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
         }
         return $this->_data;
     }
@@ -80,9 +80,9 @@ abstract class Model
     public function getWithJoin()
     {
         if ($this->id) {
-            return $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN, $this->numRows, $this->orderBy);
+            return $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
         }
-        return $this->db->getWithJoin($this->tableJOIN, $this->numRows, $this->orderBy);
+        return $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
     }
 
     public function getOneWithJoin()
@@ -131,6 +131,10 @@ abstract class Model
     public function runQuery($query)
     {
         return $this->db->query($query);
+    }
+
+    public function result(){
+        return $this->db->resultData;
     }
 
     public function getTableStructure()

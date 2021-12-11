@@ -20,6 +20,7 @@ class Index
         $_type = ucfirst($type);
         $controller = "Admin\\$_type";
         $this->router->add("admin/$type", ['controller' => $controller, 'action' => 'index']);
+        $this->router->add("admin/$type/page/{page:\d+}", ['controller' => $controller, 'action' => 'index']);
         $this->router->add("admin/$type/{id:\d+}", ['controller' => $controller, 'action' => 'edit']);
         $this->router->add("admin/create$_type", ['controller' => $controller, 'action' => 'create']);
         $this->router->add("admin/update$_type", ['controller' => $controller, 'action' => 'update']);

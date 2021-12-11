@@ -101,12 +101,17 @@ class Student extends AdminController
 
     public function indexAction()
     {
-        $st = new StudentModel(null, null, ['users.name', 'asc']);
+        $page = 1;
+        if(isset($this->route_params['page'])){
+            $page = $this->route_params['page'];
+        }
+        $st = new StudentModel(null, null, ['users.id', 'asc'],$page);
         $res = $st->getWithJoin();
         $columns = array('Serial no.', 'Roll no.', 'Name', 'Mobile', 'Email', 'Batch', 'Course', 'Branch', 'Semester', 'Edit');
         $this->setTemplateVars([
             'columns' => $columns,
             'students' => $res,
+            'result' => $st->result()
         ]);
         $this->renderTemplate('Admin/Dashboard/Student/index.html');
     }

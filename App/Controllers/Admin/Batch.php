@@ -24,7 +24,7 @@ class Batch extends AdminController
     public function indexAction()
     {
         $st = new BatchModel();
-        $res = $st->getAll();
+        $res = $st->getWithJoin();
         $years = $this->get10Years();
         $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
         $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns]);

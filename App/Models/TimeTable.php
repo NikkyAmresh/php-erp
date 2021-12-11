@@ -37,7 +37,7 @@ class TimeTable extends Model
     {
         if ($this->id) {
             $students = new Student(null, ['field' => 'classID', 'value' => $this->getClassID()]);
-            $students = $students->getWithJoin();
+            return $students->getWithJoin();
         }
         return;
     }

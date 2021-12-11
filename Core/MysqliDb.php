@@ -16,6 +16,7 @@
 class MysqliDb
 {
 
+    public $resultData = array();
     /**
      * Static instance of self
      *
@@ -729,13 +730,20 @@ class MysqliDb
         return $this;
     }
 
-    public function getWithJoin($joinStr, $numRows = null, $orderBy = null)
+    public function getWithJoin($joinStr, $page = 1,  $orderBy = null, $pageLimit = 20)
     {
-        $this->_query = $joinStr;
-        if ($orderBy) {
+        substr_replace($joinStr, ' SQL_CALC_FOUND_ROWS ', 6, 0);
+
+        $this->_query = substr_replace($joinStr, ' SQL_CALC_FOUND_ROWS ', 6, 0);;
+
+        $this->pageLimit = $pageLimit;
+
+        $offset = $this->pageLimit * ($page - 1);
+       if ($orderBy) {
             $this->orderBy($orderBy[0], $orderBy[1]);
         }
-        $stmt = $this->_buildQuery($numRows);
+
+        $stmt = $this->_buildQuery([$offset, $this->pageLimit]);
 
         if ($this->isSubQuery) {
             return $this;
@@ -746,7 +754,13 @@ class MysqliDb
         $this->_stmtErrno = $stmt->errno;
         $res = $this->_dynamicBindResults($stmt);
         $this->reset();
-
+        $stmt = $this->mysqli()->query('SELECT FOUND_ROWS()');
+        $totalCount = $stmt->fetch_row();
+        $this->totalCount = $totalCount[0];
+        $this->totalPages = ceil($this->totalCount / $this->pageLimit);
+        $this->resultData = [ 'startIndex' => $offset, 'endIndex'=> $offset+count($res),
+        'totalCount'=>$this->totalCount, 'totalPage'=>$this->totalPages, 'currentPage'=>$page
+    ];
         return $res;
     }
 

@@ -22,6 +22,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 //  * Error and Exception handling
 //  */
 error_reporting(1);
+ini_set("mysql.trace_mode", "0");
 ini_set('display_errors', 1);
 
 set_error_handler('Core\Error::errorHandler');

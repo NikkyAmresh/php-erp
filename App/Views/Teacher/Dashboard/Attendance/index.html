@@ -1,17 +1,64 @@
 {% extends "base.html" %} {% block title %}Student | Dashboard{% endblock %} {%
 block body %}
 
-<h3>{{timeTable.branchCode}} - {{timeTable.semester}} sem section - {{timeTable.section|ucf}}</h3>
+<h3>
+  {{timeTable.branchCode}} - {{timeTable.semester}} sem section -
+  {{timeTable.section|ucf}}
+</h3>
 
 <h4>
   Subject - {{timeTable.subjectName}}({{timeTable.subjectCode}}) -
   {{timeTable.day|ucf}}/{{timeTable.fromTime}}-{{timeTable.toTime}}
 </h4>
 
-{%for student in students%}
-  {{student.name}} <br>
-{% endfor %}
-
-<a href="/teacher/timeTable">back to Time Table</a> <br /><br />
+<table>
+  <thead>
+    <tr>
+      <th>Roll no.</th>
+      <th>Student Name</th>
+      <th>Status</th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+      <th>
+        <button class="btn bg-gray-200 text-white bg-green-600">
+          All Present</button
+        ><button class="btn bg-gray-200 text-white bg-red-600">
+          All Absent
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {%for student in students%}
+    <tr>
+      <td>{{student.rollNum}}</td>
+      <td>{{student.name}}</td>
+      <td>
+        <button
+          class="btn bg-gray-200 text-black hover:text-white hover:bg-green-600"
+        >
+          Present</button
+        ><button
+          class="btn bg-gray-200 text-black hover:text-white hover:bg-red-600"
+        >
+          Absent
+        </button>
+        <button
+          class="
+            btn
+            bg-gray-200
+            text-black
+            hover:text-white hover:bg-yellow-600
+          "
+        >
+          Leave
+        </button>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 {% endblock %}
