@@ -3,6 +3,7 @@
 namespace App\Models;
 
 class Student extends \Core\Model
+
 {
     protected $table = 'students';
 
@@ -65,5 +66,30 @@ class Student extends \Core\Model
     {
         $certification = new Certification(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
         return $certification->getAll();
+    }
+    public function getAchievementdetails()
+    {
+        $achivementdetails = new Achivementdetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $achivementdetails->getAll();
+    }
+    public function getEducationdetails()
+    {
+        $educationdetails = new Educationdetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $educationdetails->getAll();
+    }
+    public function getExperiencedetails()
+    {
+        $experiencedetails = new Experiencedetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $educationdetails->getAll();
+    }
+    public function getProjects()
+    {
+        $projects = new Project(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        return $projects->getAll();
+    }
+    public function getStudentpersonaldetatils()
+    {
+        $studentpersonaldetails = new Studentpersonaldetail(null, [['field' => 'studentID', 'value' => $this->getStudentID()]]);
+        return $studentpersonaldetails->getAll();
     }
 }
