@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Dec 10, 2021 at 11:39 PM
--- Server version: 5.7.27
--- PHP Version: 7.1.32
+-- Host: localhost:3307
+-- Generation Time: Dec 11, 2021 at 02:25 PM
+-- Server version: 10.4.21-MariaDB
+-- PHP Version: 7.3.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,10 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `achivementdetails` (
   `id` int(11) NOT NULL,
   `userID` int(11) NOT NULL,
-  `title` int(11) NOT NULL,
+  `title` varchar(30) NOT NULL,
   `date` date NOT NULL,
-  `description` int(11) NOT NULL
+  `description` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `achivementdetails`
+--
+
+INSERT INTO `achivementdetails` (`id`, `userID`, `title`, `date`, `description`) VALUES
+(1, 1, 'MTA security fundamentals', '2018-12-07', 'achievement from microsoft'),
+(2, 3, 'coursera web developemnt', '2021-12-04', 'received from coursera');
 
 -- --------------------------------------------------------
 
@@ -138,6 +145,14 @@ CREATE TABLE `certifications` (
   `link` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `certifications`
+--
+
+INSERT INTO `certifications` (`id`, `userID`, `title`, `org`, `description`, `date`, `link`) VALUES
+(1, 1, 'MTAP security fundamentals', 'Microsoft', 'received certificate from microsoft', '2018-12-08', 'https://www.jotform.com/pdf-editor/213441654500042?template=1'),
+(2, 3, 'udemy web developemnt', 'coursera', 'received certificate from udemy', '2021-12-01', 'https://www.udemy.com/course/photoshop-pro-100/');
+
 -- --------------------------------------------------------
 
 --
@@ -221,6 +236,14 @@ CREATE TABLE `educationdetails` (
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `educationdetails`
+--
+
+INSERT INTO `educationdetails` (`id`, `userID`, `school`, `degree`, `fromDate`, `toDate`, `field`, `grade`, `description`) VALUES
+(1, 1, 'Jawahar navodaya vidyalaya ', 'under graduation', '2021-11-03', '2018-12-04', 'science', '9.0', 'xyz desc of education details'),
+(2, 3, 'kendriya vidyalaya', 'under graduation', '2020-12-03', '2021-12-04', 'science', '9.0', 'xyz desc of education details');
+
 -- --------------------------------------------------------
 
 --
@@ -238,6 +261,14 @@ CREATE TABLE `experiencedetails` (
   `toDate` date DEFAULT NULL,
   `description` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `experiencedetails`
+--
+
+INSERT INTO `experiencedetails` (`id`, `userID`, `title`, `employmentType`, `companyName`, `location`, `fromDate`, `toDate`, `description`) VALUES
+(1, 1, 'devops', 'full time', 'fotonicia', 'delhi', '2020-12-02', '2021-12-03', 'xyz desc of experience details'),
+(2, 3, 'web developer', 'intern', 'infotech', 'delhi', '2020-12-02', '2020-12-05', 'xyz desc of experience');
 
 -- --------------------------------------------------------
 
@@ -281,6 +312,14 @@ CREATE TABLE `projects` (
   `link` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`id`, `userID`, `title`, `description`, `fromDate`, `toDate`, `link`) VALUES
+(1, 1, 'pexels py', 'xyz desc of projects', '2021-12-02', '2021-12-03', 'https://www.pexels.com/'),
+(2, 3, 'dictionary', 'desc about dictionary', '2020-12-05', '2021-12-06', 'https://www.dictionary.com/');
+
 -- --------------------------------------------------------
 
 --
@@ -320,6 +359,14 @@ CREATE TABLE `studentpersonaldetails` (
   `motherMobile` varchar(15) NOT NULL,
   `address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `studentpersonaldetails`
+--
+
+INSERT INTO `studentpersonaldetails` (`id`, `studentID`, `fatherName`, `fatherMobile`, `fatherEmail`, `motherName`, `motherEmail`, `motherMobile`, `address`) VALUES
+(1, 1, 'Ramesh Kumar', '9876543219', 'ramesh@gmail.com', 'Asha Kumari', 'asha@gmail.com', '987654392', 'Dumraon, Bihar'),
+(2, 3, 'Mamesh Kumar', '9876543219', 'mamesh@gmail.com', 'Misha Kumari', 'misha@gmail.com', '987654392', 'delhi,India');
 
 -- --------------------------------------------------------
 
@@ -598,7 +645,7 @@ CREATE TABLE `users` (
   `email` varchar(100) NOT NULL,
   `mobile` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `lastLogin` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `lastLogin` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -750,6 +797,12 @@ ALTER TABLE `educationdetails`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `experiencedetails`
+--
+ALTER TABLE `experiencedetails`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `periods`
 --
 ALTER TABLE `periods`
@@ -812,7 +865,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `achivementdetails`
 --
 ALTER TABLE `achivementdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -842,7 +895,7 @@ ALTER TABLE `branches`
 -- AUTO_INCREMENT for table `certifications`
 --
 ALTER TABLE `certifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `classes`
@@ -866,7 +919,13 @@ ALTER TABLE `departments`
 -- AUTO_INCREMENT for table `educationdetails`
 --
 ALTER TABLE `educationdetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `experiencedetails`
+--
+ALTER TABLE `experiencedetails`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `periods`
@@ -878,7 +937,7 @@ ALTER TABLE `periods`
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `semesters`
@@ -890,7 +949,7 @@ ALTER TABLE `semesters`
 -- AUTO_INCREMENT for table `studentpersonaldetails`
 --
 ALTER TABLE `studentpersonaldetails`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `students`
