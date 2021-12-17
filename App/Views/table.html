@@ -22,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for item in items|ft(columns) %}
+          {% for item in items|sortData(columns) %}
           <tr class="bg-blue-100 lg:text-black">
             {% for key, data in item %}
             <td class="p-3 text-right border border-solid border-white">
