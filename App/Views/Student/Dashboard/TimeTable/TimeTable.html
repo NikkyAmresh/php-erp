@@ -1,56 +1,58 @@
 {% extends "base.html" %}
 {% block title %}TimeTable{% endblock %} {%
 block body %}
-
-<h3>Time Table</h3>
-<div class="block w-full overflow-x-auto">
-  <table class="items-center bg-transparent w-full border-collapse">
-    <thead>
-      <tr>
-        <th
-          class="px-6 bg-blueGray-50 text-blueGray-500 align-middle border border-solid border-blueGray-100 py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left">
-          Day/Period</th>
-        {% for period in periods %}
-        <th
-          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 "
-          data-value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for day in days %}
-      <tr data-value="{{day}}">
-        <th
-          class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left text-blueGray-700 ">
-          <b>{{day}}</b></th>
-        {% for period in periods %}
-        <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 tableData"
-          id="{{period.id}}-{{day}}">NA</td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</div>
-<script type="text/javascript">
-  $(function () {
-    $.ajax({
-      url: "/student/getTimetable",
-      method: "get",
-    })
-      .done((data) => {
-        data = JSON.parse(data);
-        data.forEach((_data) => {
-          let td = $("#" + _data.periodID + "-" + _data.day);
-          if (td.length) {
-            td.text(_data.subjectName + "/" + _data.teacher);
-          }
+<div class="flex m-5 my-5">
+  <div class="col-span-12">
+    <div class="overflow-auto lg:overflow-visible">
+      <div class="block w-full overflow-x-auto">
+        <table class="table
+  lg:h-full lg-80vw
+  text-gray-400
+  border-separate
+  space-y-6
+  text-sm
+  border-collapse border-2 border-double border-blue-300">
+          <thead class="bg-blue-900 text-white">
+            <tr>
+              <th class="p-3 lg:w-4 text-center border border-solid border-white">
+                Day/Period</th>
+              {% for period in periods %}
+              <th class="p-3 lg:w-4 text-center border border-solid border-white" data-value="{{period.id}}">
+                {{period.fromTime}}-{{period.toTime}}</th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody>
+            {% for day in days %}
+            <tr class="bg-blue-100 lg:text-black" data-value="{{day}}">
+              <td class="p-3 text-right border border-solid border-white"><b>{{day|ucf}}</b></td>
+              {% for period in periods %}
+              <td class="p-3 text-right border border-solid border-white tableData" id="{{period.id}}-{{day}}">NA</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <script type="text/javascript">
+        $(function () {
+          $.ajax({
+            url: "/student/getTimetable",
+            method: "get",
+          })
+            .done((data) => {
+              data = JSON.parse(data);
+              data.forEach((_data) => {
+                let td = $("#" + _data.periodID + "-" + _data.day);
+                if (td.length) {
+                  td.text(_data.subjectName + "/" + _data.teacher);
+                }
+              });
+            })
+            .fail((err) => {
+              console.log(err)
+            });
+          console.log("read");
         });
-      })
-      .fail((err) => {
-        console.log(err)
-      });
-    console.log("read");
-  });
-</script>
-{% endblock %}
+      </script>
+      {% endblock %}
