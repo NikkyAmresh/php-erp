@@ -4,7 +4,6 @@ namespace Core;
 
 use App\Helpers\Constants;
 use App\Helpers\Session;
-
 /**
  * View
  *
@@ -57,17 +56,8 @@ class View
             Constants::MESSAGE_TYPE[Constants::INFO] => self::getInfoMessage()];
         $finalArgs = array_merge($args, $messages);
         $twig->addFilter(new \Twig\TwigFilter('ucf', 'ucfirst'));
-        $twig->addFilter(new \Twig\TwigFilter('ft', function ($data, $sqn) {
-            $fdata = [];
-            foreach ($data as $dt) {
-                $obj = [];
-                foreach ($sqn as $sq) {
-                    $obj[$sq] = $dt[$sq];
-                }
-                array_push($fdata, $obj);
-            }
-            return $fdata;
-        }));
+        $twig->addFilter(new \Twig\TwigFilter('sortData', ['App\Helpers\Utils','sortData'] ));
+        $twig->addFilter(new \Twig\TwigFilter('formatDate', ['App\Helpers\Utils','formatDate']));
         echo $twig->render($template, $finalArgs);
         self::resetMessages();
     }

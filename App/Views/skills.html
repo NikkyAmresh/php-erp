@@ -18,7 +18,7 @@
                     <div class="px-4 py-2">
                         {{achievement.description|ucf}}
                         <br>
-                        {{achievement.date}}
+                        {{achievement.date|formatDate}}
                     </div>
                 </div>
                 {% endfor %}
@@ -39,7 +39,7 @@
                     <div class="px-4 py-2">
                         {{certificate.description|ucf}}
                         <br>
-                        {{certificate.date}}
+                        {{certificate.date|formatDate}}
                         <br>
                         <a href="{{certificate.link}}">{{certificate.link}}</a>
                     </div>
