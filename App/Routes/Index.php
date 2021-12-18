@@ -30,8 +30,7 @@ class Index
 
     public function setRoutes()
     {
-        $this->router->add('', ['controller' => 'Home', 'action' => 'index']);
-        $this->router->add('login', ['controller' => 'Auth\Login', 'action' => 'index']);
+        $this->router->add('', ['controller' => 'Student\Index', 'action' => 'index']);
         $this->router->add('logout', ['controller' => 'Auth\Logout', 'action' => 'index']);
         $this->router->add("admin", ['controller' => 'Admin\Index', 'action' => 'index']);
 

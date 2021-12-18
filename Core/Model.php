@@ -87,7 +87,12 @@ abstract class Model
 
     public function getOneWithJoin()
     {
-        $data = $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN);
+        $data = [];
+        if ($this->id) {
+            $data = $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN);
+        } else {
+            $data = $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
+        }
         $this->setData($data[0]);
         return $this->_data;
 
@@ -133,7 +138,8 @@ abstract class Model
         return $this->db->query($query);
     }
 
-    public function result(){
+    public function result()
+    {
         return $this->db->resultData;
     }
 
