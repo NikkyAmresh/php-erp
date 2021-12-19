@@ -262,7 +262,7 @@ class MysqliDb
      * @param string $charset
      * @param string $socket
      */
-    public function __construct($host = null, $username = null, $password = null, $db = null, $port = null, $charset = 'utf8', $socket = null)
+    public function setConfig($host = null, $username = null, $password = null, $db = null, $port = null, $charset = 'utf8', $socket = null)
     {
         $isSubQuery = false;
 
@@ -293,6 +293,8 @@ class MysqliDb
         }
 
         self::$_instance = $this;
+
+        return $this;
     }
 
     /**

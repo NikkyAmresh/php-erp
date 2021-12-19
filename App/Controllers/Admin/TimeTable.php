@@ -22,7 +22,7 @@ class TimeTable extends AdminController
     public function updateByClassAction()
     {
         $timeTable = new TimeTableModel();
-        $q1 = $timeTable->deleteMany(['field' => 'classID', 'value' => $_REQUEST['classID']]);
+        $q1 = $timeTable->deleteMany(['classID' => $_REQUEST['classID']]);
         $timeTable = new TimeTableModel();
         $q2 = $timeTable->insertMulti($_REQUEST['data']);
         echo $q1 . $q2;

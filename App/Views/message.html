@@ -1,0 +1,37 @@
+<script type="text/javascript">
+  var successMsg = {{ SUCCESS_MESSAGE | json_encode() | raw }}
+  var infoMsg = {{ INFO_MESSAGE | json_encode() | raw }}
+  var errorMsg = {{ ERROR_MESSAGE | json_encode() | raw }}
+  var warnMsg = {{ WARNING_MESSAGE | json_encode() | raw }}
+
+  function showErrorMessage(message) {
+     Toastify({
+      text: message,
+      style: {
+        background: "linear-gradient(to right, #b01800, #c93d3d)",
+      }
+    }).showToast();
+  }
+
+  function showSuccessMessage(message) {
+    Toastify({
+      text: message,
+      style: {
+        background: "linear-gradient(to right, #00b09b, #96c93d)",
+      }
+    }).showToast();
+  }
+
+  if (successMsg) {
+    showSuccessMessage(successMsg);
+  }
+  if (infoMsg) {
+    showSuccessMessage(infoMsg);
+  }
+  if (errorMsg) {
+    showErrorMessage(errorMsg);
+  }
+  if (warnMsg) {
+    showErrorMessage(warnMsg);
+  }
+</script>

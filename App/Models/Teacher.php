@@ -9,9 +9,26 @@ class Teacher extends Model
     protected $table = 'teachers';
     protected $tableJOIN = 'SELECT teachers.*,departments.name as department,users.name as name,users.email as email,users.mobile as mobile FROM `teachers` join departments on departments.id=teachers.departmentID left JOIN users on users.id = teachers.userID';
 
+
+    public function __construct(
+        User $userModel,
+        TimeTable $timeTableModel,
+        Certification $certificationModel,
+        Achivementdetail $achivementdetailModel,
+        Experiencedetail $experiencedetailModel,
+        Project $projectModel,
+        \MysqliDb $dbModel) {
+        $this->userModel = $userModel;
+        $this->experiencedetailModel = $experiencedetailModel;
+        $this->timeTableModel = $timeTableModel;
+        $this->certificationModel = $certificationModel;
+        $this->achivementdetailModel = $achivementdetailModel;
+        $this->projectModel = $projectModel;
+        parent::__construct($dbModel);
+    }
     public function teacherAuth($email, $pass)
     {
-        $usr = new User();
+        $usr = $this->userModel->bind();
         $validate = $usr->auth($email, $pass);
         if ($validate) {
             $teacher = $this->db->where('userID', $usr->getUser()['id'])->getOne($this->table);
@@ -39,27 +56,27 @@ class Teacher extends Model
 
     public function getTimeTable()
     {
-        $timeTable = new TimeTable(null, ['field' => 'timetables.teacherID', 'value' => $this->getId()]);
+        $timeTable = $this->timeTableModel->bind(null, ['timetables.teacherID' => $this->getId()]);
         return $timeTable->getWithJoin();
     }
     public function getCertifications()
     {
-        $certification = new Certification(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        $certification = $this->certificationModel->bind(null, ['userID' => $this->getUserID()]);
         return $certification->getAll();
     }
     public function getAchievementdetails()
     {
-        $achivementdetails = new Achivementdetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        $achivementdetails = $this->achivementdetailModel->bind(null, ['userID' => $this->getUserID()]);
         return $achivementdetails->getAll();
     }
     public function getExperiencedetails()
     {
-        $experiencedetails = new Experiencedetail(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        $experiencedetails = $this->experiencedetailModel->bind(null, ['userID' => $this->getUserID()]);
         return $experiencedetails->getAll();
     }
     public function getProjects()
     {
-        $projects = new Project(null, [['field' => 'userID', 'value' => $this->getUserID()]]);
+        $projects = $this->projectModel->bind(null, ['userID' => $this->getUserID()]);
         return $projects->getAll();
     }
 }

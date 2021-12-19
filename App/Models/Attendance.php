@@ -21,4 +21,8 @@ class Attendance extends Model
         join branches on branches.id=classes.branchID
         join semesters on semesters.id=classes.semesterID
         join periods on timetables.periodID=periods.id';
+    
+    public function __construct(\MysqliDb $dbModel) {
+        parent::__construct($dbModel);
+    }
 }

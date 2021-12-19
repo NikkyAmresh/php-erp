@@ -62,6 +62,7 @@ class Index
         $this->router->add("teacher/timeTable", ['controller' => 'teacher\TimeTable', 'action' => 'show']);
         $this->router->add("teacher/attendance/{id:\d+}", ['controller' => 'teacher\Attendance', 'action' => 'mark']);
         $this->router->add("teacher/profile", ['controller' => 'Teacher\Profile', 'action' => 'index']);
+        $this->router->add("teacher/submitAttendance", ['controller' => 'Teacher\Attendance', 'action' => 'submitAttendance']);
     }
 
 }

@@ -76,6 +76,18 @@ block body %}
       formData.absent.push($(this).attr('data-studentID'));
     })
     console.log(formData);
+    $.ajax({
+      'url':'/teacher/submitAttendance',
+      method:'POST',
+      'data': {
+        timetableID: {{ timeTable.id | json_encode()| raw}},
+        attendances:formData
+      },
+    }).done(function(res){
+      console.log(res);
+    }).fail(function(err){
+      console.log(err);
+    })
   }
   function addP(e){
     $(e).addClass('text-white bg-green-600 present');

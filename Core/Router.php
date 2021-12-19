@@ -111,8 +111,11 @@ class Router
             $controller = $this->convertToStudlyCaps($controller);
             $controller = $this->getNamespace() . $controller;
 
+            $container = new Container();
             if (class_exists($controller)) {
-                $controller_object = new $controller($this->params);
+                // $controller_object = new $controller($this->params);
+                $controller_object = $container->get($controller);
+                $controller_object->setRouteParams($this->params);
 
                 $action = $this->params['action'];
                 $action = $this->convertToCamelCase($action);
