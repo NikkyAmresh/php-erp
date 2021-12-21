@@ -8,13 +8,13 @@ class HomePage extends SeleniumTest
 {
     public function testLogin()
     {
-        $this->url('http://localhost');
+        $this->url('http://localhost:8080');
         $this->assertEquals('Login', $this->title());
 
         $page = new AuthenticationPage($this);
         $welcomePage = $page->username('nikkyamresh8@gmail.com')
-                            ->password('test')
-                            ->submit();
+            ->password('test')
+            ->submit();
         $welcomePage->assertWelcomeIs('Nikky Amresh');
     }
 }
