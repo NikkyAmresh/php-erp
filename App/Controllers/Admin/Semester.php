@@ -2,23 +2,33 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Models\Admin as AdminModel;
 use App\Models\Semester as SemesterModel;
 
 class Semester extends AdminController
 {
     protected $pageCode = 'semester';
+    protected $adminModel;
+    protected $semester;
+    public function __construct(
+        SemesterModel $semester,
+        AdminModel $adminModel
+    ) {
+        $this->semester = $semester;
+        parent::__construct($adminModel);
+    }
     public function indexAction()
     {
-        $st = new SemesterModel();
+        $st = $this->semester->bind();
         $res = $st->getAll();
         $columns = array('Serial no', 'Name', 'Edit');
-        $this->setTemplateVars(['semesters' => $res, 'columns' => $columns,'result' => $st->result()]);
+        $this->setTemplateVars(['semesters' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Semester/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = new SemesterModel();
+            $semester = $this->semester->bind();
             $semester->setName($_REQUEST['name']);
             $semester->save();
             $this->setSuccessMessage("semester created successfully");
@@ -30,7 +40,7 @@ class Semester extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = new SemesterModel($_REQUEST['id']);
+            $semester = $this->semester->bind($_REQUEST['id']);
             $semester->setName($_REQUEST['name']);
             if ($semester->save()) {
                 $this->setSuccessMessage("semester updated successfully");
@@ -45,7 +55,7 @@ class Semester extends AdminController
 
     public function deleteAction()
     {
-        $semester = new SemesterModel($this->route_params['id']);
+        $semester = $this->semester->bind($this->route_params['id']);
         $res = $semester->delete();
         if ($res) {
             $this->setSuccessMessage("semester deleted successfully");
@@ -56,7 +66,7 @@ class Semester extends AdminController
     }
     public function editAction()
     {
-        $st = new SemesterModel($this->route_params['id']);
+        $st = $this->semester->bind($this->route_params['id']);
         $res = $st->get();
         if ($res) {
             $this->setTemplateVars(['semester' => $res]);

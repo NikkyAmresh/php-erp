@@ -8,7 +8,7 @@ use App\Models\Teacher as TeacherModel;
 
 class TeacherController extends TeacherBaseController
 {
-
+    protected $teacherModel;
     public function __construct(TeacherModel $teacherModel)
     {
         $this->teacherModel = $teacherModel;
@@ -20,7 +20,6 @@ class TeacherController extends TeacherBaseController
     }
     public function before()
     {
-
         parent::before();
         $teacherID = $this->isLoggedIn();
         if ($this->isLoggedIn()) {

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Teacher;
 use Core\Model;
 use \MysqliDb;
+
 class Department extends Model
 {
     protected $table = 'departments';
@@ -11,7 +13,8 @@ class Department extends Model
     protected $teacherModel;
     protected $dbModel;
 
-    public function __construct(Teacher $teacherModel, MysqliDb $dbModel) {
+    public function __construct(Teacher $teacherModel, MysqliDb $dbModel)
+    {
         $this->teacherModel = $teacherModel;
         parent::__construct($dbModel);
     }

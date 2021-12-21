@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Core\Model;
+use \MysqliDb;
 
-class Studentpersonaldetail extends Model
+class StudentPersonalDetail extends Model
 {
     protected $table = 'studentpersonaldetails';
 
-    public function __construct(\MysqliDb $dbModel) {
+    public function __construct(MysqliDb $dbModel)
+    {
         parent::__construct($dbModel);
     }
 }

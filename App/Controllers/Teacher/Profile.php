@@ -11,12 +11,12 @@ class Profile extends TeacherController
 
     public function indexAction()
     {
-        $achivementdetails = $this->teacher->getAchievementdetails();
+        $achivementDetails = $this->teacher->getAchievementDetails();
         $certification = $this->teacher->getCertifications();
-        $experiencedetails = $this->teacher->getExperiencedetails();
+        $experienceDetails = $this->teacher->getExperienceDetails();
         $projects = $this->teacher->getProjects();
         $res = $this->teacher->getOneWithJoin();
-        $this->setTemplateVars(['teacher' => $res, 'achivements' => $achivementdetails, 'certification' => $certification, 'experience' => $experiencedetails, 'projects' => $projects]);
+        $this->setTemplateVars(['teacher' => $res, 'achivements' => $achivementDetails, 'certification' => $certification, 'experience' => $experienceDetails, 'projects' => $projects]);
         $this->renderTemplate('Teacher/Dashboard/profile.html');
     }
 }

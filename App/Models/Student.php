@@ -2,34 +2,45 @@
 
 namespace App\Models;
 
+use \MysqliDb;
+
 class Student extends \Core\Model
 
 {
     protected $table = 'students';
-
     protected $tableJOIN = 'SELECT students.*,users.name,users.mobile,users.id as userID,users.email, users.lastLogin,courses.name as courseName, courses.duration as courseDuration,batches.code as batchCode,batches.fromYear as batchFromYear, batches.toYear as batchToYear,semesters.name as semester,classes.section as section,branches.name as branchName,branches.code as branch, departments.name as department FROM `students` left join users on users.id=students.userID left join courses on courses.id=students.courseID left join batches on batches.id=students.batchID left join classes on classes.id=students.classID left join semesters on semesters.id=classes.semesterID left join branches on branches.id=classes.branchID left join departments on departments.id=branches.departmentID';
-
+    protected $userModel;
+    protected $timeTableModel;
+    protected $attendanceModel;
+    protected $certificationModel;
+    protected $achivementDetailModel;
+    protected $educationDetailModel;
+    protected $experienceDetailModel;
+    protected $studentPersonalDetailModel;
+    protected $projectModel;
+    protected $dbModel;
 
     public function __construct(
+        MysqliDb $dbModel,
         User $userModel,
         TimeTable $timeTableModel,
         Attendance $attendanceModel,
         Certification $certificationModel,
-        Achivementdetail $achivementdetailModel,
-        Educationdetail $educationdetailModel,
-        Experiencedetail $experiencedetailModel,
-        Studentpersonaldetail $studentpersonaldetailModel,
-        Project $projectModel,
-        \MysqliDb $dbModel) {
+        AchivementDetail $achivementdetailModel,
+        EducationDetail $educationdetailModel,
+        ExperienceDetail $experiencedetailModel,
+        StudentPersonalDetail $studentpersonaldetailModel,
+        Project $projectModel) {
         $this->userModel = $userModel;
-        $this->experiencedetailModel = $experiencedetailModel;
+        $this->experienceDetailModel = $experiencedetailModel;
         $this->timeTableModel = $timeTableModel;
         $this->attendanceModel = $attendanceModel;
         $this->certificationModel = $certificationModel;
-        $this->achivementdetailModel = $achivementdetailModel;
-        $this->educationdetailModel = $educationdetailModel;
-        $this->StudentpersonaldetailModel = $studentpersonaldetailModel;
+        $this->achivementDetailModel = $achivementdetailModel;
+        $this->educationDetailModel = $educationdetailModel;
+        $this->studentPersonalDetailModel = $studentpersonaldetailModel;
         $this->projectModel = $projectModel;
+        $this->dbModel = $dbModel;
         parent::__construct($dbModel);
     }
 
@@ -91,29 +102,29 @@ class Student extends \Core\Model
         $certification = $this->certificationModel->bind(null, ['userID' => $this->getUserID()]);
         return $certification->getAll();
     }
-    public function getAchievementdetails()
+    public function getAchievementDetails()
     {
-        $achivementdetails = $this->achivementdetailModel->bind(null, ['userID' => $this->getUserID()]);
-        return $achivementdetails->getAll();
+        $achivementDetails = $this->achivementDetailModel->bind(null, ['userID' => $this->getUserID()]);
+        return $achivementDetails->getAll();
     }
-    public function getEducationdetails()
+    public function getEducationDetails()
     {
-        $educationdetails = $this->educationdetailModel->bind(null, ['userID' => $this->getUserID()]);
-        return $educationdetails->getAll();
+        $educationDetails = $this->educationDetailModel->bind(null, ['userID' => $this->getUserID()]);
+        return $educationDetails->getAll();
     }
-    public function getExperiencedetails()
+    public function getExperienceDetails()
     {
-        $experiencedetails = $this->experiencedetailModel->bind(null, ['userID' => $this->getUserID()]);
-        return $experiencedetails->getAll();
+        $experienceDetails = $this->experienceDetailModel->bind(null, ['userID' => $this->getUserID()]);
+        return $experienceDetails->getAll();
     }
     public function getProjects()
     {
         $projects = $this->projectModel->bind(null, ['userID' => $this->getUserID()]);
         return $projects->getAll();
     }
-    public function getStudentpersonaldetatils()
+    public function getStudentPersonalDetatils()
     {
-        $studentpersonaldetails = $this->studentpersonaldetailModel->bind(null, ['studentID' => $this->getId()]);
-        return $studentpersonaldetails->getOneWithJoin();
+        $studentpersonalDetails = $this->studentPersonalDetailModel->bind(null, ['studentID' => $this->getId()]);
+        return $studentpersonalDetails->getOneWithJoin();
     }
 }

@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Models;
+
 use \MysqliDb;
+
 class Admin extends \Core\Model
+
 {
     protected $table = 'admin';
     protected $tableJOIN = 'select admin.*,users.name as name,users.email as email,users.mobile as mobile from admin join users on users.id=admin.userID';
 
-    public function __construct(User $userModel, MysqliDb $dbModel) {
+    public function __construct(User $userModel, MysqliDb $dbModel)
+    {
         $this->userModel = $userModel;
         parent::__construct($dbModel);
     }

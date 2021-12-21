@@ -3,24 +3,40 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Models\Department;
+use App\Models\Admin as AdminModel;
+use App\Models\Department as DepartmentModel;
 use App\Models\Teacher as TeacherModel;
-use App\Models\User;
+use App\Models\User as UserModel;
 
 class Teacher extends AdminController
 {
     protected $pageCode = 'teacher';
+    protected $teacher;
+    protected $department;
+    protected $user;
+    protected $adminModel;
+    public function __construct(
+        DepartmentModel $department,
+        TeacherModel $teacher,
+        UserModel $user,
+        AdminModel $adminModel
+    ) {
+        $this->teacher = $teacher;
+        $this->user = $user;
+        $this->department = $department;
+        parent::__construct($adminModel);
+    }
 
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $teacher = new User();
+            $teacher = $this->user->bind();
             $teacher->setName($_REQUEST['name']);
             $teacher->setMobile($_REQUEST['mobile']);
             $teacher->setEmail($_REQUEST['email']);
             $teacher->setPassword(md5($_REQUEST['password']));
             if ($id = $teacher->save()) {
-                $teacher = new TeacherModel();
+                $teacher = $this->teacher->bind();
                 $teacher->setUserID($id);
                 $teacher->setDepartmentID($_REQUEST['department']);
                 $teacher->save();
@@ -36,10 +52,10 @@ class Teacher extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $teacher = new TeacherModel($_REQUEST['id']);
+            $teacher = $this->teacher->bind($_REQUEST['id']);
             $teacher->get();
             if ($_REQUEST['userID']) {
-                $user = new User();
+                $user = $this->user->bind();
                 $user->get($_REQUEST['userID']);
                 $user->setName($_REQUEST['name'])->save();
             }
@@ -57,7 +73,7 @@ class Teacher extends AdminController
 
     public function deleteAction()
     {
-        $teacher = new TeacherModel($this->route_params['id']);
+        $teacher = $this->teacher->bind($this->route_params['id']);
         $res = $teacher->delete();
         if ($res) {
             $this->setSuccessMessage("Teacher delete successfully");
@@ -69,18 +85,18 @@ class Teacher extends AdminController
 
     public function indexAction()
     {
-        $st = new TeacherModel();
+        $st = $this->teacher->bind();
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'Name', 'Department', 'Edit');
-        $this->setTemplateVars(['teachers' => $res, 'columns' => $columns,'result' => $st->result()]);
+        $this->setTemplateVars(['teachers' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }
     public function editAction()
     {
-        $st = new TeacherModel($this->route_params['id']);
+        $st = $this->teacher->bind($this->route_params['id']);
         $res = $st->getOneWithJoin();
         if ($res) {
-            $depts = (new Department())->getAll();
+            $depts = ($this->department->bind())->getAll();
             $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);
             $this->renderTemplate('Admin/Dashboard/Teacher/edit.html');
         } else {
@@ -89,7 +105,7 @@ class Teacher extends AdminController
     }
     public function newAction()
     {
-        $depts = (new Department())->getAll();
+        $depts = ($this->department->bind())->getAll();
         $this->setTemplateVars(['deps' => $depts]);
         $this->renderTemplate('Admin/Dashboard/Teacher/new.html');
     }

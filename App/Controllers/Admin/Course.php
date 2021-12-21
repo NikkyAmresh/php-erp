@@ -2,24 +2,33 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Models\Admin as AdminModel;
 use App\Models\Course as CourseModel;
 
 class Course extends AdminController
 {
     protected $pageCode = 'course';
-
+    protected $course;
+    protected $adminModel;
+    public function __construct(
+        CourseModel $course,
+        AdminModel $adminModel
+    ) {
+        $this->course = $course;
+        parent::__construct($adminModel);
+    }
     public function indexAction()
     {
-        $st = new CourseModel();
+        $st = $this->course->bind();
         $res = $st->getAll();
         $columns = array('Serial no', 'Course', 'Duration', 'Edit');
-        $this->setTemplateVars(['courses' => $res, 'columns' => $columns,'result' => $st->result()]);
+        $this->setTemplateVars(['courses' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Course/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $course = new CourseModel();
+            $course = $this->course->bind();
             $course->setName($_REQUEST['name']);
             $course->setDuration($_REQUEST['duration']);
             $course->save();
@@ -32,7 +41,7 @@ class Course extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $course = new CourseModel($_REQUEST['id']);
+            $course = $this->course->bind($_REQUEST['id']);
             $course->setName($_REQUEST['name']);
             $course->setDuration($_REQUEST['duration']);
             if ($course->save()) {
@@ -48,7 +57,7 @@ class Course extends AdminController
 
     public function deleteAction()
     {
-        $course = new CourseModel($this->route_params['id']);
+        $course = $this->course->bind($this->route_params['id']);
         $res = $course->delete();
         if ($res) {
             $this->setSuccessMessage("course deleted successfully");
@@ -59,7 +68,7 @@ class Course extends AdminController
     }
     public function editAction()
     {
-        $st = new CourseModel($this->route_params['id']);
+        $st = $this->course->bind($this->route_params['id']);
         $res = $st->get();
         if ($res) {
             $this->setTemplateVars(['courses' => $res]);

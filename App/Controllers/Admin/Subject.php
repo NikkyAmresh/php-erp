@@ -2,24 +2,38 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Models\Admin as AdminModel;
 use App\Models\Department as DepartmentModel;
 use App\Models\Subject as SubjectModel;
 
 class Subject extends AdminController
 {
     protected $pageCode = 'subject';
+    protected $adminModel;
+    protected $department;
+    protected $subject;
+
+    public function __construct(
+        AdminModel $adminModel,
+        DepartmentModel $department,
+        SubjectModel $subject
+    ) {
+        $this->department = $department;
+        $this->subject = $subject;
+        parent::__construct($adminModel);
+    }
     public function indexAction()
     {
-        $st = new SubjectModel();
+        $st = $this->subject->bind();
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
-        $this->setTemplateVars(['subjects' => $res, 'columns' => $columns,'result' => $st->result()]);
+        $this->setTemplateVars(['subjects' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $subject = new SubjectModel();
+            $subject = $this->subject->bind();
             $subject->setName($_REQUEST['name']);
             $subject->setSubjectCode($_REQUEST['subjectCode']);
             $subject->setDepartmentID($_REQUEST['department']);
@@ -33,7 +47,7 @@ class Subject extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $subject = new SubjectModel($_REQUEST['id']);
+            $subject = $this->subject->bind($_REQUEST['id']);
             $subject->setName($_REQUEST['name']);
             $subject->setSubjectCode($_REQUEST['subjectCode']);
             $subject->setDepartmentID($_REQUEST['department']);
@@ -50,7 +64,7 @@ class Subject extends AdminController
 
     public function deleteAction()
     {
-        $subject = new SubjectModel($this->route_params['id']);
+        $subject = $this->subject->bind($this->route_params['id']);
         $res = $subject->delete();
         if ($res) {
             $this->setSuccessMessage("subject deleted successfully");
@@ -61,9 +75,9 @@ class Subject extends AdminController
     }
     public function editAction()
     {
-        $st = new SubjectModel($this->route_params['id']);
+        $st = $this->subject->bind($this->route_params['id']);
         $res = $st->get();
-        $dep = new DepartmentModel();
+        $dep = $this->department->bind();
         $deps = $dep->getAll();
         if ($res) {
             $this->setTemplateVars(['subject' => $res, 'deps' => $deps]);
@@ -74,7 +88,7 @@ class Subject extends AdminController
     }
     public function newAction()
     {
-        $dep = new DepartmentModel();
+        $dep = $this->department->bind();
         $deps = $dep->getAll();
         $this->setTemplateVars(['deps' => $deps]);
         $this->renderTemplate('Admin/Dashboard/Subject/new.html');
