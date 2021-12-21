@@ -4,11 +4,19 @@ namespace App\Controllers\Teacher;
 
 use App\Helpers\Constants;
 use App\Helpers\Session;
-use App\Models\Teacher;
+use App\Models\Teacher as teacherModel;
 
 class Index extends TeacherBaseController
 {
     protected $pageCode = 'home';
+    protected $teacherModel;
+    /**
+     * Class constructor.
+     */
+    public function __construct(teacherModel $teacherModel)
+    {
+        $this->teacherModel = $teacherModel;
+    }
     public function isAlreadyLoggedIn()
     {
         return Session::get(Constants::LOGGED_IN_TEACHER_ID);
@@ -17,7 +25,7 @@ class Index extends TeacherBaseController
     public function login($method, $body)
     {
         if ($method == Constants::REQUEST_METHOD_POST) {
-            $teacher = new Teacher();
+            $teacher = $this->teacherModel->bind();
             $validate = $teacher->teacherAuth($body['email'], $body['password']);
             if ($validate) {
                 $user = $teacher->getUser();

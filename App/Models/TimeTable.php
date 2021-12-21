@@ -33,10 +33,22 @@ class TimeTable extends Model
 '
     ;
 
+    protected $studentModel;
+
+
+    public function __construct(\MysqliDb $dbModel) {
+        parent::__construct($dbModel);
+    }
+
+    public function setStudent(Student $studentModel)
+    {
+        $this->studentModel = $studentModel;
+        return $this;
+    }
     public function getStudents()
     {
-        if ($this->id) {
-            $students = new Student(null, ['field' => 'classID', 'value' => $this->getClassID()]);
+        if ($this->studentModel) {
+            $students = $this->studentModel->bind(null, ['classID' => $this->getClassID()]);
             return $students->getWithJoin();
         }
         return;

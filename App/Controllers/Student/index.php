@@ -4,11 +4,19 @@ namespace App\Controllers\Student;
 
 use App\Helpers\Constants;
 use App\Helpers\Session;
-use App\Models\Student;
+use App\Models\Student as StudentModel;
 
 class Index extends StudentBaseController
 {
     protected $pageCode = 'home';
+    protected $studentModel;
+/**
+ * Class constructor.
+ */
+    public function __construct(StudentModel $studentModel)
+    {
+        $this->studentModel = $studentModel;
+    }
     public function isAlreadyLoggedIn()
     {
         return Session::get(Constants::LOGGED_IN_STUDENT_ID);
@@ -17,7 +25,7 @@ class Index extends StudentBaseController
     public function login($method, $body)
     {
         if ($method == Constants::REQUEST_METHOD_POST) {
-            $student = new Student();
+            $student = $this->studentModel->bind();
             $validate = $student->studentAuth($body['email'], $body['password']);
             if ($validate) {
                 $user = $student->getUser();

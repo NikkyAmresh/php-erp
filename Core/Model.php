@@ -5,6 +5,8 @@ require_once 'MysqliDb.php';
 
 use App\Config;
 
+use \MysqliDb;
+
 abstract class Model
 {
 
@@ -12,13 +14,18 @@ abstract class Model
     protected $tableJOIN = '';
     protected $_data = [];
     protected $dbCall = null;
+    protected $dbModel;
+
+    public function __construct(MysqliDb $dbModel) {
+        $this->dbModel = $dbModel;
+    }
 
     public function initDb()
     {
-        $this->db = new \MysqliDb(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
+        $this->db = $this->dbModel->setConfig(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
     }
 
-    public function __construct($id = null, $cond = null, $orderBy = null, $page = 1)
+    public function bind($id = null, $cond = null, $orderBy = null, $page = 1)
     {
         $this->id = $id;
         $this->cond = $cond;
@@ -32,15 +39,11 @@ abstract class Model
             $this->getOneWithJoin();
         } elseif ($cond) {
             $this->dbCall = $this->db;
-            if (isset($cond[0])) {
-                foreach ($cond as $condition) {
-                    $this->dbCall = $this->dbCall->where($condition['field'], $condition['value']);
-                }
-            } else {
-                $this->dbCall = $this->dbCall->where($cond['field'], $cond['value'])->orderBy("id", "asc");
+            foreach ($cond as $field => $value) {
+                $this->dbCall = $this->dbCall->where($field, $value)->orderBy("id", "asc");
             }
         }
-
+        return $this;
     }
 
     public function __call($func, $params)
@@ -93,6 +96,9 @@ abstract class Model
         } else {
             $data = $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
         }
+        if(!isset($data[0])){
+            throw new Exceptions\NotEntityException();
+        }
         $this->setData($data[0]);
         return $this->_data;
 
@@ -115,7 +121,11 @@ abstract class Model
 
     public function deleteMany($cond, $numRows = null)
     {
-        $this->db->where($this->table . ".{$cond['field']}", $cond['value'])->delete($this->table, $numRows);
+        $this->dbCall = $this->db;
+        foreach ($cond as $field => $value) {
+            $this->dbCall = $this->dbCall->where($field, $value);
+        }
+        return $this->dbCall->delete($this->table, $numRows);
     }
 
     public function insertMulti($dataArray)

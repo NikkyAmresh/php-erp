@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Helpers\Session;
-use App\Models\Admin;
+use App\Models\Admin as AdminModel;
 
 class Index extends AdminBaseController
 {
@@ -15,10 +15,15 @@ class Index extends AdminBaseController
         return Session::get(Constants::LOGGED_IN_ADMIN_ID);
     }
 
+    public function __construct(AdminModel $adminModel)
+    {
+        $this->adminModel = $adminModel;
+    }
+
     public function login($method, $body)
     {
         if ($method == Constants::REQUEST_METHOD_POST) {
-            $admin = new Admin();
+            $admin = $this->adminModel->bind();
             $validate = $admin->adminAuth($body['email'], $body['password']);
             if ($validate) {
                 $adminUser = $admin->getAdminUser();

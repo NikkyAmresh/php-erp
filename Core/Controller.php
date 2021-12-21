@@ -22,14 +22,7 @@ abstract class Controller
 
     protected $template_params = [];
 
-    /**
-     * Class constructor
-     *
-     * @param array $route_params  Parameters from the route
-     *
-     * @return void
-     */
-    public function __construct($route_params)
+    public function setRouteParams($route_params)
     {
         $this->route_params = $route_params;
     }

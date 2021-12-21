@@ -2,8 +2,9 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Classes as ClassModel;
-use App\Models\Period;
+use App\Models\Admin as AdminModel;
+use App\Models\Classes as ClassesModel;
+use App\Models\Period as PeriodModel;
 use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use App\Models\TimeTable as TimeTableModel;
@@ -11,7 +12,29 @@ use App\Models\TimeTable as TimeTableModel;
 class TimeTable extends AdminController
 {
     protected $pageCode = 'timetable';
+    protected $adminModel;
+    protected $periodModel;
+    protected $classModel;
+    protected $subjectModel;
+    protected $teacherModel;
+    protected $timeTableModel;
 
+    public function __construct(
+        AdminModel $adminModel,
+        PeriodModel $periodModel,
+        SubjectModel $subjectModel,
+        TeacherModel $teacherModel,
+        ClassesModel $classModel,
+        TimeTableModel $timeTableModel
+    ) {
+        $this->periodModel = $periodModel;
+        $this->classModel = $classModel;
+        $this->subjectModel = $subjectModel;
+        $this->teacherModel = $teacherModel;
+        $this->classModel = $classModel;
+        $this->timeTableModel = $timeTableModel;
+        parent::__construct($adminModel);
+    }
     public function className($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);
@@ -21,9 +44,9 @@ class TimeTable extends AdminController
 
     public function updateByClassAction()
     {
-        $timeTable = new TimeTableModel();
-        $q1 = $timeTable->deleteMany(['field' => 'classID', 'value' => $_REQUEST['classID']]);
-        $timeTable = new TimeTableModel();
+        $timeTable = $this->timeTableModel->bind();
+        $q1 = $timeTable->deleteMany(['classID' => $_REQUEST['classID']]);
+        $timeTable = $this->timeTable->bind();
         $q2 = $timeTable->insertMulti($_REQUEST['data']);
         echo $q1 . $q2;
 
@@ -31,21 +54,21 @@ class TimeTable extends AdminController
 
     public function getAction()
     {
-        $st = new ClassModel($this->route_params['id']);
+        $st = $this->classModel->bind($this->route_params['id']);
         $res = $st->getTimeTable();
         echo json_encode($res);
         return;
     }
     public function indexAction()
     {
-        $st = new TimeTableModel();
+        $st = $this->timeTableModel->bind();
         $res = $st->getWithJoin();
-        $subjects = new SubjectModel();
+        $subjects = $this->subjectModel->bind();
         $subRes = $subjects->getAll();
-        $periods = (new Period())->getAll();
-        $classes = new ClassModel();
+        $periods = $this->periodModel->bind()->getAll();
+        $classes = $this->classModel->bind();
         $classRes = $classes->getWithJoin();
-        $teacher = new TeacherModel();
+        $teacher = $this->teacherModel->bind();
         $teacherRes = $teacher->getWithJoin();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         foreach ($classRes as $key => $r) {

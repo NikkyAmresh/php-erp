@@ -2,21 +2,26 @@
 
 namespace App\Controllers\Teacher;
 
-use App\Controllers\Teacher\TeacherController;
-use App\Models\Teacher;
-
+use App\Models\Teacher as TeacherModel;
 class Profile extends TeacherController
 {
     protected $pageCode = 'profile';
 
+    public function __construct(
+        TeacherModel $teacherModel
+    ) {
+        $this->teacherModel = $teacherModel;
+        parent::__construct($teacherModel);
+    }
+
     public function indexAction()
     {
-        $achivementdetails = $this->teacher->getAchievementdetails();
+        $achivementDetails = $this->teacher->getAchievementDetails();
         $certification = $this->teacher->getCertifications();
-        $experiencedetails = $this->teacher->getExperiencedetails();
+        $experienceDetails = $this->teacher->getExperienceDetails();
         $projects = $this->teacher->getProjects();
         $res = $this->teacher->getOneWithJoin();
-        $this->setTemplateVars(['teacher' => $res, 'achivements' => $achivementdetails, 'certification' => $certification, 'experience' => $experiencedetails, 'projects' => $projects]);
+        $this->setTemplateVars(['teacher' => $res, 'achivements' => $achivementDetails, 'certification' => $certification, 'experience' => $experienceDetails, 'projects' => $projects]);
         $this->renderTemplate('Teacher/Dashboard/profile.html');
     }
 }

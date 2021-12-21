@@ -3,12 +3,21 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Models\Admin as AdminModel;
 use App\Models\Batch as BatchModel;
 
 class Batch extends AdminController
 {
     protected $pageCode = 'batch';
-
+    protected $adminModel;
+    protected $batchModel;
+    public function __construct(
+        BatchModel $batchModel,
+        AdminModel $adminModel
+    ) {
+        $this->batchModel = $batchModel;
+        parent::__construct($adminModel);
+    }
     public function get10Years()
     {
         $currentYear = date("Y");
@@ -23,17 +32,17 @@ class Batch extends AdminController
 
     public function indexAction()
     {
-        $st = new BatchModel();
+        $st = $this->batchModel->bind();
         $res = $st->getWithJoin();
         $years = $this->get10Years();
         $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
-        $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns,'result' => $st->result()]);
+        $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $batch = new BatchModel();
+            $batch = $this->batchModel->bind();
             $batch->setFromYear($_REQUEST['fromYear']);
             $batch->setToYear($_REQUEST['toYear']);
             $batch->setCode($_REQUEST['fromYear'] . "-" . $_REQUEST['toYear']);
@@ -47,7 +56,7 @@ class Batch extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $batch = new BatchModel($_REQUEST['id']);
+            $batch = $this->batchModel->bind($_REQUEST['id']);
             $batch->setFromYear($_REQUEST['fromYear']);
             $batch->setToYear($_REQUEST['toYear']);
             $from = $_REQUEST['fromYear'];
@@ -66,7 +75,7 @@ class Batch extends AdminController
 
     public function deleteAction()
     {
-        $batch = new BatchModel($this->route_params['id']);
+        $batch = $this->batchModel->bind($this->route_params['id']);
         $res = $batch->delete();
         if ($res) {
             $this->setSuccessMessage("Batch deleted successfully");
@@ -77,7 +86,7 @@ class Batch extends AdminController
     }
     public function editAction()
     {
-        $st = new BatchModel($this->route_params['id']);
+        $st = $this->batchModel->bind($this->route_params['id']);
         $res = $st->get();
         $years = $this->get10Years();
         if ($res) {
