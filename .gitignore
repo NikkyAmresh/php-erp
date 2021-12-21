@@ -1,6 +1,7 @@
 vendor
 
 composer.lock
+Tests/vendor
 
 public/.env
 
