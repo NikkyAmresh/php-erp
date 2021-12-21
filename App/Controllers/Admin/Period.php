@@ -10,19 +10,19 @@ class Period extends AdminController
 {
     protected $pageCode = 'period';
     protected $adminModel;
-    protected $period;
+    protected $periodModel;
 
     public function __construct(
         AdminModel $adminModel,
-        PeriodModel $period
+        PeriodModel $periodModel
     ) {
-        $this->period = $period;
+        $this->periodModel = $periodModel;
         parent::__construct($adminModel);
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $period = $this->period->bind();
+            $period = $this->periodModel->bind();
 
             $period->setFromTime($_REQUEST['fromTime']);
             $period->setToTime($_REQUEST['toTime']);
@@ -40,7 +40,7 @@ class Period extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['fromTime']))) {
-            $period = $this->period->bind($_REQUEST['id']);
+            $period = $this->periodModel->bind($_REQUEST['id']);
 
             $period->setFromTime($_REQUEST['fromTime']);
             $period->setToTime($_REQUEST['toTime']);
@@ -57,7 +57,7 @@ class Period extends AdminController
 
     public function deleteAction()
     {
-        $period = $this->period->bind($this->route_params['id']);
+        $period = $this->periodModel->bind($this->route_params['id']);
         $res = $period->delete();
         if ($res) {
             $this->setSuccessMessage("Period delete successfully");
@@ -69,7 +69,7 @@ class Period extends AdminController
 
     public function indexAction()
     {
-        $st = $this->period->bind();
+        $st = $this->periodModel->bind();
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'from', 'to', 'Edit');
         $this->setTemplateVars(['periods' => $res, 'columns' => $columns, 'result' => $st->result()]);
@@ -77,7 +77,7 @@ class Period extends AdminController
     }
     public function editAction()
     {
-        $st = $this->period->bind($this->route_params['id']);
+        $st = $this->periodModel->bind($this->route_params['id']);
         $res = $st->get();
         if ($res) {
             $this->setTemplateVars(['period' => $res]);

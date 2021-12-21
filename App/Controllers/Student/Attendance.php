@@ -2,10 +2,18 @@
 
 namespace App\Controllers\Student;
 
-use App\Controllers\Student\StudentController;
-
+use App\Models\Student as StudentModel;
 class Attendance extends StudentController
 {
+
+    /**
+     * Class constructor.
+     */
+    public function __construct(StudentModel $studentModel)
+    {
+        parent::__construct($studentModel);
+    }
+
     protected $pageCode = 'attendance';
     public function indexAction()
     {

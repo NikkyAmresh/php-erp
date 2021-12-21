@@ -9,17 +9,17 @@ class Semester extends AdminController
 {
     protected $pageCode = 'semester';
     protected $adminModel;
-    protected $semester;
+    protected $semesterModel;
     public function __construct(
-        SemesterModel $semester,
+        SemesterModel $semesterModel,
         AdminModel $adminModel
     ) {
-        $this->semester = $semester;
+        $this->semesterModel = $semesterModel;
         parent::__construct($adminModel);
     }
     public function indexAction()
     {
-        $st = $this->semester->bind();
+        $st = $this->semesterModel->bind();
         $res = $st->getAll();
         $columns = array('Serial no', 'Name', 'Edit');
         $this->setTemplateVars(['semesters' => $res, 'columns' => $columns, 'result' => $st->result()]);
@@ -28,7 +28,7 @@ class Semester extends AdminController
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = $this->semester->bind();
+            $semester = $this->semesterModel->bind();
             $semester->setName($_REQUEST['name']);
             $semester->save();
             $this->setSuccessMessage("semester created successfully");
@@ -40,7 +40,7 @@ class Semester extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = $this->semester->bind($_REQUEST['id']);
+            $semester = $this->semesterModel->bind($_REQUEST['id']);
             $semester->setName($_REQUEST['name']);
             if ($semester->save()) {
                 $this->setSuccessMessage("semester updated successfully");
@@ -55,7 +55,7 @@ class Semester extends AdminController
 
     public function deleteAction()
     {
-        $semester = $this->semester->bind($this->route_params['id']);
+        $semester = $this->semesterModel->bind($this->route_params['id']);
         $res = $semester->delete();
         if ($res) {
             $this->setSuccessMessage("semester deleted successfully");
@@ -66,7 +66,7 @@ class Semester extends AdminController
     }
     public function editAction()
     {
-        $st = $this->semester->bind($this->route_params['id']);
+        $st = $this->semesterModel->bind($this->route_params['id']);
         $res = $st->get();
         if ($res) {
             $this->setTemplateVars(['semester' => $res]);

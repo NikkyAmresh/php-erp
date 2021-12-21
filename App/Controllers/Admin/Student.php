@@ -15,24 +15,24 @@ class Student extends AdminController
 
     protected $pageCode = 'student';
     protected $adminModel;
-    protected $class;
-    protected $course;
-    protected $student;
-    protected $user;
-    protected $batch;
+    protected $classModel;
+    protected $courseModel;
+    protected $studentModel;
+    protected $userModel;
+    protected $batchModel;
     public function __construct(
         AdminModel $adminModel,
-        ClassesModel $class,
-        BatchModel $batch,
-        StudentModel $student,
-        UserModel $user,
-        CourseModel $course
+        ClassesModel $classModel,
+        BatchModel $batchModel,
+        StudentModel $studentModel,
+        UserModel $userModel,
+        CourseModel $courseModel
     ) {
-        $this->batch = $batch;
-        $this->student = $student;
-        $this->user = $user;
-        $this->class = $class;
-        $this->course = $course;
+        $this->batchModel = $batchModel;
+        $this->studentModel = $studentModel;
+        $this->userModel = $userModel;
+        $this->classModel = $classModel;
+        $this->courseModel = $courseModel;
         parent::__construct($adminModel);
     }
     public function className($array)
@@ -55,13 +55,13 @@ class Student extends AdminController
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
 
-            $user = $this->user->bind();
+            $user = $this->userModel->bind();
             $user->setName($_REQUEST['name']);
             $user->setMobile($_REQUEST['mobile']);
             $user->setEmail($_REQUEST['email']);
             $user->setPassword(md5($_REQUEST['password']));
             if ($id = $user->save()) {
-                $student = $this->student->bind();
+                $student = $this->studentModel->bind();
                 $student->setUserID($id);
                 $student->setCourseID($_REQUEST['course']);
                 $student->setBatchID($_REQUEST['batch']);
@@ -70,7 +70,7 @@ class Student extends AdminController
                 if ($student->save()) {
                     $this->setSuccessMessage("Student {$_REQUEST['name']} created successfully");
                 } else {
-                    $user = $this->user->bind();
+                    $user = $this->userModel->bind();
                     $this->setErrorMessage($student->getError());
                     $user->delete($id);
                 }
@@ -86,13 +86,13 @@ class Student extends AdminController
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
             if ($_REQUEST['userID']) {
-                $user = $this->user->bind();
+                $user = $this->userModel->bind();
                 $user->get($_REQUEST['userID']);
                 $user->setName($_REQUEST['name']);
                 $user->setMobile($_REQUEST['mobile']);
                 $user->setEmail($_REQUEST['email'])->save();
             }
-            $student = $this->student->bind();
+            $student = $this->studentModel->bind();
             $student->get($_REQUEST['id']);
             $student->setCourseID($_REQUEST['course']);
             $student->setBatchID($_REQUEST['batch']);
@@ -111,7 +111,7 @@ class Student extends AdminController
 
     public function deleteAction()
     {
-        $student = $this->student->bind($this->route_params['id']);
+        $student = $this->studentModel->bind($this->route_params['id']);
         $res = $student->delete();
         if ($res) {
             $this->setSuccessMessage("Student delete successfully");
@@ -127,7 +127,7 @@ class Student extends AdminController
         if (isset($this->route_params['page'])) {
             $page = $this->route_params['page'];
         }
-        $st = $this->student->bind(null, null, ['users.id', 'asc'], $page);
+        $st = $this->studentModel->bind(null, null, ['users.id', 'asc'], $page);
         $res = $st->getWithJoin();
         $columns = array('Serial no.', 'Roll no.', 'Name', 'Mobile', 'Email', 'Batch', 'Course', 'Branch', 'Semester', 'Edit');
         $this->setTemplateVars([
@@ -139,16 +139,16 @@ class Student extends AdminController
     }
     public function editAction()
     {
-        $st = $this->student->bind($this->route_params['id']);
+        $st = $this->studentModel->bind($this->route_params['id']);
         $res = $st->getOneWithJoin();
         if ($res) {
-            $courseModel = $this->course->bind();
+            $courseModel = $this->courseModel->bind();
             $courses = $courseModel->getWithJoin();
-            $batchesModel = $this->batch->bind();
+            $batchesModel = $this->batchModel->bind();
             $batches = $batchesModel->getWithJoin();
-            $classes = ($this->class->bind())->getWithJoin(null, null, ['semester', 'asc']);
+            $classes = $this->classModel->bind()->getWithJoin(null, null, ['semester', 'asc']);
             foreach ($classes as $key => $r) {
-                $classes[$key]['name'] = $this->className($r);
+                $classes[$key]['name'] = $this->classModelName($r);
             }
             $this->setTemplateVars([
                 'student' => $res,
@@ -163,9 +163,9 @@ class Student extends AdminController
     }
     public function newAction()
     {
-        $courses = ($this->course->bind())->getWithJoin();
-        $batches = ($this->batch->bind())->getWithJoin();
-        $classes = ($this->class->bind())->getWithJoin(null, null, null, ['semester', 'asc']);
+        $courses = $this->courseModel->bind()->getWithJoin();
+        $batches = $this->batchModel->bind()->getWithJoin();
+        $classes = $this->classModel->bind()->getWithJoin(null, null, null, ['semester', 'asc']);
         foreach ($classes as $key => $r) {
             $classes[$key]['name'] = $this->className($r);
         }

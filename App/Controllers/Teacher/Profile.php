@@ -2,12 +2,17 @@
 
 namespace App\Controllers\Teacher;
 
-use App\Controllers\Teacher\TeacherController;
-use App\Models\Teacher;
-
+use App\Models\Teacher as TeacherModel;
 class Profile extends TeacherController
 {
     protected $pageCode = 'profile';
+
+    public function __construct(
+        TeacherModel $teacherModel
+    ) {
+        $this->teacherModel = $teacherModel;
+        parent::__construct($teacherModel);
+    }
 
     public function indexAction()
     {

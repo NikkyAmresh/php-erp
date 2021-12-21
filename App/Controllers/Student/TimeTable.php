@@ -9,14 +9,14 @@ use App\Models\Student as StudentModel;
 class TimeTable extends StudentController
 {
     protected $pageCode = 'timetable';
-    protected $period;
+    protected $periodModel;
     protected $studentModel;
     /**
      * Class constructor.
      */
-    public function __construct(PeriodModel $period, StudentModel $studentModel)
+    public function __construct(PeriodModel $periodModel, StudentModel $studentModel)
     {
-        $this->period = $period;
+        $this->periodModel = $periodModel;
         parent::__construct($studentModel);
     }
     public function getAction()
@@ -27,7 +27,7 @@ class TimeTable extends StudentController
     }
     public function showAction()
     {
-        $periods = ($this->period->bind())->getAll();
+        $periods = $this->periodModel->bind()->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
         $this->renderTemplate('Student/Dashboard/TimeTable/TimeTable.html');

@@ -9,21 +9,21 @@ use App\Models\Department as DepartmentModel;
 class Department extends AdminController
 {
     protected $pageCode = 'department';
-    protected $department;
+    protected $departmentModel;
     protected $adminModel;
 
     public function __construct(
-        DepartmentModel $department,
+        DepartmentModel $departmentModel,
         AdminModel $adminModel
     ) {
-        $this->department = $department;
+        $this->departmentModel = $departmentModel;
         parent::__construct($adminModel);
     }
 
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $department = $this->department->bind();
+            $department = $this->departmentModel->bind();
             $department->setName($_REQUEST['name']);
             if ($department->save()) {
                 $this->setSuccessMessage("Department {$_REQUEST['name']} created successfully");
@@ -38,7 +38,7 @@ class Department extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $department = $this->department->bind($_REQUEST['id']);
+            $department = $this->departmentModel->bind($_REQUEST['id']);
             $department->setName($_REQUEST['name']);
             $department->setHodID($_REQUEST['hod']);
             if ($department->save()) {
@@ -54,7 +54,7 @@ class Department extends AdminController
 
     public function deleteAction()
     {
-        $department = $this->department->bind($this->route_params['id']);
+        $department = $this->departmentModel->bind($this->route_params['id']);
         $res = $department->delete();
         if ($res) {
             $this->setSuccessMessage("Department delete successfully");
@@ -66,7 +66,7 @@ class Department extends AdminController
 
     public function indexAction()
     {
-        $st = $this->department->bind();
+        $st = $this->departmentModel->bind();
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'Department', 'HOD', 'Edit');
         $this->setTemplateVars(['departments' => $res, 'columns' => $columns, 'result' => $st->result()]);
@@ -75,7 +75,7 @@ class Department extends AdminController
     }
     public function editAction()
     {
-        $st = $this->department->bind($this->route_params['id']);
+        $st = $this->departmentModel->bind($this->route_params['id']);
         $res = $st->get();
         if ($res) {
             $hods = $st->getTeachers();

@@ -4,7 +4,6 @@ namespace App\Controllers\Student;
 
 use App\Controllers\Student\StudentController;
 use App\Models\Student as StudentModel;
-use App\Models\Studentpersonaldetail as StudentpersonaldetailModel;
 
 class Profile extends StudentController
 {
@@ -16,12 +15,11 @@ class Profile extends StudentController
     /**
      * Class constructor.
      */
-    public function __construct(StudentPersonalDetailModel $personalDetail, StudentModel $studentModel)
+    public function __construct(StudentModel $studentModel)
     {
-        $this->SpersonalDetail = $personalDetail;
         parent::__construct($studentModel);
-
     }
+
     public function indexAction()
     {
         $res = $this->student->getOneWithJoin();

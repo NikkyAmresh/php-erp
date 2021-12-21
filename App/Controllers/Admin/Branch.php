@@ -10,23 +10,23 @@ use App\Models\Department as DepartmentModel;
 class Branch extends AdminController
 {
     protected $pageCode = 'branch';
-    protected $branch;
-    protected $department;
+    protected $branchModel;
+    protected $departmentModel;
     protected $adminModel;
     public function __construct(
-        BranchModel $branch,
-        DepartmentModel $department,
+        BranchModel $branchModel,
+        DepartmentModel $departmentModel,
         AdminModel $adminModel
     ) {
-        $this->branch = $branch;
-        $this->department = $department;
+        $this->branchModel = $branchModel;
+        $this->departmentModel = $departmentModel;
         parent::__construct($adminModel);
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
 
-            $branch = $this->branch->bind();
+            $branch = $this->branchModel->bind();
             $branch->setDepartmentID($_REQUEST['department']);
             $branch->setName($_REQUEST['name']);
             $branch->setCode($_REQUEST['code']);
@@ -44,7 +44,7 @@ class Branch extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $branch = $this->branch->bind($_REQUEST['id']);
+            $branch = $this->branchModel->bind($_REQUEST['id']);
             $branch->setDepartmentID($_REQUEST['department']);
             $branch->setName($_REQUEST['name']);
             $branch->setCode($_REQUEST['code']);
@@ -61,7 +61,7 @@ class Branch extends AdminController
 
     public function deleteAction()
     {
-        $branch = $this->branch->bind($this->route_params['id']);
+        $branch = $this->branchModel->bind($this->route_params['id']);
         $res = $branch->delete();
         if ($res) {
             $this->setSuccessMessage("Branch delete successfully");
@@ -73,7 +73,7 @@ class Branch extends AdminController
 
     public function indexAction()
     {
-        $st = $this->branch->bind();
+        $st = $this->branchModel->bind();
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
         $this->setTemplateVars(['branches' => $res, 'columns' => $columns, 'result' => $st->result()]);
@@ -81,10 +81,10 @@ class Branch extends AdminController
     }
     public function editAction()
     {
-        $st = $this->branch->bind($this->route_params['id']);
+        $st = $this->branchModel->bind($this->route_params['id']);
         $res = $st->getOneWithJoin();
         if ($res) {
-            $depts = ($this->department->bind())->getAll();
+            $depts = $this->departmentModel->bind()->getAll();
             $this->setTemplateVars(['branch' => $res, 'deps' => $depts]);
             $this->renderTemplate('Admin/Dashboard/Branch/edit.html');
         } else {
@@ -93,7 +93,7 @@ class Branch extends AdminController
     }
     public function newAction()
     {
-        $depts = ($this->department->bind())->getAll();
+        $depts = $this->departmentModel->bind()->getAll();
         $this->setTemplateVars(['deps' => $depts]);
         $this->renderTemplate('Admin/Dashboard/Branch/new.html');
     }

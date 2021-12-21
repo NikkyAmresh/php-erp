@@ -9,7 +9,6 @@ use App\Models\Student as StudentModel;
 use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use App\Models\TimeTable as TimeTableModel;
-use \Core\View;
 
 class Attendance extends TeacherController
 {
@@ -37,7 +36,7 @@ class Attendance extends TeacherController
         $res = $st->getWithJoin();
         $subjects = $this->subjectModel->bind();
         $subRes = $subjects->getAll();
-        $periods = ($this->periodModel->bind())->getAll();
+        $periods = $this->periodModel->bind()->getAll();
         $classes = $this->classModel->bind();
         $classRes = $classes->getWithJoin();
         $teacher = $this->teacherModel->bind();
@@ -46,7 +45,8 @@ class Attendance extends TeacherController
         foreach ($classRes as $key => $r) {
             $classRes[$key]['name'] = $this->className($r);
         }
-        View::renderTemplate('Teacher/Dashboard/TimeTable/index.html', ['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
+        $this->setTemplateVars(['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes]);
+        $this->renderTemplate('Teacher/Dashboard/TimeTable/index.html');
     }
 
     public function markAction()
@@ -63,7 +63,7 @@ class Attendance extends TeacherController
     {
         $timeTableId = $_POST['timetableID'];
         $attendances = $_POST['attendances'];
-        $timeTable = $this->timeTable->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
+        $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
         $res = $timeTable->get();
 
     }

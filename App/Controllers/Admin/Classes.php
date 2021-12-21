@@ -14,25 +14,25 @@ class Classes extends AdminController
 {
 
     protected $pageCode = 'classes';
-    protected $semester;
+    protected $semesterModel;
     protected $adminModel;
-    protected $branch;
-    protected $class;
-    protected $department;
-    protected $teacher;
+    protected $branchModel;
+    protected $classModel;
+    protected $departmentModel;
+    protected $teacherModel;
     public function __construct(
-        SemesterModel $semester,
+        SemesterModel $semesterModel,
         AdminModel $adminModel,
-        BranchModel $branch,
-        ClassModel $class,
-        DepartmentModel $department,
-        TeacherModel $teacher
+        BranchModel $branchModel,
+        ClassModel $classModel,
+        DepartmentModel $departmentModel,
+        TeacherModel $teacherModel
     ) {
-        $this->semester = $semester;
-        $this->branch = $branch;
-        $this->department = $department;
-        $this->class = $class;
-        $this->teacher = $teacher;
+        $this->semesterModel = $semesterModel;
+        $this->branchModel = $branchModel;
+        $this->departmentModel = $departmentModel;
+        $this->classModel = $classModel;
+        $this->teacherModel = $teacherModel;
         parent::__construct($adminModel);
     }
     public function className($array)
@@ -55,7 +55,7 @@ class Classes extends AdminController
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['semester']))) {
 
-            $class = $this->class->bind();
+            $class = $this->classModel->bind();
             $class->setDepartmentID($_REQUEST['department']);
             $class->setBranchID($_REQUEST['branch']);
             $class->setSemesterID($_REQUEST['semester']);
@@ -75,7 +75,7 @@ class Classes extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['semester']))) {
-            $class = $this->class->bind($_REQUEST['id']);
+            $class = $this->classModel->bind($_REQUEST['id']);
             $class->setDepartmentID($_REQUEST['department']);
             $class->setBranchID($_REQUEST['branch']);
             $class->setSemesterID($_REQUEST['semester']);
@@ -94,7 +94,7 @@ class Classes extends AdminController
 
     public function deleteAction()
     {
-        $class = $this->class->bind($this->route_params['id']);
+        $class = $this->classModel->bind($this->route_params['id']);
         $res = $class->delete();
         if ($res) {
             $this->setSuccessMessage("Class delete successfully");
@@ -106,7 +106,7 @@ class Classes extends AdminController
 
     public function indexAction()
     {
-        $st = $this->class->bind(null, null, ['semester', 'asc']);
+        $st = $this->classModel->bind(null, null, ['semester', 'asc']);
         $res = $st->getWithJoin();
         $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
         $sections = $this->getSections();
@@ -123,13 +123,13 @@ class Classes extends AdminController
     }
     public function editAction()
     {
-        $st = $this->class->bind($this->route_params['id']);
+        $st = $this->classModel->bind($this->route_params['id']);
         $res = $st->getOneWithJoin();
         if ($res) {
-            $depts = ($this->department->bind())->getWithJoin();
-            $branches = ($this->branch->bind())->getWithJoin();
-            $teachers = ($this->teacher->bind())->getWithJoin();
-            $semesters = ($this->semester->bind())->getWithJoin();
+            $depts = $this->departmentModel->bind()->getWithJoin();
+            $branches = $this->branchModel->bind()->getWithJoin();
+            $teachers = $this->teacherModel->bind()->getWithJoin();
+            $semesters = $this->semesterModel->bind()->getWithJoin();
             $res['name'] = $this->className($res);
             $sections = $this->getSections();
             $this->setTemplateVars([
@@ -147,12 +147,12 @@ class Classes extends AdminController
     }
     public function newAction()
     {
-        $st = $this->class->bind(null, null, ['semester', 'asc']);
+        $st = $this->classModel->bind(null, null, ['semester', 'asc']);
         $res = $st->getWithJoin();
-        $depts = ($this->department->bind())->getWithJoin();
-        $branches = ($this->branch->bind())->getWithJoin();
-        $teachers = ($this->teacher->bind())->getWithJoin();
-        $semesters = ($this->semester->bind())->getWithJoin();
+        $depts = $this->departmentModel->bind()->getWithJoin();
+        $branches = $this->branchModel->bind()->getWithJoin();
+        $teachers = $this->teacherModel->bind()->getWithJoin();
+        $semesters = $this->semesterModel->bind()->getWithJoin();
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->className($r);

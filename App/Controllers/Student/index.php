@@ -9,13 +9,13 @@ use App\Models\Student as StudentModel;
 class Index extends StudentBaseController
 {
     protected $pageCode = 'home';
-    protected $student;
+    protected $studentModel;
 /**
  * Class constructor.
  */
-    public function __construct(StudentModel $student)
+    public function __construct(StudentModel $studentModel)
     {
-        $this->student = $student;
+        $this->studentModel = $studentModel;
     }
     public function isAlreadyLoggedIn()
     {
@@ -25,7 +25,7 @@ class Index extends StudentBaseController
     public function login($method, $body)
     {
         if ($method == Constants::REQUEST_METHOD_POST) {
-            $student = $this->student->bind();
+            $student = $this->studentModel->bind();
             $validate = $student->studentAuth($body['email'], $body['password']);
             if ($validate) {
                 $user = $student->getUser();
