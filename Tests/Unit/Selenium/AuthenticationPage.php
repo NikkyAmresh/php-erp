@@ -1,37 +1,44 @@
 <?php
 namespace Unit\Selenium;
 
-class WelcomePage
+class Page
 {
-    public function __construct($test)
+    public function __construct($page)
     {
-        $this->header = $test->byCssSelector('body > nav');
-        $this->test = $test;
+        $this->page = $page;
+    }
+
+    public function isLogout()
+    {
+        return $this->page->assertMatchesRegularExpression("/Sign in as/", $this->page->byCssSelector('body > div > div > div > div > div h2')->text());
+    }
+}
+class WelcomePage extends Page
+{
+    public function __construct($page)
+    {
+        parent::__construct($page);
     }
 
     public function assertWelcomeIs($text)
     {
-        $this->test->assertMatchesRegularExpression("/$text/", $this->header->text());
-        $this->logout();
+        $this->page->assertMatchesRegularExpression("/$text/", $this->page->byCssSelector('body > nav')->text());
     }
+
     public function logout()
     {
-        $logoutElement = $this->test->byCssSelector('body > nav > div.flex.items-center.justify-end.p-6.gap-5 > div > a');
-        sleep(5);
+        $logoutElement = $this->page->byCssSelector('body > nav > div.flex.items-center.justify-end.p-6.gap-5 > div > a');
         $logoutElement->click();
-        $this->test->assertMatchesRegularExpression("/Sign in as Student/", $this->test->byCssSelector('body > div > div > div > div > div h2')->text());
-        sleep(2);
-        return $this;
     }
 }
 
-class AuthenticationPage
+class AuthenticationPage extends Page
 {
-    public function __construct($test)
+    public function __construct($page)
     {
-        $this->usernameInput = $test->byName('email');
-        $this->passwordInput = $test->byName('password');
-        $this->test = $test;
+        $this->usernameInput = $page->byName('email');
+        $this->passwordInput = $page->byName('password');
+        parent::__construct($page);
     }
 
     public function username($value)
@@ -48,7 +55,7 @@ class AuthenticationPage
 
     public function submit()
     {
-        $this->test->clickOnElement('submitButton');
-        return new WelcomePage($this->test);
+        $this->page->clickOnElement('submitButton');
+        return new WelcomePage($this->page);
     }
 }

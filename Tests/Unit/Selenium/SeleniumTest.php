@@ -7,9 +7,12 @@ use PHPUnit\Extensions\Selenium2TestCase;
 class SeleniumTest extends Selenium2TestCase
 {
 
-    protected $url = 'https://www.google.com';
+    public static function setUpBeforeClass(): void
+    {
+        self::shareSession(true);
+    }
 
-    protected function setUp():void
+    public function setUp(): void
     {
         $this->setBrowser('chrome');
         $this->setBrowserUrl($this->url);
