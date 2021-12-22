@@ -18,7 +18,7 @@ class Classes extends Model
     public function getStudents()
     {
         $st = $this->studentModel->bind(null, ['classID' => $this->id]);
-        return $st->getWithJoin();
+        return $st->get();
     }
 
     public function getTimeTable()

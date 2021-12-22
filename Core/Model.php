@@ -36,7 +36,7 @@ abstract class Model
         }
         $this->initDb();
         if ($id) {
-            $this->getOneWithJoin();
+            $this->getOne();
         } elseif ($cond) {
             $this->dbCall = $this->db;
             foreach ($cond as $field => $value) {
@@ -66,7 +66,7 @@ abstract class Model
         return $this->db->orderBy("id", "asc")->get($this->table, $page);
     }
 
-    public function get()
+    public function getResult()
     {
         if (!count($this->_data)) {
             return $this->dbCall->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
@@ -80,7 +80,7 @@ abstract class Model
 
     }
 
-    public function getWithJoin()
+    public function get()
     {
         if ($this->id) {
             return $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
@@ -88,7 +88,7 @@ abstract class Model
         return $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
     }
 
-    public function getOneWithJoin()
+    public function getOne()
     {
         $data = [];
         if ($this->id) {

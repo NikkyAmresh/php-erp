@@ -20,7 +20,7 @@ class Profile extends TeacherController
         $certification = $this->teacher->getCertifications();
         $experienceDetails = $this->teacher->getExperienceDetails();
         $projects = $this->teacher->getProjects();
-        $res = $this->teacher->getOneWithJoin();
+        $res = $this->teacher->getOne();
         $this->setTemplateVars(['teacher' => $res, 'achivements' => $achivementDetails, 'certification' => $certification, 'experience' => $experienceDetails, 'projects' => $projects]);
         $this->renderTemplate('Teacher/Dashboard/profile.html');
     }

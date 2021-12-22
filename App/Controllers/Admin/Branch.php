@@ -74,7 +74,7 @@ class Branch extends AdminController
     public function indexAction()
     {
         $st = $this->branchModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->get();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
         $this->setTemplateVars(['branches' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Branch/index.html');
@@ -82,7 +82,7 @@ class Branch extends AdminController
     public function editAction()
     {
         $st = $this->branchModel->bind($this->route_params['id']);
-        $res = $st->getOneWithJoin();
+        $res = $st->getOne();
         if ($res) {
             $depts = $this->departmentModel->bind()->getAll();
             $this->setTemplateVars(['branch' => $res, 'deps' => $depts]);

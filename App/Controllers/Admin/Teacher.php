@@ -86,7 +86,7 @@ class Teacher extends AdminController
     public function indexAction()
     {
         $st = $this->teacherModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->get();
         $columns = array('Serial no', 'Name', 'Department', 'Edit');
         $this->setTemplateVars(['teachers' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
@@ -94,7 +94,7 @@ class Teacher extends AdminController
     public function editAction()
     {
         $st = $this->teacherModel->bind($this->route_params['id']);
-        $res = $st->getOneWithJoin();
+        $res = $st->getOne();
         if ($res) {
             $depts = ($this->departmentModel->bind())->getAll();
             $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);

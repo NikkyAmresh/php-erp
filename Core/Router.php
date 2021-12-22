@@ -2,6 +2,9 @@
 
 namespace Core;
 
+
+use App\Helpers\Constants;
+use App\Helpers\Session;
 /**
  * Router
  *
@@ -107,6 +110,7 @@ class Router
         $url = $this->removeQueryStringVariables($url);
 
         if ($this->match($url)) {
+            $this->setHistory($url);
             $controller = $this->params['controller'];
             $controller = $this->convertToStudlyCaps($controller);
             $controller = $this->getNamespace() . $controller;
@@ -215,5 +219,10 @@ class Router
         }
 
         return $namespace;
+    }
+
+    public function setHistory($url)
+    {
+        return Session::set(Constants::HISTORY_URL, $url);
     }
 }

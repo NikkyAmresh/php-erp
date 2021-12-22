@@ -107,7 +107,7 @@ class Classes extends AdminController
     public function indexAction()
     {
         $st = $this->classModel->bind(null, null, ['semester', 'asc']);
-        $res = $st->getWithJoin();
+        $res = $st->get();
         $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
@@ -124,12 +124,12 @@ class Classes extends AdminController
     public function editAction()
     {
         $st = $this->classModel->bind($this->route_params['id']);
-        $res = $st->getOneWithJoin();
+        $res = $st->getOne();
         if ($res) {
-            $depts = $this->departmentModel->bind()->getWithJoin();
-            $branches = $this->branchModel->bind()->getWithJoin();
-            $teachers = $this->teacherModel->bind()->getWithJoin();
-            $semesters = $this->semesterModel->bind()->getWithJoin();
+            $depts = $this->departmentModel->bind()->get();
+            $branches = $this->branchModel->bind()->get();
+            $teachers = $this->teacherModel->bind()->get();
+            $semesters = $this->semesterModel->bind()->get();
             $res['name'] = $this->className($res);
             $sections = $this->getSections();
             $this->setTemplateVars([
@@ -148,11 +148,11 @@ class Classes extends AdminController
     public function newAction()
     {
         $st = $this->classModel->bind(null, null, ['semester', 'asc']);
-        $res = $st->getWithJoin();
-        $depts = $this->departmentModel->bind()->getWithJoin();
-        $branches = $this->branchModel->bind()->getWithJoin();
-        $teachers = $this->teacherModel->bind()->getWithJoin();
-        $semesters = $this->semesterModel->bind()->getWithJoin();
+        $res = $st->get();
+        $depts = $this->departmentModel->bind()->get();
+        $branches = $this->branchModel->bind()->get();
+        $teachers = $this->teacherModel->bind()->get();
+        $semesters = $this->semesterModel->bind()->get();
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->className($r);

@@ -14,10 +14,11 @@
 //  phpinfo();
 // echo $_SERVER['QUERY_STRING'] ;
 // echo $_GET['url'] ;
-header("Cache-Control: no-cache, must-revalidate");
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 require dirname(__DIR__) . '/vendor/autoload.php';
-
 // /**
 //  * Error and Exception handling
 //  */
@@ -27,6 +28,7 @@ ini_set('display_errors', 1);
 
 set_error_handler('Core\Error::errorHandler');
 set_exception_handler('Core\Error::exceptionHandler');
+
 $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 // /**

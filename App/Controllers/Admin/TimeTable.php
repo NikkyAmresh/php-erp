@@ -46,7 +46,7 @@ class TimeTable extends AdminController
     {
         $timeTable = $this->timeTableModel->bind();
         $q1 = $timeTable->deleteMany(['classID' => $_REQUEST['classID']]);
-        $timeTable = $this->timeTable->bind();
+        $timeTable = $this->timeTableModel->bind();
         $q2 = $timeTable->insertMulti($_REQUEST['data']);
         echo $q1 . $q2;
 
@@ -62,14 +62,14 @@ class TimeTable extends AdminController
     public function indexAction()
     {
         $st = $this->timeTableModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->get();
         $subjects = $this->subjectModel->bind();
         $subRes = $subjects->getAll();
         $periods = $this->periodModel->bind()->getAll();
         $classes = $this->classModel->bind();
-        $classRes = $classes->getWithJoin();
+        $classRes = $classes->get();
         $teacher = $this->teacherModel->bind();
-        $teacherRes = $teacher->getWithJoin();
+        $teacherRes = $teacher->get();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         foreach ($classRes as $key => $r) {
             $classRes[$key]['name'] = $this->className($r);

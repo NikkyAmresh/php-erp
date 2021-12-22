@@ -49,7 +49,7 @@ class TimeTable extends Model
     {
         if ($this->studentModel) {
             $students = $this->studentModel->bind(null, ['classID' => $this->getClassID()]);
-            return $students->getWithJoin();
+            return $students->get();
         }
         return;
     }

@@ -70,7 +70,7 @@ class Period extends AdminController
     public function indexAction()
     {
         $st = $this->periodModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->get();
         $columns = array('Serial no', 'from', 'to', 'Edit');
         $this->setTemplateVars(['periods' => $res, 'columns' => $columns, 'result' => $st->result()]);
         $this->renderTemplate('Admin/Dashboard/Period/index.html');
