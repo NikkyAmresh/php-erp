@@ -113,4 +113,11 @@ abstract class Controller
     {
         return Session::set(Constants::MESSAGE_TYPE[Constants::INFO], $message);
     }
+
+    public function renderMessage($status,$message,$data=null)
+    {
+        $payload = ['status'=>$status,'message'=>$message,'data'=>$data];
+        echo json_encode($payload);
+        return;
+    }
 }

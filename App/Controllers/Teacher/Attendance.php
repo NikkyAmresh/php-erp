@@ -3,6 +3,8 @@
 namespace App\Controllers\Teacher;
 
 use App\Controllers\Teacher\TeacherController;
+// use App\Models\Attendance as AttendanceModel;
+use App\Models\Attendance as AttendanceModel;
 use App\Models\Classes as ClassModel;
 use App\Models\Period as PeriodModel;
 use App\Models\Student as StudentModel;
@@ -20,7 +22,8 @@ class Attendance extends TeacherController
         PeriodModel $periodModel,
         ClassModel $classModel,
         TeacherModel $teacherModel,
-        StudentModel $studentModel
+        StudentModel $studentModel,
+        AttendanceModel $attendanceModel
     ) {
         $this->timeTableModel = $timeTableModel;
         $this->subjectModel = $subjectModel;
@@ -28,6 +31,7 @@ class Attendance extends TeacherController
         $this->classModel = $classModel;
         $this->teacherModel = $teacherModel;
         $this->studentModel = $studentModel;
+        $this->attendanceModel = $attendanceModel;
         parent::__construct($teacherModel);
     }
     public function indexAction()
@@ -51,10 +55,13 @@ class Attendance extends TeacherController
 
     public function markAction()
     {
-        $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $this->route_params['id'], 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
+        $timeTableId=$this->route_params['id'];
+        $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
         $res = $timeTable->getOne();
         $students = $timeTable->setStudent($this->studentModel)->getStudents();
-        $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $res, 'students' => $students]);
+        $date = date("Y/m/d");
+        $attendance = $this->attendanceModel->bind(null,['date'=>$date,'timetableID'=>$timeTableId])->get();
+        $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $res, 'students' => $students,'attendance'=>$attendance]);
         $this->renderTemplate('Teacher/Dashboard/Attendance/index.html');
         return;
     }
@@ -63,13 +70,33 @@ class Attendance extends TeacherController
     {
         $timeTableId = $_POST['timetableID'];
         $attendances = $_POST['attendances'];
-        $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
-        $res = $timeTable->getOne();
 
-        // if(!$res){
-        //     $this->setErrorMessage("Can't mark attendance");
-        //     $this->redirect("/teacher/attendace");
-        // }
+        $attendance = $this->attendanceModel->bind();
+
+        $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
+        $docs = [];
+        $date = date("Y/m/d");
+        foreach ($attendances as $value) {
+            $doc = ['studentID'=>$value['id'],'status'=>$value['status'],'date'=>$date,'timetableID'=>$timeTableId];
+            array_push($docs,$doc);
+        }
+        $res = false;
+        try {
+            $res = $timeTable->getOne();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+        if($res){
+            $attendance->deleteMany(['date'=>$date,'timetableID'=>$timeTableId]);
+            if($attendance->insertMulti($docs)){
+                return $this->renderMessage(1,"Attendance Updated");
+            }else{
+                return $this->renderMessage(0,"Somethig went Wrong");
+            }
+        }else{
+            return $this->renderMessage(0,"You are not allowed to mark this date/subject attendace");
+        }
+
 
     }
     public function showAction()

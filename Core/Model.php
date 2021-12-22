@@ -130,7 +130,7 @@ abstract class Model
 
     public function insertMulti($dataArray)
     {
-        $this->db->insertMulti($this->table, $dataArray);
+        return $this->db->insertMulti($this->table, $dataArray);
     }
 
     public function setData($data)
