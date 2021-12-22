@@ -22,7 +22,7 @@ abstract class Model
 
     public function initDb()
     {
-        $this->db = $this->dbModel->setConfig(Config::getDbHost(), Config::getDbUser(), Config::getDbPassword(), Config::getDbName());
+        $this->db = $this->dbModel->setConfig(Config::getEnv('DB_HOST'),Config::getEnv('DB_USER'), Config::getEnv('DB_PASSWORD'), Config::getEnv('DB_NAME'));
     }
 
     public function bind($id = null, $cond = null, $orderBy = null, $page = 1)
@@ -36,7 +36,7 @@ abstract class Model
         }
         $this->initDb();
         if ($id) {
-            $this->getOne();
+            $this->get();
         } elseif ($cond) {
             $this->dbCall = $this->db;
             foreach ($cond as $field => $value) {
@@ -80,7 +80,7 @@ abstract class Model
 
     }
 
-    public function get()
+    public function getCollection()
     {
         if ($this->id) {
             return $this->db->where($this->table . '.id', $this->id)->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
@@ -88,7 +88,7 @@ abstract class Model
         return $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
     }
 
-    public function getOne()
+    public function get()
     {
         $data = [];
         if ($this->id) {
@@ -148,7 +148,7 @@ abstract class Model
         return $this->db->query($query);
     }
 
-    public function result()
+    public function getPaginationSummary()
     {
         return $this->db->resultData;
     }

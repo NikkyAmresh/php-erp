@@ -22,7 +22,7 @@ class Profile extends StudentController
 
     public function indexAction()
     {
-        $res = $this->student->getOne();
+        $res = $this->student->get();
         $achivementDetails = $this->student->getAchievementDetails();
         $certification = $this->student->getCertifications();
         $educationDetails = $this->student->getEducationDetails();

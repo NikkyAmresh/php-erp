@@ -1,5 +1,5 @@
 <?php
-namespace Unit\Selenium;
+namespace Tests\Unit\Selenium;
 
 class Page
 {

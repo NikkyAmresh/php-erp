@@ -128,24 +128,24 @@ class Student extends AdminController
             $page = $this->route_params['page'];
         }
         $st = $this->studentModel->bind(null, null, ['users.id', 'asc'], $page);
-        $res = $st->get();
+        $res = $st->getCollection();
         $columns = array('Serial no.', 'Roll no.', 'Name', 'Mobile', 'Email', 'Batch', 'Course', 'Branch', 'Semester', 'Edit');
         $this->setTemplateVars([
             'columns' => $columns,
             'students' => $res,
-            'result' => $st->result(),
+            'result' => $st->getPaginationSummary(),
         ]);
         $this->renderTemplate('Admin/Dashboard/Student/index.html');
     }
     public function editAction()
     {
         $st = $this->studentModel->bind($this->route_params['id']);
-        $res = $st->getOne();
+        $res = $st->get();
         if ($res) {
             $courseModel = $this->courseModel->bind();
-            $courses = $courseModel->get();
+            $courses = $courseModel->getCollection();
             $batchesModel = $this->batchModel->bind();
-            $batches = $batchesModel->get();
+            $batches = $batchesModel->getCollection();
             $classes = $this->classModel->bind()->getWithJoin(null, null, ['semester', 'asc']);
             foreach ($classes as $key => $r) {
                 $classes[$key]['name'] = $this->classModelName($r);
@@ -163,8 +163,8 @@ class Student extends AdminController
     }
     public function newAction()
     {
-        $courses = $this->courseModel->bind()->get();
-        $batches = $this->batchModel->bind()->get();
+        $courses = $this->courseModel->bind()->getCollection();
+        $batches = $this->batchModel->bind()->getCollection();
         $classes = $this->classModel->bind()->getWithJoin(null, null, null, ['semester', 'asc']);
         foreach ($classes as $key => $r) {
             $classes[$key]['name'] = $this->className($r);

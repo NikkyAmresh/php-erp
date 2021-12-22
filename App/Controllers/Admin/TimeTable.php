@@ -62,14 +62,14 @@ class TimeTable extends AdminController
     public function indexAction()
     {
         $st = $this->timeTableModel->bind();
-        $res = $st->get();
+        $res = $st->getCollection();
         $subjects = $this->subjectModel->bind();
         $subRes = $subjects->getAll();
         $periods = $this->periodModel->bind()->getAll();
         $classes = $this->classModel->bind();
-        $classRes = $classes->get();
+        $classRes = $classes->getCollection();
         $teacher = $this->teacherModel->bind();
-        $teacherRes = $teacher->get();
+        $teacherRes = $teacher->getCollection();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         foreach ($classRes as $key => $r) {
             $classRes[$key]['name'] = $this->className($r);

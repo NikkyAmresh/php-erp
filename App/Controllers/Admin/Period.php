@@ -70,15 +70,15 @@ class Period extends AdminController
     public function indexAction()
     {
         $st = $this->periodModel->bind();
-        $res = $st->get();
+        $res = $st->getCollection();
         $columns = array('Serial no', 'from', 'to', 'Edit');
-        $this->setTemplateVars(['periods' => $res, 'columns' => $columns, 'result' => $st->result()]);
+        $this->setTemplateVars(['periods' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
         $this->renderTemplate('Admin/Dashboard/Period/index.html');
     }
     public function editAction()
     {
         $st = $this->periodModel->bind($this->route_params['id']);
-        $res = $st->get();
+        $res = $st->getCollection();
         if ($res) {
             $this->setTemplateVars(['period' => $res]);
             $this->renderTemplate('Admin/Dashboard/Period/edit.html');

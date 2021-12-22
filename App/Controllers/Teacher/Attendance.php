@@ -33,14 +33,14 @@ class Attendance extends TeacherController
     public function indexAction()
     {
         $st = $this->timeTableModel->bind();
-        $res = $st->get();
+        $res = $st->getCollection();
         $subjects = $this->subjectModel->bind();
         $subRes = $subjects->getAll();
         $periods = $this->periodModel->bind()->getAll();
         $classes = $this->classModel->bind();
-        $classRes = $classes->get();
+        $classRes = $classes->getCollection();
         $teacher = $this->teacherModel->bind();
-        $teacherRes = $teacher->get();
+        $teacherRes = $teacher->getCollection();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         foreach ($classRes as $key => $r) {
             $classRes[$key]['name'] = $this->className($r);
@@ -52,7 +52,7 @@ class Attendance extends TeacherController
     public function markAction()
     {
         $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $this->route_params['id'], 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
-        $res = $timeTable->getOne();
+        $res = $timeTable->get();
         $students = $timeTable->setStudent($this->studentModel)->getStudents();
         $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $res, 'students' => $students]);
         $this->renderTemplate('Teacher/Dashboard/Attendance/index.html');
@@ -64,7 +64,7 @@ class Attendance extends TeacherController
         $timeTableId = $_POST['timetableID'];
         $attendances = $_POST['attendances'];
         $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $this->teacher->getId(), 'timetables.day' => lcfirst(date('l'))]);
-        $res = $timeTable->getOne();
+        $res = $timeTable->get();
 
         // if(!$res){
         //     $this->setErrorMessage("Can't mark attendance");
@@ -74,7 +74,7 @@ class Attendance extends TeacherController
     }
     public function showAction()
     {
-        $periods = ($this->periodModel->bind())->getAll();
+        $periods = $this->periodModel->bind()->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
         $this->renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html');

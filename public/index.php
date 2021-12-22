@@ -29,8 +29,6 @@ ini_set('display_errors', 1);
 set_error_handler('Core\Error::errorHandler');
 set_exception_handler('Core\Error::exceptionHandler');
 
-$dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->safeLoad();
 // /**
 //  * Routing
 //  */

@@ -18,12 +18,12 @@ class Classes extends Model
     public function getStudents()
     {
         $st = $this->studentModel->bind(null, ['classID' => $this->id]);
-        return $st->get();
+        return $st->getCollection();
     }
 
     public function getTimeTable()
     {
         $st = $this->timeTableModel->bind(null, ['classID' => $this->id]);
-        return $res = $st->get();
+        return $res = $st->getCollection();
     }
 }

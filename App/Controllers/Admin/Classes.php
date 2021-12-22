@@ -107,7 +107,7 @@ class Classes extends AdminController
     public function indexAction()
     {
         $st = $this->classModel->bind(null, null, ['semester', 'asc']);
-        $res = $st->get();
+        $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
@@ -117,19 +117,19 @@ class Classes extends AdminController
             'columns' => $columns,
             'classes' => $res,
             'sections' => $sections,
-            'result' => $st->result(),
+            'result' => $st->getPaginationSummary(),
         ]);
         $this->renderTemplate('Admin/Dashboard/Classes/index.html');
     }
     public function editAction()
     {
         $st = $this->classModel->bind($this->route_params['id']);
-        $res = $st->getOne();
+        $res = $st->get();
         if ($res) {
-            $depts = $this->departmentModel->bind()->get();
-            $branches = $this->branchModel->bind()->get();
-            $teachers = $this->teacherModel->bind()->get();
-            $semesters = $this->semesterModel->bind()->get();
+            $depts = $this->departmentModel->bind()->getCollection();
+            $branches = $this->branchModel->bind()->getCollection();
+            $teachers = $this->teacherModel->bind()->getCollection();
+            $semesters = $this->semesterModel->bind()->getCollection();
             $res['name'] = $this->className($res);
             $sections = $this->getSections();
             $this->setTemplateVars([
@@ -148,11 +148,11 @@ class Classes extends AdminController
     public function newAction()
     {
         $st = $this->classModel->bind(null, null, ['semester', 'asc']);
-        $res = $st->get();
-        $depts = $this->departmentModel->bind()->get();
-        $branches = $this->branchModel->bind()->get();
-        $teachers = $this->teacherModel->bind()->get();
-        $semesters = $this->semesterModel->bind()->get();
+        $res = $st->getCollection();
+        $depts = $this->departmentModel->bind()->getCollection();
+        $branches = $this->branchModel->bind()->getCollection();
+        $teachers = $this->teacherModel->bind()->getCollection();
+        $semesters = $this->semesterModel->bind()->getCollection();
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->className($r);

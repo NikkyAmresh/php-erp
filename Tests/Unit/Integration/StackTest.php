@@ -1,13 +1,16 @@
 <?php
 
-namespace Unit\Integration;
+namespace Tests\Unit\Integration;
 
 use PHPUnit\Framework\TestCase;
+
+use App\Helpers\Constants;
 
 class StackTest extends TestCase
 {
     public function testPushAndPop()
     {
+        echo Constants::REQUEST_METHOD_POST;
         $stack = array();
         $this->assertEquals(0, count($stack));
 

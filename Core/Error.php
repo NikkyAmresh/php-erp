@@ -43,7 +43,7 @@ class Error
         }
         http_response_code($code);
 
-        if (\App\Config::getShowErrors()) {
+        if (\App\Config::getEnv('SHOW_ERRORS')) {
             echo "<h1>Fatal error</h1>";
             echo "<p>Uncaught exception: '" . get_class($exception) . "'</p>";
             echo "<p>Message: '" . $exception->getMessage() . "'</p>";

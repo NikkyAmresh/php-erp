@@ -86,15 +86,15 @@ class Teacher extends AdminController
     public function indexAction()
     {
         $st = $this->teacherModel->bind();
-        $res = $st->get();
+        $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Department', 'Edit');
-        $this->setTemplateVars(['teachers' => $res, 'columns' => $columns, 'result' => $st->result()]);
+        $this->setTemplateVars(['teachers' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }
     public function editAction()
     {
         $st = $this->teacherModel->bind($this->route_params['id']);
-        $res = $st->getOne();
+        $res = $st->get();
         if ($res) {
             $depts = ($this->departmentModel->bind())->getAll();
             $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);
