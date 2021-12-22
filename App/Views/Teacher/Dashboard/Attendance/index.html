@@ -1,6 +1,6 @@
-{% extends "base.html" %} {% block title %}Teacher | Attendance{% endblock %} {%
-block body %}
-
+{% extends "base.html" %}
+{% block title %}Teacher | Attendance{% endblock %}
+{% block body %}
 <h3>
   {{timeTable.branchCode}} - {{timeTable.semester}} sem section -
   {{timeTable.section|ucf}}
@@ -22,9 +22,9 @@ block body %}
       <th></th>
       <th></th>
       <th>
-        <button onclick="allP()" class="btn bg-gray-200 text-white bg-green-600">
-          All Present</button
-        ><button onclick="allA()" class="btn bg-gray-200 text-white bg-red-600">
+        <button onclick="allP()" class="all-pres btn bg-gray-200 text-white bg-green-600">
+          All Present</button>
+        <button onclick="allA()" class="all-abs btn bg-gray-200 text-white bg-red-600">
           All Absent
         </button>
       </th>
@@ -37,22 +37,18 @@ block body %}
       <td>{{student.name}}</td>
       <td>
         <button onclick="addP(this)" data-studentID='{{student.id}}'
-          class="pres btn bg-gray-200 text-black hover:text-white hover:bg-green-600"
-        >
-          Present</button
-        ><button onclick="addA(this)" data-studentID='{{student.id}}'
-          class="abs btn bg-gray-200 text-black hover:text-white hover:bg-red-600"
-        >
+          class="pres btn bg-gray-200 text-black hover:text-white hover:bg-green-600">
+          Present</button>
+        <button onclick="addA(this)" data-studentID='{{student.id}}'
+          class="abs btn bg-gray-200 text-black hover:text-white hover:bg-red-600">
           Absent
         </button>
-        <button
-          class="
+        <button class="
             btn
             bg-gray-200
             text-black
             hover:text-white hover:bg-yellow-600
-          "
-        >
+          ">
           Leave
         </button>
       </td>
@@ -60,51 +56,75 @@ block body %}
     {% endfor %}
   </tbody>
 </table>
-<button onclick="submitAttendance()"  class="btn btn-primary">Submit</button>
+<button id="submitBtn" onclick="submitAttendance()" class="btn btn-primary">Submit</button>
 <script>
-  $(document).ready(function(){
+      var attendance = {{ attendance | json_encode() | raw }}
+  $(document).ready(function () {
     console.log('jQuery init');
+    if(attendance.length){
+      $("#submitBtn").attr('disabled',true);
+
+    attendance.forEach((at)=>{
+      if(at.status){
+      addP($('button[data-studentID='+at.studentID+"].pres"))
+      }else{
+        addA($('button[data-studentID='+at.studentID+"].abs"))
+      }
+    })
+    }
   });
 
 
-  function submitAttendance(){
-    let formData = {present:[],absent:[]};
+  function submitAttendance() {
+    let formData = [];
     $('.present').each(function () {
-      formData.present.push($(this).attr('data-studentID'));
+      formData.push({id:$(this).attr('data-studentID'),status:1});
     })
     $('.absent').each(function () {
-      formData.absent.push($(this).attr('data-studentID'));
+      formData.push({id:$(this).attr('data-studentID'),status:0});
     })
-    console.log(formData);
-    $.ajax({
-      'url':'/teacher/submitAttendance',
-      method:'POST',
-      'data': {
-        timetableID: {{ timeTable.id | json_encode()| raw}},
-        attendances:formData
-      },
-    }).done(function(res){
-      console.log(res);
-    }).fail(function(err){
-      console.log(err);
-    })
+    sendData(formData);
   }
-  function addP(e){
+  function sendData(dataToSend) {
+    var timeTableId = {{ timeTable.id | json_encode() | raw
+  }};
+  function l(res) {
+    res = JSON.parse(res);
+    if(res.status){
+      showSuccessMessage(res.message);
+    }else{
+      showErrorMessage(res.message);
+    }
+    console.log(res);
+  }
+  $.ajax({
+    'url': '/teacher/submitAttendance',
+    method: 'POST',
+    'data': {
+      timetableID: timeTableId,
+      attendances: dataToSend
+    }
+  }).done(l).fail(function (err) {
+    console.log(err);
+  });
+  }
+
+  function addP(e) {
     $(e).addClass('text-white bg-green-600 present');
-    $(e).siblings().each(function(){
+    $(e).siblings().each(function () {
       removeA(this);
     })
   }
-  function addA(e){
+  function addA(e) {
     $(e).addClass('text-white bg-red-600 absent');
-    $(e).siblings().each(function(){
+    $(e).siblings().each(function () {
       removeP(this);
     })
   }
-  function removeP(e){
+  function removeP(e) {
     $(e).removeClass('text-white bg-green-600 present');
   }
-  function removeA(e){
+  function removeA(e) {
     $(e).removeClass('text-white bg-red-600 absent');
   }
 
