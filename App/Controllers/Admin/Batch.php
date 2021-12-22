@@ -33,10 +33,10 @@ class Batch extends AdminController
     public function indexAction()
     {
         $st = $this->batchModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->getCollection();
         $years = $this->get10Years();
         $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
-        $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns, 'result' => $st->result()]);
+        $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
         $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }
     public function createAction()

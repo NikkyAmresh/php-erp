@@ -93,6 +93,14 @@ abstract class Controller
     {
         return Session::set(Constants::MESSAGE_TYPE[Constants::SUCCESS], $message);
     }
+    public function setHistory($url)
+    {
+        return Session::set(Constants::HISTORY_URL, $url);
+    }
+    public function getHistory()
+    {
+        return Session::get(Constants::HISTORY_URL);
+    }
     public function setErrorMessage($message)
     {
         return Session::set(Constants::MESSAGE_TYPE[Constants::ERROR], $message);
@@ -104,5 +112,12 @@ abstract class Controller
     public function getInfoMessage($message)
     {
         return Session::set(Constants::MESSAGE_TYPE[Constants::INFO], $message);
+    }
+
+    public function renderMessage($status,$message,$data=null)
+    {
+        $payload = ['status'=>$status,'message'=>$message,'data'=>$data];
+        echo json_encode($payload);
+        return;
     }
 }

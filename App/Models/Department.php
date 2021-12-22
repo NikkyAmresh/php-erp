@@ -22,7 +22,7 @@ class Department extends Model
     public function getTeachers()
     {
         $st = $this->teacherModel->bind(null, ['departmentID' => $this->id]);
-        return $st->getWithJoin();
+        return $st->getCollection();
     }
 
 }

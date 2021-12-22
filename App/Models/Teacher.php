@@ -65,7 +65,7 @@ class Teacher extends Model
     public function getTimeTable()
     {
         $timeTable = $this->timeTableModel->bind(null, ['timetables.teacherID' => $this->getId()]);
-        return $timeTable->getWithJoin();
+        return $timeTable->getCollection();
     }
     public function getCertifications()
     {

@@ -67,16 +67,16 @@ class Department extends AdminController
     public function indexAction()
     {
         $st = $this->departmentModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->getCollection();
         $columns = array('Serial no', 'Department', 'HOD', 'Edit');
-        $this->setTemplateVars(['departments' => $res, 'columns' => $columns, 'result' => $st->result()]);
+        $this->setTemplateVars(['departments' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
         $this->renderTemplate('Admin/Dashboard/Department/index.html');
 
     }
     public function editAction()
     {
         $st = $this->departmentModel->bind($this->route_params['id']);
-        $res = $st->get();
+        $res = $st->getCollection();
         if ($res) {
             $hods = $st->getTeachers();
             $this->setTemplateVars(['department' => $res, 'hods' => $hods]);

@@ -22,7 +22,7 @@ class Course extends AdminController
         $st = $this->courseModel->bind();
         $res = $st->getAll();
         $columns = array('Serial no', 'Course', 'Duration', 'Edit');
-        $this->setTemplateVars(['courses' => $res, 'columns' => $columns, 'result' => $st->result()]);
+        $this->setTemplateVars(['courses' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
         $this->renderTemplate('Admin/Dashboard/Course/index.html');
     }
     public function createAction()
@@ -69,7 +69,7 @@ class Course extends AdminController
     public function editAction()
     {
         $st = $this->courseModel->bind($this->route_params['id']);
-        $res = $st->get();
+        $res = $st->getCollection();
         if ($res) {
             $this->setTemplateVars(['courses' => $res]);
             $this->renderTemplate('Admin/Dashboard/course/edit.html', ['course' => $res]);

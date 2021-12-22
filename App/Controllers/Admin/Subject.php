@@ -25,9 +25,9 @@ class Subject extends AdminController
     public function indexAction()
     {
         $st = $this->subjectModel->bind();
-        $res = $st->getWithJoin();
+        $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
-        $this->setTemplateVars(['subjects' => $res, 'columns' => $columns, 'result' => $st->result()]);
+        $this->setTemplateVars(['subjects' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
         $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }
     public function createAction()

@@ -75,25 +75,25 @@ class Student extends \Core\Model
     public function getTimeTable()
     {
         $timeTable = $this->timeTableModel->bind(null, ['classID' => $this->getClassID()]);
-        return $timeTable->getWithJoin();
+        return $timeTable->getCollection();
     }
 
     public function getAllAttendance()
     {
         $attendance = $this->attendanceModel->bind(null, ['studentID' => $this->getId()]);
-        return $attendance->getWithJoin();
+        return $attendance->getCollection();
     }
 
     public function getAttendanceBySubject($subjectCode)
     {
         $attendance = $this->attendanceModel->bind(null, ['studentID' => $this->getId(), 'subjects.subjectCode' => $subjectCode]);
-        return $attendance->getWithJoin();
+        return $attendance->getCollection();
     }
 
     public function getAttendanceByDay($day)
     {
         $attendance = $this->attendanceModel->bind(null, ['studentID' => $this->getId(), 'date' => $day]);
-        return $attendance->getWithJoin();
+        return $attendance->getCollection();
 
     }
 
@@ -125,6 +125,6 @@ class Student extends \Core\Model
     public function getStudentPersonalDetatils()
     {
         $studentpersonalDetails = $this->studentPersonalDetailModel->bind(null, ['studentID' => $this->getId()]);
-        return $studentpersonalDetails->getOneWithJoin();
+        return $studentpersonalDetails->get();
     }
 }
