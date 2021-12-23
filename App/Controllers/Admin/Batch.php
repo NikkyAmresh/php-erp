@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
 use App\Models\Admin as AdminModel;
-use App\Models\Batch as BatchModel;
+use App\Helpers\Batch as BatchHelper;
 
 class Batch extends AdminController
 {
@@ -12,42 +12,27 @@ class Batch extends AdminController
     protected $adminModel;
     protected $batchModel;
     public function __construct(
-        BatchModel $batchModel,
+        BatchHelper $batchHelper,
         AdminModel $adminModel
     ) {
-        $this->batchModel = $batchModel;
+        $this->batchHelper = $batchHelper;
         parent::__construct($adminModel);
-    }
-    public function get10Years()
-    {
-        $currentYear = date("Y");
-        $fromYears = [];
-        $toYears = [];
-        for ($i = 0; $i < 11; $i++) {
-            array_push($fromYears, $currentYear - $i);
-            array_push($toYears, $currentYear + $i);
-        }
-        return ['to' => $toYears, 'from' => $fromYears];
     }
 
     public function indexAction()
     {
-        $st = $this->batchModel->bind();
-        $res = $st->getCollection();
-        $years = $this->get10Years();
-        $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
-        $this->setTemplateVars(['batches' => $res, 'years' => $years, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
+        $data = $this->batchHelper->getCollection();
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $batch = $this->batchModel->bind();
-            $batch->setFromYear($_REQUEST['fromYear']);
-            $batch->setToYear($_REQUEST['toYear']);
-            $batch->setCode($_REQUEST['fromYear'] . "-" . $_REQUEST['toYear']);
-            $batch->save();
-            $this->setSuccessMessage("Batch created successfully");
+            if($this->batchHelper->create($_REQUEST)) {
+                $this->setSuccessMessage("Batch created successfully");
+            }else{
+                $this->setErrorMessage("Unable to create Batch");
+            }
         } else {
             $this->setErrorMessage("Unable to create Batch");
         }
@@ -56,13 +41,7 @@ class Batch extends AdminController
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $batch = $this->batchModel->bind($_REQUEST['id']);
-            $batch->setFromYear($_REQUEST['fromYear']);
-            $batch->setToYear($_REQUEST['toYear']);
-            $from = $_REQUEST['fromYear'];
-            $to = $_REQUEST['toYear'];
-            $batch->setCode($from . "-" . $to);
-            if ($batch->save()) {
+            if ($this->batchHelper->update($_REQUEST)) {
                 $this->setSuccessMessage("Batch updated successfully");
             } else {
                 $this->setErrorMessage("Unable to create batch");
@@ -75,9 +54,7 @@ class Batch extends AdminController
 
     public function deleteAction()
     {
-        $batch = $this->batchModel->bind($this->route_params['id']);
-        $res = $batch->delete();
-        if ($res) {
+        if ($this->batchHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("Batch deleted successfully");
         } else {
             $this->setErrorMessage("Unable to delete");
@@ -86,9 +63,8 @@ class Batch extends AdminController
     }
     public function editAction()
     {
-        $st = $this->batchModel->bind($this->route_params['id']);
-        $res = $st->get();
-        $years = $this->get10Years();
+        $res= $this->batchHelper->get($this->route_params['id']);
+        $years = $this->batchHelper->get10Years();
         if ($res) {
             $this->setTemplateVars(['batch' => $res, 'years' => $years]);
             $this->renderTemplate('Admin/Dashboard/Batch/edit.html');
@@ -98,7 +74,7 @@ class Batch extends AdminController
     }
     public function newAction()
     {
-        $years = $this->get10Years();
+        $years = $this->batchHelper->get10Years();
         $this->setTemplateVars(['years' => $years]);
         $this->renderTemplate('Admin/Dashboard/Batch/new.html');
 

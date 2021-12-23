@@ -97,7 +97,7 @@ abstract class Model
             $data = $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
         }
         if(!isset($data[0])){
-            throw new Exceptions\NotEntityException();
+            return null;
         }
         $this->setData($data[0]);
         return $this->_data;

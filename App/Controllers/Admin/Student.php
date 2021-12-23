@@ -146,9 +146,9 @@ class Student extends AdminController
             $courses = $courseModel->getCollection();
             $batchesModel = $this->batchModel->bind();
             $batches = $batchesModel->getCollection();
-            $classes = $this->classModel->bind()->getWithJoin(null, null, ['semester', 'asc']);
+            $classes = $this->classModel->bind(null,null,['semester', 'asc'])->getCollection();
             foreach ($classes as $key => $r) {
-                $classes[$key]['name'] = $this->classModelName($r);
+                $classes[$key]['name'] = $this->className($r);
             }
             $this->setTemplateVars([
                 'student' => $res,
@@ -165,7 +165,7 @@ class Student extends AdminController
     {
         $courses = $this->courseModel->bind()->getCollection();
         $batches = $this->batchModel->bind()->getCollection();
-        $classes = $this->classModel->bind()->getWithJoin(null, null, null, ['semester', 'asc']);
+        $classes = $this->classModel->bind(null, null, ['semester', 'asc'])->getCollection();
         foreach ($classes as $key => $r) {
             $classes[$key]['name'] = $this->className($r);
         }

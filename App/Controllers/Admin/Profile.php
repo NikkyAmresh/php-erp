@@ -16,7 +16,7 @@ class Profile extends AdminController
 
     public function indexAction()
     {
-        $this->setTemplateVars(['admin' => $this->admin->getCollection()]);
+        $this->setTemplateVars(['admin' => $this->admin->getResult()]);
         $this->renderTemplate('Admin/Dashboard/profile.html');
     }
 
