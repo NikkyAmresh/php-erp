@@ -1,36 +1,32 @@
 <div class="bg-white p-3 shadow-sm rounded-sm">
-    <div class="grid grid-cols-2">
-        <div>
-            <div>
-                <div class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3">
-                    <span clas="text-green-500">
-                        <i class="fas fa-briefcase"></i>
-                    </span>
-                    <span class="tracking-wide">Experiences</span>
-                </div>
-                <div class="grid md:grid-cols-2 text-sm">
-                    {% if experience|length %}
-                    {% for exp in experience %}
-                    <div>
-                        <div class="px-4 py-2 font-semibold">{{exp.title|ucf}}
-                        </div>
-                        <div class="px-4 py-2">
-                            {{exp.companyName|ucf}}.{{exp.employmentType|ucf}}
-                            <br>
-                            {{exp.location|ucf}}
-                            <br>
-                            {{exp.fromDate|formatDate}} - {{exp.toDate|formatDate}}
-                        </div>
-
-                    </div>
-                    {% endfor %}
-                    {% else %}
-                    <div class="px-4 py-2">
-                        No experience till now.
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
+  <div class="grid grid-cols-2">
+    <div>
+      <div>
+        <div
+          class="flex items-center space-x-2 font-semibold text-gray-900 leading-8 mb-3"
+        >
+          <span clas="text-green-500">
+            <i class="fas fa-briefcase"></i>
+          </span>
+          <span class="tracking-wide">Experiences</span>
         </div>
+        <div class="grid md:grid-cols-2 text-sm">
+          {% if experience|length %} {% for exp in experience %}
+          <div>
+            <div class="px-4 py-2 font-semibold">{{exp.title|ucf}}</div>
+            <div class="px-4 py-2">
+              {{exp.companyName|ucf}}.{{exp.employmentType|ucf}}
+              <br />
+              {{exp.location|ucf}}
+              <br />
+              {{exp.fromDate|formatDate}} - {{exp.toDate|formatDate}}
+            </div>
+          </div>
+          {% endfor %} {% else %}
+          <div class="px-4 py-2">No experience till now.</div>
+          {% endif %}
+        </div>
+      </div>
     </div>
+  </div>
 </div>

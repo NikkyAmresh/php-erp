@@ -1,20 +1,23 @@
 {%extends "base.html"%}{%block body%}
 <div class="bg-gray-100">
-    <div class="container mx-auto my-5 p-5">
-        <div class="md:flex no-wrap md:-mx-2 ">
-            <div class="w-full md:w-9/12 mx-2 h-64">
-                {% include 'about.html' with{'details':student,'studentpersonaldetails':studentpersonaldetails} %}
-                <div>
-                    {% include 'education.html' with{'student':student,'educationdetails':educationdetails} %}
-                    <div class="my-4"></div>
-                    {% include 'experience.html' with{'experience':experience} %}
-                    {% include 'skills.html' with{'achievements':achievements,'certificate':certificate}%}
-                    <div class="my-4"></div>
-                    {% include 'project.html' with{'projects':projects}%}
-                </div>
-            </div>
-
+  <div class="container mx-auto my-5 p-5">
+    <div class="md:flex no-wrap md:-mx-2">
+      <div class="w-full md:w-9/12 mx-2 h-64">
+        {% include 'about.html'
+        with{'details':student,'studentpersonaldetails':studentpersonaldetails}
+        %}
+        <div>
+          {% include 'education.html'
+          with{'student':student,'educationdetails':educationdetails} %}
+          <div class="my-4"></div>
+          {% include 'experience.html' with{'experience':experience} %} {%
+          include 'skills.html'
+          with{'achievements':achievements,'certificate':certificate}%}
+          <div class="my-4"></div>
+          {% include 'project.html' with{'projects':projects}%}
         </div>
+      </div>
     </div>
+  </div>
 </div>
 {%endblock%}

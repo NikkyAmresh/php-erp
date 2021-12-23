@@ -1,6 +1,5 @@
-{% extends "base.html" %}
-{% block title %}Teacher | Attendance{% endblock %}
-{% block body %}
+{% extends "base.html" %} {% block title %}Teacher | Attendance{% endblock %} {%
+block body %}
 <h3>
   {{timeTable.branchCode}} - {{timeTable.semester}} sem section -
   {{timeTable.section|ucf}}
@@ -22,9 +21,16 @@
       <th></th>
       <th></th>
       <th>
-        <button onclick="allP()" class="all-pres btn bg-gray-200 text-white bg-green-600">
-          All Present</button>
-        <button onclick="allA()" class="all-abs btn bg-gray-200 text-white bg-red-600">
+        <button
+          onclick="allP()"
+          class="all-pres btn bg-gray-200 text-white bg-green-600"
+        >
+          All Present
+        </button>
+        <button
+          onclick="allA()"
+          class="all-abs btn bg-gray-200 text-white bg-red-600"
+        >
           All Absent
         </button>
       </th>
@@ -36,19 +42,23 @@
       <td>{{student.rollNum}}</td>
       <td>{{student.name}}</td>
       <td>
-        <button onclick="addP(this)" data-studentID='{{student.id}}'
-          class="pres btn bg-gray-200 text-black hover:text-white hover:bg-green-600">
-          Present</button>
-        <button onclick="addA(this)" data-studentID='{{student.id}}'
-          class="abs btn bg-gray-200 text-black hover:text-white hover:bg-red-600">
+        <button
+          onclick="addP(this)"
+          data-studentID="{{student.id}}"
+          class="pres btn bg-gray-200 text-black hover:text-white hover:bg-green-600"
+        >
+          Present
+        </button>
+        <button
+          onclick="addA(this)"
+          data-studentID="{{student.id}}"
+          class="abs btn bg-gray-200 text-black hover:text-white hover:bg-red-600"
+        >
           Absent
         </button>
-        <button class="
-            btn
-            bg-gray-200
-            text-black
-            hover:text-white hover:bg-yellow-600
-          ">
+        <button
+          class="btn bg-gray-200 text-black hover:text-white hover:bg-yellow-600"
+        >
           Leave
         </button>
       </td>
@@ -56,7 +66,9 @@
     {% endfor %}
   </tbody>
 </table>
-<button id="submitBtn" onclick="submitAttendance()" class="btn btn-primary">Submit</button>
+<button id="submitBtn" onclick="submitAttendance()" class="btn btn-primary">
+  Submit
+</button>
 <script>
       var attendance = {{ attendance | json_encode() | raw }}
   $(document).ready(function () {

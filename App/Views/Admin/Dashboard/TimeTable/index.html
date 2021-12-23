@@ -48,15 +48,7 @@ block body %}
         </div>
 
         <table
-          class="
-            table
-            lg:h-full lg-80vw
-            text-gray-400
-            border-separate
-            space-y-6
-            text-sm
-            border-collapse border-2 border-double border-blue-300
-          "
+          class="table lg:h-full lg-80vw text-gray-400 border-separate space-y-6 text-sm border-collapse border-2 border-double border-blue-300"
         >
           <thead class="bg-blue-900 text-white">
             <tr>
@@ -84,12 +76,7 @@ block body %}
               {% for period in periods %}
               <td
                 onclick="changeId(this)"
-                class="
-                  tableData
-                  p-3
-                  text-right
-                  border border-solid border-white
-                "
+                class="tableData p-3 text-right border border-solid border-white"
                 id="{{period.id}}-{{day}}"
               >
                 NA

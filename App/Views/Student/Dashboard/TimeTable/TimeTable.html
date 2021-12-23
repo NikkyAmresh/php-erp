@@ -1,33 +1,42 @@
-{% extends "base.html" %}
-{% block title %}TimeTable{% endblock %} {%
-block body %}
+{% extends "base.html" %} {% block title %}TimeTable{% endblock %} {% block body
+%}
 <div class="flex m-5 my-5">
   <div class="col-span-12">
     <div class="overflow-auto lg:overflow-visible">
       <div class="block w-full overflow-x-auto">
-        <table class="table
-  lg:h-full lg-80vw
-  text-gray-400
-  border-separate
-  space-y-6
-  text-sm
-  border-collapse border-2 border-double border-blue-300">
+        <table
+          class="table lg:h-full lg-80vw text-gray-400 border-separate space-y-6 text-sm border-collapse border-2 border-double border-blue-300"
+        >
           <thead class="bg-blue-900 text-white">
             <tr>
-              <th class="p-3 lg:w-4 text-center border border-solid border-white">
-                Day/Period</th>
+              <th
+                class="p-3 lg:w-4 text-center border border-solid border-white"
+              >
+                Day/Period
+              </th>
               {% for period in periods %}
-              <th class="p-3 lg:w-4 text-center border border-solid border-white" data-value="{{period.id}}">
-                {{period.fromTime}}-{{period.toTime}}</th>
+              <th
+                class="p-3 lg:w-4 text-center border border-solid border-white"
+                data-value="{{period.id}}"
+              >
+                {{period.fromTime}}-{{period.toTime}}
+              </th>
               {% endfor %}
             </tr>
           </thead>
           <tbody>
             {% for day in days %}
             <tr class="bg-blue-100 lg:text-black" data-value="{{day}}">
-              <td class="p-3 text-right border border-solid border-white"><b>{{day|ucf}}</b></td>
+              <td class="p-3 text-right border border-solid border-white">
+                <b>{{day|ucf}}</b>
+              </td>
               {% for period in periods %}
-              <td class="p-3 text-right border border-solid border-white tableData" id="{{period.id}}-{{day}}">NA</td>
+              <td
+                class="p-3 text-right border border-solid border-white tableData"
+                id="{{period.id}}-{{day}}"
+              >
+                NA
+              </td>
               {% endfor %}
             </tr>
             {% endfor %}
@@ -37,22 +46,25 @@ block body %}
       <script type="text/javascript">
         $(function () {
           $.ajax({
-            url: "/student/getTimetable",
-            method: "get",
+            url: '/student/getTimetable',
+            method: 'get',
           })
             .done((data) => {
               data = JSON.parse(data);
               data.forEach((_data) => {
-                let td = $("#" + _data.periodID + "-" + _data.day);
+                let td = $('#' + _data.periodID + '-' + _data.day);
                 if (td.length) {
-                  td.text(_data.subjectName + "/" + _data.teacher);
+                  td.text(_data.subjectName + '/' + _data.teacher);
                 }
               });
             })
             .fail((err) => {
-              console.log(err)
+              console.log(err);
             });
-          console.log("read");
+          console.log('read');
         });
       </script>
       {% endblock %}
+    </div>
+  </div>
+</div>

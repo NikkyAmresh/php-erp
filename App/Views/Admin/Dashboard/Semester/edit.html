@@ -1,15 +1,24 @@
 {% extends "base.html" %} {% block title %}Admin | Semesters{% endblock %} {%
 block body %}
-<form action="/admin/updateSemester" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
-    <div class="input-field">
-        <label for="name">semester Name</label>
-        <input type="hidden" name="id" value="{{semester.id}}" />
-        <input type="text" id="name" name="name" value="{{semester.name}}" />
-    </div>
-    <br>
-    <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">Update</button>
-    <a class="text-red-600 hover:text-red-400" href="/admin/deleteSemester/{{semester.id}}"><i
-            class="material-icons-round">delete_outline</i></a>
+<form
+  action="/admin/updateSemester"
+  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6"
+  method="post"
+>
+  <div class="input-field">
+    <label for="name">semester Name</label>
+    <input type="hidden" name="id" value="{{semester.id}}" />
+    <input type="text" id="name" name="name" value="{{semester.name}}" />
+  </div>
+  <br />
+  <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">
+    Update
+  </button>
+  <a
+    class="text-red-600 hover:text-red-400"
+    href="/admin/deleteSemester/{{semester.id}}"
+    ><i class="material-icons-round">delete_outline</i></a
+  >
 </form>
 <br />
 {% endblock %}

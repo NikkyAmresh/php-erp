@@ -1,20 +1,44 @@
-{% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {%
-block body %}
-<form action="/admin/updatePeriod" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
-    <h5>Timing</h5>
-    <input type="hidden" name="id" value="{{period.id}}">
-    <div class="input-field">
-        <label for="fromTime">From</label>
-        <input type="time" id="appt" value="{{period.fromTime}}" name="fromTime" min="09:00" max="18:00" required>
-    </div>
-    <div class="input-field">
-        <label for="toTime">To</label>
-        <input type="time" id="appt" value="{{period.toTime}}" name="toTime" min="09:00" max="18:00" required>
-    </div>
-    <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">Update</button>
-    <a class="text-red-600 hover:text-red-400" href="/admin/deletePeriod/{{period.id}}"><i
-            class="material-icons-round">delete_outline</i></a>
-
+{% extends "base.html" %} {% block title %}Admin | Period{% endblock %} {% block
+body %}
+<form
+  action="/admin/updatePeriod"
+  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6"
+  method="post"
+>
+  <h5>Timing</h5>
+  <input type="hidden" name="id" value="{{period.id}}" />
+  <div class="input-field">
+    <label for="fromTime">From</label>
+    <input
+      type="time"
+      id="appt"
+      value="{{period.fromTime}}"
+      name="fromTime"
+      min="09:00"
+      max="18:00"
+      required
+    />
+  </div>
+  <div class="input-field">
+    <label for="toTime">To</label>
+    <input
+      type="time"
+      id="appt"
+      value="{{period.toTime}}"
+      name="toTime"
+      min="09:00"
+      max="18:00"
+      required
+    />
+  </div>
+  <button class="bg-blue-900 hover:bg-blue-700 text-white py-2 px-4 rounded">
+    Update
+  </button>
+  <a
+    class="text-red-600 hover:text-red-400"
+    href="/admin/deletePeriod/{{period.id}}"
+    ><i class="material-icons-round">delete_outline</i></a
+  >
 </form>
 <br />
 {% endblock %}

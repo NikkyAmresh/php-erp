@@ -1,68 +1,80 @@
-{% extends "base.html" %}
-{% block title %}TimeTable{% endblock %}
-{% block body %}
+{% extends "base.html" %} {% block title %}TimeTable{% endblock %} {% block body
+%}
 <div class="flex m-5 my-5">
   <div class="col-span-12">
     <div class="overflow-auto lg:overflow-visible">
-<h3>Time Table</h3>
-<table class="
-table
-lg:h-full lg-80vw
-text-gray-400
-border-separate
-space-y-6
-text-sm
-border-collapse border-2 border-double border-blue-300
-">
-  <thead class="bg-blue-900 text-white">
-    <tr>
-      <th  class="p-3 lg:w-4 text-center border border-solid border-white">Day/Period</th>
-      {% for period in periods %}
-      <th  class="p-3 lg:w-4 text-center border border-solid border-white" data-value="{{period.id}}">{{period.fromTime}}-{{period.toTime}}</th>
-      {% endfor %}
-    </tr>
-  </thead>
-  <tbody>
-    {% for day in days %}
-    <tr class="bg-blue-100 lg:text-black" data-value="{{day}}">
-      <td class="p-3 text-right border border-solid border-white"><b>{{day|ucf}}</b></td>
-      {% for period in periods %}
-      <td  class="p-3 text-right border border-solid border-white tableData" id="{{period.id}}-{{day}}">NA</td>
-      {% endfor %}
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
-<script type="text/javascript">
-  $(function () {
-    $.ajax({
-      url: "/teacher/getTimetable",
-      method: "get",
-    })
-      .done((data) => {
-        data = JSON.parse(data);
-        console.log(data);
-        data.forEach((_data) => {
-          let td = $("#" + _data.periodID + "-" + _data.day);
-          if (td.length) {
-            const yr = Math.ceil(parseInt(_data.semester) / 2);
-            const className = `${_data.branchCode}-${yr}yr (${_data.section})`;
-            td.text(_data.subjectName + "/" + className);
-            td.attr("data-timeTable", _data.id);
-          }
+      <h3>Time Table</h3>
+      <table
+        class="table lg:h-full lg-80vw text-gray-400 border-separate space-y-6 text-sm border-collapse border-2 border-double border-blue-300"
+      >
+        <thead class="bg-blue-900 text-white">
+          <tr>
+            <th class="p-3 lg:w-4 text-center border border-solid border-white">
+              Day/Period
+            </th>
+            {% for period in periods %}
+            <th
+              class="p-3 lg:w-4 text-center border border-solid border-white"
+              data-value="{{period.id}}"
+            >
+              {{period.fromTime}}-{{period.toTime}}
+            </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for day in days %}
+          <tr class="bg-blue-100 lg:text-black" data-value="{{day}}">
+            <td class="p-3 text-right border border-solid border-white">
+              <b>{{day|ucf}}</b>
+            </td>
+            {% for period in periods %}
+            <td
+              class="p-3 text-right border border-solid border-white tableData"
+              id="{{period.id}}-{{day}}"
+            >
+              NA
+            </td>
+            {% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <script type="text/javascript">
+        $(function () {
+          $.ajax({
+            url: '/teacher/getTimetable',
+            method: 'get',
+          })
+            .done((data) => {
+              data = JSON.parse(data);
+              console.log(data);
+              data.forEach((_data) => {
+                let td = $('#' + _data.periodID + '-' + _data.day);
+                if (td.length) {
+                  const yr = Math.ceil(parseInt(_data.semester) / 2);
+                  const className = `${_data.branchCode}-${yr}yr (${_data.section})`;
+                  td.text(_data.subjectName + '/' + className);
+                  td.attr('data-timeTable', _data.id);
+                }
+              });
+            })
+            .fail((err) => {
+              console.log(err);
+            });
+          $('.tableData').each(function () {
+            const self = this;
+            $(this).on('click', function () {
+              if ($(self).attr('data-timeTable'))
+                window.open(
+                  '/teacher/attendance/' + $(self).attr('data-timeTable'),
+                );
+            });
+          });
+          console.log('read');
         });
-      })
-      .fail((err) => {
-        console.log(err);
-      });
-    $(".tableData").each(function () {
-      const self = this;
-      $(this).on("click", function () {
-        if ($(self).attr("data-timeTable"))
-          window.open("/teacher/attendance/" + $(self).attr("data-timeTable"));
-      });
-    });
-    console.log("read");
-  });
-</script>
-{% endblock %}
+      </script>
+      {% endblock %}
+    </div>
+  </div>
+</div>

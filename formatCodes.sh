@@ -1,0 +1,1 @@
+npx prettier --ignore-path .gitignore --write . 
