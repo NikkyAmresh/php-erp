@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Dec 24, 2021 at 06:54 PM
+-- Generation Time: Dec 24, 2021 at 06:57 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.3.17
 
@@ -268,7 +268,7 @@ CREATE TABLE `subjects` (
   `name` varchar(30) NOT NULL,
   `subjectCode` varchar(10) NOT NULL,
   `departmentID` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -295,7 +295,7 @@ CREATE TABLE `timetables` (
   `classID` int(10) NOT NULL,
   `subjectID` int(10) NOT NULL,
   `teacherID` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
