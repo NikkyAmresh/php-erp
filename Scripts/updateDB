@@ -6,7 +6,7 @@ echo "Updating db";
 $handle = fopen("App/.env", "r");
 if ($handle) {
     while (($line = fgets($handle)) !== false) {
-        $var = explode("=",$line);
+        $var = explode("=", $line);
         $key = ltrim(rtrim($var[0]));
         $$key = ltrim(rtrim($var[1]));
     }

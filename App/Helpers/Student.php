@@ -95,28 +95,6 @@ class Student extends User
         $student->delete($id);
         return $this->deleteUser($userId);
     }
-    public function get($id)
-    {
-        $st = $this->studentModel->bind($id);
-        $res = $st->get();
-        if ($res) {
-            $courseModel = $this->courseModel->bind();
-            $courses = $courseModel->getCollection();
-            $batchesModel = $this->batchModel->bind();
-            $batches = $batchesModel->getCollection();
-            $classes = $this->classModel->bind(null, null, ['semester', 'asc'])->getCollection();
-            foreach ($classes as $key => $r) {
-                $classes[$key]['name'] = $this->className($r);
-            }
-            return [
-                'student' => $res,
-                'courses' => $courses,
-                'batches' => $batches,
-                'classes' => $classes,
-            ];
-        }
-
-    }
     public function getCollectionForNew()
     {
         $courses = $this->courseModel->bind()->getCollection();

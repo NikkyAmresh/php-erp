@@ -30,7 +30,7 @@ class Teacher extends User
         if ($id = $teacherModel->save()) {
             $teacher = $this->teacherModel->bind();
             $teacher->setUserID($id);
-            $teacher->setDepartmentID($_REQUEST['department']);
+            $teacher->setDepartmentID($teacher['department']);
             return $teacher->save();
         } else {
             return null;
