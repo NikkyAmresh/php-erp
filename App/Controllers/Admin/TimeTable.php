@@ -2,12 +2,12 @@
 
 namespace App\Controllers\Admin;
 
+use App\Helpers\Classes as ClassModel;
+use App\Helpers\Period as PeriodModel;
+use App\Helpers\Subject as SubjectModel;
+use App\Helpers\Teacher as TeacherModel;
+use App\Helpers\TimeTable as TimeTableModel;
 use App\Models\Admin as AdminModel;
-use App\Models\Classes as ClassesModel;
-use App\Models\Period as PeriodModel;
-use App\Models\Subject as SubjectModel;
-use App\Models\Teacher as TeacherModel;
-use App\Models\TimeTable as TimeTableModel;
 
 class TimeTable extends AdminController
 {
@@ -21,25 +21,19 @@ class TimeTable extends AdminController
 
     public function __construct(
         AdminModel $adminModel,
-        PeriodModel $periodModel,
-        SubjectModel $subjectModel,
-        TeacherModel $teacherModel,
-        ClassesModel $classModel,
-        TimeTableModel $timeTableModel
+        PeriodHelper $periodModel,
+        SubjectHelper $subjectModel,
+        TeacherHelper $teacherModel,
+        ClassHelper $classModel,
+        TimeTableHelper $timeTableHelper
     ) {
-        $this->periodModel = $periodModel;
-        $this->classModel = $classModel;
-        $this->subjectModel = $subjectModel;
-        $this->teacherModel = $teacherModel;
-        $this->classModel = $classModel;
-        $this->timeTableModel = $timeTableModel;
+        $this->periodHelper = $periodHelper;
+        $this->classHelper = $classHelper;
+        $this->subjectHelper = $subjectHelper;
+        $this->teacherHelper = $teacherHelper;
+        $this->classHelper = $classHelper;
+        $this->timeTableHelper = $timeTableHelper;
         parent::__construct($adminModel);
-    }
-    public function className($array)
-    {
-        $result = preg_replace("/[^0-9]+/", "", $array['semester']);
-        $year = ceil($result / 2);
-        return $array['branch'] . ' (' . $year . ")year [sem - ${array['semester']}] | section " . ucfirst($array['section']);
     }
 
     public function updateByClassAction()

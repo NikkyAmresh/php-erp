@@ -2,67 +2,45 @@
 
 namespace App\Controllers\Admin;
 
+use App\Helpers\Branch as BranchHelper;
+use App\Helpers\Classes as ClassHelper;
 use App\Helpers\Constants;
+use App\Helpers\Department as DepartmentHelper;
+use App\Helpers\Semester as SemesterHelper;
+use App\Helpers\Teacher as TeacherHelper;
 use App\Models\Admin as AdminModel;
-use App\Models\Branch as BranchModel;
-use App\Models\Classes as ClassModel;
-use App\Models\Department as DepartmentModel;
-use App\Models\Semester as SemesterModel;
-use App\Models\Teacher as TeacherModel;
 
 class Classes extends AdminController
 {
 
     protected $pageCode = 'classes';
-    protected $semesterModel;
+    protected $semesterHelper;
     protected $adminModel;
-    protected $branchModel;
-    protected $classModel;
-    protected $departmentModel;
-    protected $teacherModel;
+    protected $branchHelper;
+    protected $classHelper;
+    protected $departmentHelper;
+    protected $teacherHelper;
     public function __construct(
-        SemesterModel $semesterModel,
+        SemesterHelper $semesterHelper,
         AdminModel $adminModel,
-        BranchModel $branchModel,
-        ClassModel $classModel,
-        DepartmentModel $departmentModel,
-        TeacherModel $teacherModel
+        BranchHelper $branchHelper,
+        ClassHelper $classHelper,
+        DepartmentHelper $departmentHelper,
+        TeacherHelper $teacherHelper
     ) {
-        $this->semesterModel = $semesterModel;
-        $this->branchModel = $branchModel;
-        $this->departmentModel = $departmentModel;
-        $this->classModel = $classModel;
-        $this->teacherModel = $teacherModel;
+        $this->semesterHelper = $semesterHelper;
+        $this->branchHelper = $branchHelper;
+        $this->departmentHelper = $departmentHelper;
+        $this->classHelper = $classHelper;
+        $this->teacherHelper = $teacherHelper;
         parent::__construct($adminModel);
     }
-    public function className($array)
-    {
-        $result = preg_replace("/[^0-9]+/", "", $array['semester']);
-        $year = ceil($result / 2);
-        return $array['branch'] . ' (' . $year . ")year [sem - ${array['semester']}] | section " . ucfirst($array['section']);
-    }
 
-    public function getSections()
-    {
-        return [
-            ['id' => 'a', 'code' => 'A'],
-            ['id' => 'b', 'code' => 'B'],
-            ['id' => 'c', 'code' => 'C'],
-            ['id' => 'd', 'code' => 'D'],
-        ];
-    }
     public function createAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['semester']))) {
-
-            $class = $this->classModel->bind();
-            $class->setDepartmentID($_REQUEST['department']);
-            $class->setBranchID($_REQUEST['branch']);
-            $class->setSemesterID($_REQUEST['semester']);
-            $class->setSection($_REQUEST['section']);
-            $class->setTeacherID($_REQUEST['teacher']);
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
             if (
-                $class->save()) {
+                $this->classHelper->create($_REQUEST)) {
                 $this->setSuccessMessage("Class " . $this->className($_REQUEST) . " created successfully");
             } else {
                 $this->setErrorMessage("Unable to create Class");
@@ -74,15 +52,9 @@ class Classes extends AdminController
     }
     public function updateAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['semester']))) {
-            $class = $this->classModel->bind($_REQUEST['id']);
-            $class->setDepartmentID($_REQUEST['department']);
-            $class->setBranchID($_REQUEST['branch']);
-            $class->setSemesterID($_REQUEST['semester']);
-            $class->setSection($_REQUEST['section']);
-            $class->setTeacherID($_REQUEST['teacher']);
-            if ($class->save()) {
-                $this->setSuccessMessage("Class " . $this->className($_REQUEST) . " updated successfully");
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->classHelper->update($_REQUEST)) {
+                $this->setSuccessMessage("Class " . $this->classHelper->className($_REQUEST) . " updated successfully");
             } else {
                 $this->setErrorMessage("Unable to update Class");
             }
@@ -94,9 +66,7 @@ class Classes extends AdminController
 
     public function deleteAction()
     {
-        $class = $this->classModel->bind($this->route_params['id']);
-        $res = $class->delete();
-        if ($res) {
+        if ($this->classHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("Class delete successfully");
         } else {
             $this->setErrorMessage("Unable to delete Class");
@@ -106,32 +76,20 @@ class Classes extends AdminController
 
     public function indexAction()
     {
-        $st = $this->classModel->bind(null, null, ['semester', 'asc']);
-        $res = $st->getCollection();
-        $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
-        $sections = $this->getSections();
-        foreach ($res as $key => $r) {
-            $res[$key]['name'] = $this->className($r);
-        }
-        $this->setTemplateVars([
-            'columns' => $columns,
-            'classes' => $res,
-            'sections' => $sections,
-            'result' => $st->getPaginationSummary(),
-        ]);
+        $data = $this->classHelper->getCollection();
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Classes/index.html');
     }
     public function editAction()
     {
-        $st = $this->classModel->bind($this->route_params['id']);
-        $res = $st->get();
+        $res = $this->classHelper->get($this->route_params['id']);
         if ($res) {
-            $depts = $this->departmentModel->bind()->getCollection();
-            $branches = $this->branchModel->bind()->getCollection();
-            $teachers = $this->teacherModel->bind()->getCollection();
-            $semesters = $this->semesterModel->bind()->getCollection();
-            $res['name'] = $this->className($res);
-            $sections = $this->getSections();
+            $depts = $this->departmentHelper->getCollection();
+            $branches = $this->branchHelper->getCollection();
+            $teachers = $this->teacherHelper->getCollection();
+            $semesters = $this->semesterHelper->getCollection();
+            $res['name'] = $this->classHelper->className($res);
+            $sections = $this->classHelper->getSections();
             $this->setTemplateVars([
                 'class' => $res,
                 'deps' => $depts,
@@ -147,15 +105,14 @@ class Classes extends AdminController
     }
     public function newAction()
     {
-        $st = $this->classModel->bind(null, null, ['semester', 'asc']);
-        $res = $st->getCollection();
-        $depts = $this->departmentModel->bind()->getCollection();
-        $branches = $this->branchModel->bind()->getCollection();
-        $teachers = $this->teacherModel->bind()->getCollection();
-        $semesters = $this->semesterModel->bind()->getCollection();
-        $sections = $this->getSections();
+        $res = $this->classHelper->getCollection();
+        $depts = $this->departmentHelper->bind()->getCollection();
+        $branches = $this->branchHelper->bind()->getCollection();
+        $teachers = $this->teacherHelper->bind()->getCollection();
+        $semesters = $this->semesterHelper->bind()->getCollection();
+        $sections = $this->classHelper->getSections();
         foreach ($res as $key => $r) {
-            $res[$key]['name'] = $this->className($r);
+            $res[$key]['name'] = $this->classHelper->className($r);
         }
         $this->setTemplateVars([
             'classes' => $res,

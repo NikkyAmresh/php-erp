@@ -2,56 +2,49 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Helpers\Department as DepartmentHelper;
+use App\Helpers\Subject as SubjectHelper;
 use App\Models\Admin as AdminModel;
-use App\Models\Department as DepartmentModel;
-use App\Models\Subject as SubjectModel;
 
 class Subject extends AdminController
 {
     protected $pageCode = 'subject';
     protected $adminModel;
-    protected $departmentModel;
-    protected $subjectModel;
+    protected $departmentHelper;
+    protected $subjectHelper;
 
     public function __construct(
         AdminModel $adminModel,
-        DepartmentModel $departmentModel,
-        SubjectModel $subjectModel
+        DepartmentHelper $departmentHelper,
+        SubjectHelper $subjectHelper
     ) {
-        $this->departmentModel = $departmentModel;
-        $this->subjectModel = $subjectModel;
+        $this->departmentHelper = $departmentHelper;
+        $this->subjectHelper = $subjectHelper;
         parent::__construct($adminModel);
     }
     public function indexAction()
     {
-        $st = $this->subjectModel->bind();
-        $res = $st->getCollection();
-        $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
-        $this->setTemplateVars(['subjects' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
+        $data = $this->subjectHelper->getCollection();
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $subject = $this->subjectModel->bind();
-            $subject->setName($_REQUEST['name']);
-            $subject->setSubjectCode($_REQUEST['subjectCode']);
-            $subject->setDepartmentID($_REQUEST['department']);
-            $subject->save();
-            $this->setSuccessMessage("subject created successfully");
+            if ($this->subjectHelper->create($_REQUEST)) {
+                $this->setSuccessMessage("Subject {$_REQUEST['name']} created successfully");
+            } else {
+                $this->setErrorMessage("Unable to create Subject");
+            }
         } else {
-            $this->setErrorMessage("Unable to create subject");
+            $this->setErrorMessage("Unable to create Subject");
         }
         return $this->redirect('/admin/subject');
     }
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $subject = $this->subjectModel->bind($_REQUEST['id']);
-            $subject->setName($_REQUEST['name']);
-            $subject->setSubjectCode($_REQUEST['subjectCode']);
-            $subject->setDepartmentID($_REQUEST['department']);
-            if ($subject->save()) {
+            if ($this->subjectHelper->update($_REQUEST)) {
                 $this->setSuccessMessage("subject updated successfully");
             } else {
                 $this->setErrorMessage("Unable to update subject");
@@ -66,7 +59,7 @@ class Subject extends AdminController
     {
         $subject = $this->subjectModel->bind($this->route_params['id']);
         $res = $subject->delete();
-        if ($res) {
+        if ($this->subjectHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("subject deleted successfully");
         } else {
             $this->setErrorMessage("Unable to delete");
@@ -75,10 +68,8 @@ class Subject extends AdminController
     }
     public function editAction()
     {
-        $st = $this->subjectModel->bind($this->route_params['id']);
-        $res = $st->get();
-        $dep = $this->departmentModel->bind();
-        $deps = $dep->getAll();
+        $res = $this->subjectHelper->get($this->route_params['id']);
+        $deps = $this->departmentHelper->getAll();
         if ($res) {
             $this->setTemplateVars(['subject' => $res, 'deps' => $deps]);
             $this->renderTemplate('Admin/Dashboard/subject/edit.html');
@@ -88,8 +79,7 @@ class Subject extends AdminController
     }
     public function newAction()
     {
-        $dep = $this->departmentModel->bind();
-        $deps = $dep->getAll();
+        $deps = $this->departmentHelper->getAll();
         $this->setTemplateVars(['deps' => $deps]);
         $this->renderTemplate('Admin/Dashboard/Subject/new.html');
     }
