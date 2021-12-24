@@ -12,14 +12,16 @@ class HomePage extends SeleniumTest
 {
     protected static $container;
     protected static $userID;
+    protected static $student;
+    protected static $admin;
+    protected static $teacher;
 
-    public function testStudentLogin()
+
+    public function testCreateStudent()
     {
         self::$container = new Container();
-
-        $this->openUrl('/');
         $studentHelper = self::$container->get(Student::class);
-        $student= [
+        self::$student = [
             'name'=>'Test Student',
             'mobile'=>'9988788982',
             'email'=>'email@student.com',
@@ -29,86 +31,130 @@ class HomePage extends SeleniumTest
             'class' => 9,
             'rollNum' => 1999283912
         ];
-        self::$userID = $studentHelper->create($student);
+        self::$userID = $studentHelper->create(self::$student);
+        $user = $studentHelper->get(self::$userID);
+        $this->assertEquals($user['name'],self::$student['name']);
+        $this->assertEquals($user['mobile'],self::$student['mobile']);
+        $this->assertEquals($user['email'],self::$student['email']);
+    }
+
+    public function testStudentLogin()
+    {
+        $this->openUrl('/');
         $this->assertEquals('Login', $this->title());
         $page = new AuthenticationPage($this);
         $page->isLogout();
-        $welcomePage = $page->username($student['email'])
-            ->password($student['password'])
+        $welcomePage = $page->username(self::$student['email'])
+            ->password(self::$student['password'])
             ->submit();
-        $welcomePage->assertWelcomeIs($student['name']);
+        $welcomePage->assertWelcomeIs(self::$student['name']);
     }
 
     public function testStudentLogout()
     {
-        $studentHelper = self::$container->get(Student::class);
         $this->openUrl('/');
         $page = new WelcomePage($this);
         $page->logout();
         $page->isLogout();
-        $studentHelper->delete(self::$userID);   
     }
 
-    public function testAdminLogin()
+    public function testStudentDelete()
+    {
+        $studentHelper = self::$container->get(Student::class);
+        $studentHelper->delete(self::$userID);
+        $user = $studentHelper->get(self::$userID);
+        $this->assertEquals($user,null);
+    }
+
+    public function testAdminCreate()
     {
         $adminHelper = self::$container->get(Admin::class);
-        $admin= [
+        self::$admin= [
             'name'=>'Test Admin',
             'mobile'=>'9988788982',
             'email'=>'email@admin.com',
             'password'=>'123456'
         ];
-        self::$userID = $adminHelper->create($admin);
+        self::$userID = $adminHelper->create(self::$admin);
+        $user = $adminHelper->get(self::$userID);
+        $this->assertEquals($user['name'],self::$admin['name']);
+        $this->assertEquals($user['mobile'],self::$admin['mobile']);
+        $this->assertEquals($user['email'],self::$admin['email']);
+    }
+
+    public function testAdminLogin()
+    {
         $this->openUrl('/admin');
         $this->assertEquals('Login', $this->title());
         $page = new AuthenticationPage($this);
         $page->isLogout();
-        $welcomePage = $page->username($admin['email'])
-            ->password($admin['password'])
+        $welcomePage = $page->username(self::$admin['email'])
+            ->password(self::$admin['password'])
             ->submit();
         $this->assertEquals('Admin | Dashboard', $this->title());
-        $welcomePage->assertWelcomeIs($admin['name']);
+        $welcomePage->assertWelcomeIs(self::$admin['name']);
     }
 
     public function testAdminLogout()
     {
-        $adminHelper = self::$container->get(Admin::class);
         $this->openUrl('/admin');
         $page = new WelcomePage($this);
         $page->logout();
         $page->isLogout();
-        $adminHelper->delete(self::$userID);   
+    }
+    
+    public function testAdminDelete()
+    {
+        $adminHelper = self::$container->get(Admin::class);
+        $adminHelper->delete(self::$userID);  
+        $user = $adminHelper->get(self::$userID);
+        $this->assertEquals($user,null);      
     }
 
-    public function testTeacherLogin()
+    public function testTeacherCreate()
     {
         $teacherHelper = self::$container->get(Teacher::class);
-        $teacher= [
+        self::$teacher= [
             'name'=>'Test Teacher',
             'mobile'=>'9988788982',
             'email'=>'email@teacher.com',
             'password'=>'123456',
             'departmentID' => 1
         ];
+        self::$userID = $teacherHelper->create(self::$teacher);
+        $user = $teacherHelper->get(self::$userID);
+        $this->assertEquals($user['name'],self::$teacher['name']);
+        $this->assertEquals($user['mobile'],self::$teacher['mobile']);
+        $this->assertEquals($user['email'],self::$teacher['email']);
+    }
+
+    public function testTeacherLogin()
+    {
+        
         $this->openUrl('/teacher');
         $this->assertEquals('Login', $this->title());
-        self::$userID = $teacherHelper->create($teacher);
         $page = new AuthenticationPage($this);
         $page->isLogout();
-        $welcomePage = $page->username($teacher['email'])
-            ->password($teacher['password'])
+        $welcomePage = $page->username(self::$teacher['email'])
+            ->password(self::$teacher['password'])
             ->submit();
         $this->assertEquals('Teacher | Dashboard', $this->title());
-        $welcomePage->assertWelcomeIs($teacher['name']);
+        $welcomePage->assertWelcomeIs(self::$teacher['name']);
     }
 
     public function testTeacherLogout()
     {
-        $teacherHelper = self::$container->get(Teacher::class);
         $this->openUrl('/teacher');
         $page = new WelcomePage($this);
         $page->logout();
         $page->isLogout();
+    }
+
+    public function testTeacherDelete()
+    {
+        $teacherHelper = self::$container->get(Teacher::class);
         $teacherHelper->delete(self::$userID);   
+        $user = $teacherHelper->get(self::$userID);
+        $this->assertEquals($user,null);
     }
 }

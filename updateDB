@@ -1,15 +1,27 @@
-#!/Applications/mampstack-7.3.17-1/php/bin/php
+#!/usr/bin/env php
 <?php
 
 echo "Updating db";
 
+$handle = fopen("App/.env", "r");
+if ($handle) {
+    while (($line = fgets($handle)) !== false) {
+        $var = explode("=",$line);
+        $key = $var[0];
+        $$key = $var[1];
+    }
+
+    fclose($handle);
+} else {
+}
+
 $db = new mysqli('localhost', 'root', 'root');
 
-$database = 'erp';
+$database = $DB_NAME;
 $db->query('use information_schema');
 
 $query = "SELECT * from `SCHEMATA` WHERE `SCHEMA_NAME`='$database';";
-
+echo "\nDB name : $database";
 $res = $db->query($query);
 if (mysqli_num_rows($res)) {
     print("\nDatabase already exists!");
@@ -24,7 +36,7 @@ if (mysqli_num_rows($res)) {
 $db->query("Create DATABASE $database;");
 $db->query("use $database;");
 print("\nSetting up...");
-$commands = file_get_contents('erp.sql');
+$commands = file_get_contents("$database.sql");
 $db->multi_query($commands);
 print("\nCompleted!");
 ?>

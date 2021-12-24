@@ -12,6 +12,11 @@ class Admin extends User{
         parent::__construct($userModel);
     }
 
+    public function get($id)
+    {
+        return $this->adminModel->bind($id)->get();
+    }
+
     public function create($admin)
     {
         if ($userId = $this->createUser($admin)) {

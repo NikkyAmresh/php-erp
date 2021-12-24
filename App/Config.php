@@ -10,7 +10,7 @@ class Config
         if ($func=='getEnv') {
             $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__);
             $dotenv->safeLoad();
-            return $_ENV[$params[0]];
+            return array_merge($_ENV,getEnv())[$params[0]];
         }
     }
 

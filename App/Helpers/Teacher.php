@@ -12,6 +12,11 @@ class Teacher extends User{
         parent::__construct($userModel);
     }
 
+    public function get($id)
+    {
+        return $this->teacherModel->bind($id)->get();
+    }
+
     public function create($teacher)
     {
         if ($userId = $this->createUser($teacher)) {
