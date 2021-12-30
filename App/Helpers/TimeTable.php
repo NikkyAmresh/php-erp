@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Helpers\Classes as ClassHelper;
 use App\Models\Branch as BranchModel;
 use App\Models\Classes as ClassModel;
 use App\Models\Period as PeriodModel;
@@ -9,7 +10,7 @@ use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use App\Models\TimeTable as TimeTableModel;
 
-class Branch
+class TimeTable
 {
     protected $periodModel;
     protected $classModel;
@@ -17,7 +18,7 @@ class Branch
     protected $teacherModel;
     protected $timeTableModel;
     protected $branchModel;
-    public function __construct(ClassModel $classModel, PeriodModel $periodModel, SubjectModel $subjectModel, TeacherModel $teacherModel, TimeTableModel $timeTableModel, BranchModel $branchModel)
+    public function __construct(ClassHelper $classHelper, ClassModel $classModel, PeriodModel $periodModel, SubjectModel $subjectModel, TeacherModel $teacherModel, TimeTableModel $timeTableModel, BranchModel $branchModel)
     {
         $this->branchModel = $branchModel;
         $this->periodModel = $periodModel;
@@ -25,30 +26,18 @@ class Branch
         $this->subjectModel = $subjectModel;
         $this->teacherModel = $teacherModel;
         $this->timeTableModel = $timeTableModel;
+        $this->classHelper = $classHelper;
     }
 
-    public function create($branch)
+    public function deleteMany($classId)
     {
-        $branchModel = $this->branchModel->bind();
-        $branchModel->setDepartmentID($branch['department']);
-        $branchModel->setName($branch['name']);
-        $branchModel->setCode($branch['code']);
-        return $branchModel->save();
+        $timeTable = $this->timeTableModel->bind();
+        return $timeTable->deleteMany(['classID' => $classId]);
     }
-
-    public function update($branch)
+    public function insertMulti($data)
     {
-        $branchModel = $this->branchModel->bind($branch['id']);
-        $branchModel->setDepartmentID($branch['department']);
-        $branchModel->setName($branch['name']);
-        $branchModel->setCode($branch['code']);
-        return $branchModel->save();
-    }
-
-    public function delete($id)
-    {
-        $branchModel = $this->branchModel->bind($id);
-        return $branchModel->delete();
+        $timeTable = $this->timeTableModel->bind();
+        return $timeTable->insertMulti($data);
     }
 
     public function getCollection()
@@ -64,15 +53,16 @@ class Branch
         $teacherRes = $teacher->getCollection();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         foreach ($classRes as $key => $r) {
-            $classRes[$key]['name'] = $this->className($r);
+            $classRes[$key]['name'] = $this->classHelper->formatClassName($r);
         }
         return ['timeTables' => $res, 'periods' => $periods, 'subjects' => $subRes, 'classes' => $classRes, 'days' => $days, 'teachers' => $teacherRes];
     }
 
     public function get($id)
     {
-        $st = $this->branchModel->bind($id);
-        return $st->get();
+        $st = $this->classModel->bind($id);
+        $res = $st->getTimeTable();
+        return $res;
     }
 
 }

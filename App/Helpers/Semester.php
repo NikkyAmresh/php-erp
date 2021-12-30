@@ -14,16 +14,16 @@ class Semester
 
     public function create($semester)
     {
-        $semester = $this->semesterModel->bind();
-        $semester->setName($semester['name']);
-        return $semester->save();
+        $semesterModel = $this->semesterModel->bind();
+        $semesterModel->setName($semester['name']);
+        return $semesterModel->save();
     }
 
     public function update($semester)
     {
-        $semester = $this->semesterModel->bind();
-        $semester->setName($semester['name']);
-        return $semester->save();
+        $semesterModel = $this->semesterModel->bind($semester['id']);
+        $semesterModel->setName($semester['name']);
+        return $semesterModel->save();
     }
 
     public function delete($id)
@@ -32,9 +32,9 @@ class Semester
         return $semesterModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->semesterModel->bind();
+        $st = $this->semesterModel->bind()->setPage($page);
         $res = $st->getAll();
         $columns = array('Serial no', 'Name', 'Edit');
         return ['semesters' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];

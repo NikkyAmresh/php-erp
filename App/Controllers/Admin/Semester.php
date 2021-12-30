@@ -19,7 +19,11 @@ class Semester extends AdminController
     }
     public function indexAction()
     {
-        $data = $this->semesterHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->semesterHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Semester/index.html');
     }

@@ -63,7 +63,11 @@ class Teacher extends AdminController
 
     public function indexAction()
     {
-        $data = $this->teacherHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->teacherHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }

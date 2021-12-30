@@ -14,10 +14,10 @@ class Course
 
     public function create($course)
     {
-        $course = $this->courseModel->bind();
-        $course->setName($course['name']);
-        $course->setDuration($course['duration']);
-        return $course->save();
+        $courseModel = $this->courseModel->bind();
+        $courseModel->setName($course['name']);
+        $courseModel->setDuration($course['duration']);
+        return $courseModel->save();
     }
 
     public function update($course)
@@ -34,9 +34,9 @@ class Course
         return $courseModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->courseModel->bind();
+        $st = $this->courseModel->bind()->setPage($page);
         $res = $st->getAll();
         $columns = array('Serial no', 'Course', 'Duration', 'Edit');
         return ['courses' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];

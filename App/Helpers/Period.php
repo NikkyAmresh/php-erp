@@ -34,12 +34,12 @@ class Period
         return $periodModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->periodModel->bind();
+        $st = $this->periodModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'from', 'to', 'Edit');
-        return ['periodes' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
+        return ['periods' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
     }
 
     public function get($id)
@@ -47,6 +47,11 @@ class Period
         $st = $this->periodModel->bind($id);
         $res = $st->getCollection();
         return ['period' => $res];
+    }
+    public function getAll()
+    {
+        $periodModel = $this->periodModel->bind();
+        return $periodModel->getAll();
     }
 
 }

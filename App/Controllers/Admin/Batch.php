@@ -2,9 +2,9 @@
 
 namespace App\Controllers\Admin;
 
+use App\Helpers\Batch as BatchHelper;
 use App\Helpers\Constants;
 use App\Models\Admin as AdminModel;
-use App\Helpers\Batch as BatchHelper;
 
 class Batch extends AdminController
 {
@@ -21,16 +21,20 @@ class Batch extends AdminController
 
     public function indexAction()
     {
-        $data = $this->batchHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->batchHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Batch/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            if($this->batchHelper->create($_REQUEST)) {
+            if ($this->batchHelper->create($_REQUEST)) {
                 $this->setSuccessMessage("Batch created successfully");
-            }else{
+            } else {
                 $this->setErrorMessage("Unable to create Batch");
             }
         } else {
@@ -63,7 +67,7 @@ class Batch extends AdminController
     }
     public function editAction()
     {
-        $res= $this->batchHelper->get($this->route_params['id']);
+        $res = $this->batchHelper->get($this->route_params['id']);
         $years = $this->batchHelper->get10Years();
         if ($res) {
             $this->setTemplateVars(['batch' => $res, 'years' => $years]);

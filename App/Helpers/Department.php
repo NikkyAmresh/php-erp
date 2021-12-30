@@ -36,9 +36,9 @@ class Department
         return $departmentModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->departmentModel->bind();
+        $st = $this->departmentModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Department', 'HOD', 'Edit');
         return ['departments' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];

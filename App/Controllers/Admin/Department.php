@@ -59,7 +59,11 @@ class Department extends AdminController
 
     public function indexAction()
     {
-        $data = $this->departmentHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->departmentHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Department/index.html');
 

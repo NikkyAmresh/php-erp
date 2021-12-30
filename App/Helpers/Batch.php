@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Helpers;
+
 use App\Models\Batch as BatchModel;
 
-class Batch{
+class Batch
+{
 
-    public function __construct(BatchModel $batchModel) {
+    public function __construct(BatchModel $batchModel)
+    {
         $this->batchModel = $batchModel;
     }
 
@@ -18,7 +21,8 @@ class Batch{
         return $batchModel->save();
     }
 
-    public function update($batch){
+    public function update($batch)
+    {
         $batchModel = $this->batchModel->bind($batch['id']);
         $batchModel->setFromYear($batch['fromYear']);
         $batchModel->setToYear($batch['toYear']);
@@ -46,16 +50,17 @@ class Batch{
         return ['to' => $toYears, 'from' => $fromYears];
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->batchModel->bind();
+        $st = $this->batchModel->bind()->setPage($page);
         $res = $st->getCollection();
         $years = $this->get10Years();
         $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
         return ['batches' => $res, 'years' => $years, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
     }
-    
-    public function get($id){
+
+    public function get($id)
+    {
         $st = $this->batchModel->bind($id);
         return $st->get();
     }

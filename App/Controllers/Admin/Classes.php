@@ -41,7 +41,7 @@ class Classes extends AdminController
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
             if (
                 $this->classHelper->create($_REQUEST)) {
-                $this->setSuccessMessage("Class " . $this->className($_REQUEST) . " created successfully");
+                $this->setSuccessMessage("Class " . $this->classHelper->formatClassName($_REQUEST) . " created successfully");
             } else {
                 $this->setErrorMessage("Unable to create Class");
             }
@@ -54,7 +54,7 @@ class Classes extends AdminController
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
             if ($this->classHelper->update($_REQUEST)) {
-                $this->setSuccessMessage("Class " . $this->classHelper->className($_REQUEST) . " updated successfully");
+                $this->setSuccessMessage("Class " . $this->classHelper->formatClassName($_REQUEST) . " updated successfully");
             } else {
                 $this->setErrorMessage("Unable to update Class");
             }
@@ -76,7 +76,11 @@ class Classes extends AdminController
 
     public function indexAction()
     {
-        $data = $this->classHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->classHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Classes/index.html');
     }
@@ -88,7 +92,7 @@ class Classes extends AdminController
             $branches = $this->branchHelper->getCollection();
             $teachers = $this->teacherHelper->getCollection();
             $semesters = $this->semesterHelper->getCollection();
-            $res['name'] = $this->classHelper->className($res);
+            $res['name'] = $this->classHelper->formatClassName($res);
             $sections = $this->classHelper->getSections();
             $this->setTemplateVars([
                 'class' => $res,
@@ -112,7 +116,7 @@ class Classes extends AdminController
         $semesters = $this->semesterHelper->bind()->getCollection();
         $sections = $this->classHelper->getSections();
         foreach ($res as $key => $r) {
-            $res[$key]['name'] = $this->classHelper->className($r);
+            $res[$key]['name'] = $this->classHelper->formatClassName($r);
         }
         $this->setTemplateVars([
             'classes' => $res,

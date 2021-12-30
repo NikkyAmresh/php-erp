@@ -22,16 +22,16 @@ class Teacher extends User
 
     public function create($teacher)
     {
-        $teacherModel = $this->userModel->bind();
-        $teacherModel->setName($teacher['name']);
-        $teacherModel->setMobile($teacher['mobile']);
-        $teacherModel->setEmail($teacher['email']);
-        $teacherModel->setPassword(md5($teacher['password']));
-        if ($id = $teacherModel->save()) {
-            $teacher = $this->teacherModel->bind();
-            $teacher->setUserID($id);
-            $teacher->setDepartmentID($teacher['department']);
-            return $teacher->save();
+        $userModel = $this->userModel->bind();
+        $userModel->setName($teacher['name']);
+        $userModel->setMobile($teacher['mobile']);
+        $userModel->setEmail($teacher['email']);
+        $userModel->setPassword(md5($teacher['password']));
+        if ($id = $userModel->save()) {
+            $teacherModel = $this->teacherModel->bind();
+            $teacherModel->setUserID($id);
+            $teacherModel->setDepartmentID($teacher['department']);
+            return $teacherModel->save();
         } else {
             return null;
         }
@@ -56,9 +56,9 @@ class Teacher extends User
         $teacher->delete($id);
         return $this->deleteUser($userId);
     }
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->teacherModel->bind();
+        $st = $this->teacherModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Department', 'Edit');
         return ['teachers' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];

@@ -11,7 +11,7 @@ class Classes
     {
         $this->classModel = $classModel;
     }
-    public function className($array)
+    public function formatClassName($array)
     {
         $result = preg_replace("/[^0-9]+/", "", $array['semester']);
         $year = ceil($result / 2);
@@ -55,14 +55,14 @@ class Classes
         return $classModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->classModel->bind(null, null, ['semester', 'asc']);
+        $st = $this->classModel->bind(null, null, ['semester', 'asc'], $page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Class Teacher', 'Edit');
         $sections = $this->getSections();
         foreach ($res as $key => $r) {
-            $res[$key]['name'] = $this->className($r);
+            $res[$key]['name'] = $this->formatClassName($r);
         }
         return [
             'columns' => $columns,

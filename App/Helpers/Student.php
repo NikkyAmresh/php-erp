@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use App\Helpers\Classes as ClassHelper;
 use App\Models\Batch as BatchModel;
 use App\Models\Classes as ClassModel;
 use App\Models\Course as CourseModel;
@@ -10,30 +11,15 @@ use App\Models\User as UserModel;
 
 class Student extends User
 {
-    public function __construct(StudentModel $studentModel, UserModel $userModel, CourseModel $courseModel, ClassModel $classModel, BatchModel $batchModel)
+    public function __construct(StudentModel $studentModel, UserModel $userModel, CourseModel $courseModel, ClassModel $classModel, BatchModel $batchModel, ClassHelper $classHelper)
     {
         $this->studentModel = $studentModel;
         $this->userModel = $userModel;
         $this->courseModel = $courseModel;
         $this->classModel = $classModel;
         $this->batchModel = $batchModel;
+        $this->classHelper = $classHelper;
         parent::__construct($userModel);
-    }
-    public function className($array)
-    {
-        $result = preg_replace("/[^0-9]+/", "", $array['semester']);
-        $year = ceil($result / 2);
-        return $array['branch'] . ' (' . $year . ")year [sem - ${array['semester']}] | section " . ucfirst($array['section']);
-    }
-
-    public function getSections()
-    {
-        return [
-            ['id' => 'a', 'code' => 'A'],
-            ['id' => 'b', 'code' => 'B'],
-            ['id' => 'c', 'code' => 'C'],
-            ['id' => 'd', 'code' => 'D'],
-        ];
     }
 
     public function get($id)
@@ -94,21 +80,5 @@ class Student extends User
         $userId = $student->get()['userID'];
         $student->delete($id);
         return $this->deleteUser($userId);
-    }
-    public function getCollectionForNew()
-    {
-        $courses = $this->courseModel->bind()->getCollection();
-        $batches = $this->batchModel->bind()->getCollection();
-        $classes = $this->classModel->bind(null, null, ['semester', 'asc'])->getCollection();
-        foreach ($classes as $key => $r) {
-            $classes[$key]['name'] = $this->className($r);
-
-        }
-        return [
-            'courses' => $courses,
-            'batches' => $batches,
-            'classes' => $classes,
-        ];
-
     }
 }

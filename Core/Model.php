@@ -25,6 +25,12 @@ abstract class Model
         $this->db = $this->dbModel->setConfig(Config::getEnv('DB_HOST'),Config::getEnv('DB_USER'), Config::getEnv('DB_PASSWORD'), Config::getEnv('DB_NAME'));
     }
 
+public function setPage($page)
+{
+    $this->page = $page;
+    return $this;
+}
+
     public function bind($id = null, $cond = null, $orderBy = null, $page = 1)
     {
         $this->id = $id;

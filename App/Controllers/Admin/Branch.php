@@ -61,7 +61,11 @@ class Branch extends AdminController
 
     public function indexAction()
     {
-        $data = $this->branchHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->branchHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Branch/index.html');
     }

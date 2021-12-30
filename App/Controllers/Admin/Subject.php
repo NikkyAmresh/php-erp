@@ -24,7 +24,11 @@ class Subject extends AdminController
     }
     public function indexAction()
     {
-        $data = $this->subjectHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->subjectHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Subject/index.html');
     }

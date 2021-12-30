@@ -97,12 +97,17 @@ class Student extends AdminController
     }
     public function newAction()
     {
-        $data = $this->studentHelper->getCollectionForNew();
-        if ($data) {
-            $this->setTemplateVars(
-                $data
-            );
+        $courses = $this->courseHelper->getCollection();
+        $batches = $this->batchHelper->getCollection();
+        $classes = $this->classHelper->getCollection();
+        foreach ($classes as $key => $r) {
+            $classes[$key]['name'] = $this->classHelper->formatClassName($r);
         }
+        $this->setTemplateVars([
+            'courses' => $courses,
+            'batches' => $batches,
+            'classes' => $classes,
+        ]);
         $this->renderTemplate('Admin/Dashboard/Student/new.html');
     }
 }

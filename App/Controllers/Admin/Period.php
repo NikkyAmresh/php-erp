@@ -58,7 +58,11 @@ class Period extends AdminController
 
     public function indexAction()
     {
-        $data = $this->periodHelper->getCollection();
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->periodHelper->getCollection($page);
         $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Period/index.html');
     }

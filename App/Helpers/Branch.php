@@ -36,9 +36,9 @@ class Branch
         return $branchModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->branchModel->bind();
+        $st = $this->branchModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
         return ['branches' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];

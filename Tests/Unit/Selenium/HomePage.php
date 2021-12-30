@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Selenium;
 
-use Tests\Unit\Selenium\SeleniumTest;
 use App\Helpers\Admin;
-use App\Helpers\Teacher;
 use App\Helpers\Student;
+use App\Helpers\Teacher;
 use Core\Container;
+use Tests\Unit\Selenium\SeleniumTest;
 
 class HomePage extends SeleniumTest
 {
@@ -16,26 +16,25 @@ class HomePage extends SeleniumTest
     protected static $admin;
     protected static $teacher;
 
-
     public function testCreateStudent()
     {
         self::$container = new Container();
         $studentHelper = self::$container->get(Student::class);
         self::$student = [
-            'name'=>'Test Student',
-            'mobile'=>'9988788982',
-            'email'=>'email@student.com',
-            'password'=>'123456',
+            'name' => 'Test Student',
+            'mobile' => '9988788982',
+            'email' => 'email@student.com',
+            'password' => '123456',
             'course' => 4,
             'batch' => 3,
             'class' => 9,
-            'rollNum' => 1999283912
+            'rollNum' => 1999283912,
         ];
         self::$userID = $studentHelper->create(self::$student);
         $user = $studentHelper->get(self::$userID);
-        $this->assertEquals($user['name'],self::$student['name']);
-        $this->assertEquals($user['mobile'],self::$student['mobile']);
-        $this->assertEquals($user['email'],self::$student['email']);
+        $this->assertEquals($user['name'], self::$student['name']);
+        $this->assertEquals($user['mobile'], self::$student['mobile']);
+        $this->assertEquals($user['email'], self::$student['email']);
     }
 
     public function testStudentLogin()
@@ -63,23 +62,23 @@ class HomePage extends SeleniumTest
         $studentHelper = self::$container->get(Student::class);
         $studentHelper->delete(self::$userID);
         $user = $studentHelper->get(self::$userID);
-        $this->assertEquals($user,null);
+        $this->assertEquals($user, null);
     }
 
     public function testAdminCreate()
     {
         $adminHelper = self::$container->get(Admin::class);
-        self::$admin= [
-            'name'=>'Test Admin',
-            'mobile'=>'9988788982',
-            'email'=>'email@admin.com',
-            'password'=>'123456'
+        self::$admin = [
+            'name' => 'Test Admin',
+            'mobile' => '9988788982',
+            'email' => 'email@admin.com',
+            'password' => '123456',
         ];
         self::$userID = $adminHelper->create(self::$admin);
         $user = $adminHelper->get(self::$userID);
-        $this->assertEquals($user['name'],self::$admin['name']);
-        $this->assertEquals($user['mobile'],self::$admin['mobile']);
-        $this->assertEquals($user['email'],self::$admin['email']);
+        $this->assertEquals($user['name'], self::$admin['name']);
+        $this->assertEquals($user['mobile'], self::$admin['mobile']);
+        $this->assertEquals($user['email'], self::$admin['email']);
     }
 
     public function testAdminLogin()
@@ -102,35 +101,35 @@ class HomePage extends SeleniumTest
         $page->logout();
         $page->isLogout();
     }
-    
+
     public function testAdminDelete()
     {
         $adminHelper = self::$container->get(Admin::class);
-        $adminHelper->delete(self::$userID);  
+        $adminHelper->delete(self::$userID);
         $user = $adminHelper->get(self::$userID);
-        $this->assertEquals($user,null);      
+        $this->assertEquals($user, null);
     }
 
     public function testTeacherCreate()
     {
         $teacherHelper = self::$container->get(Teacher::class);
-        self::$teacher= [
-            'name'=>'Test Teacher',
-            'mobile'=>'9988788982',
-            'email'=>'email@teacher.com',
-            'password'=>'123456',
-            'departmentID' => 1
+        self::$teacher = [
+            'name' => 'Test Teacher',
+            'mobile' => '9988788982',
+            'email' => 'email@teacher.com',
+            'password' => '123456',
+            'department' => 1,
         ];
         self::$userID = $teacherHelper->create(self::$teacher);
         $user = $teacherHelper->get(self::$userID);
-        $this->assertEquals($user['name'],self::$teacher['name']);
-        $this->assertEquals($user['mobile'],self::$teacher['mobile']);
-        $this->assertEquals($user['email'],self::$teacher['email']);
+        $this->assertEquals($user['name'], self::$teacher['name']);
+        $this->assertEquals($user['mobile'], self::$teacher['mobile']);
+        $this->assertEquals($user['email'], self::$teacher['email']);
     }
 
     public function testTeacherLogin()
     {
-        
+
         $this->openUrl('/teacher');
         $this->assertEquals('Login', $this->title());
         $page = new AuthenticationPage($this);
@@ -153,8 +152,8 @@ class HomePage extends SeleniumTest
     public function testTeacherDelete()
     {
         $teacherHelper = self::$container->get(Teacher::class);
-        $teacherHelper->delete(self::$userID);   
+        $teacherHelper->delete(self::$userID);
         $user = $teacherHelper->get(self::$userID);
-        $this->assertEquals($user,null);
+        $this->assertEquals($user, null);
     }
 }

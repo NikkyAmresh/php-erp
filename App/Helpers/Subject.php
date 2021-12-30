@@ -36,9 +36,9 @@ class Subject
         return $subjectModel->delete();
     }
 
-    public function getCollection()
+    public function getCollection($page)
     {
-        $st = $this->subjectModel->bind();
+        $st = $this->subjectModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
         return ['subjects' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
@@ -49,5 +49,9 @@ class Subject
         $st = $this->subjectModel->bind($id);
         return $st->get();
     }
-
+    public function getAll()
+    {
+        $st = $this->subjectModel->bind();
+        return $st->getAll();
+    }
 }
