@@ -10,6 +10,7 @@ class Admin extends \Core\Model
     protected $table = 'admin';
     protected $tableJOIN = 'select admin.*,users.name as name,users.email as email,users.mobile as mobile from admin join users on users.id=admin.userID';
 
+    protected $user;
     public function __construct(User $userModel, MysqliDb $dbModel)
     {
         $this->userModel = $userModel;
@@ -22,7 +23,8 @@ class Admin extends \Core\Model
         if ($validate) {
             $adminUser = $this->db->where('userID', $usr->getUser()['id'])->getOne($this->table);
             if ($adminUser) {
-                $this->adminUser = $usr->getUser();
+                $this->user = $usr->getUser();
+                $this->adminUser = $adminUser;
                 return true;
             } else {
                 return false;
@@ -36,5 +38,11 @@ class Admin extends \Core\Model
     {
         return $this->adminUser;
     }
+
+    public function getUser()
+    {
+        return $this->user;
+    }
+
 
 }
