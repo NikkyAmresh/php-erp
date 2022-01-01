@@ -49,6 +49,15 @@ class HomePage extends SeleniumTest
         $welcomePage->assertWelcomeIs(self::$student['name']);
     }
 
+    public function testStudentProfile()
+    {
+        $this->openUrl('/student');
+        $this->byCssSelector('body > div > div.flex.flex-col.w-80.sm\:w-56.bg-white.rounded-r-3xl.overflow-hidden > ul > li:nth-child(2) > a > span.text-sm.font-medium')->click();
+        $this->assertEquals('Student | Profile', $this->title());
+        $studentName = $this->byCssSelector('body > div > div.container > div > div > div > div > div.bg-white.p-3.shadow-sm.rounded-sm > div.text-gray-700 > div > div:nth-child(1) > div:nth-child(2)')->text();
+        $this->assertEquals(self::$student['name'], $studentName);
+    }
+
     public function testStudentLogout()
     {
         $this->openUrl('/');
@@ -76,6 +85,7 @@ class HomePage extends SeleniumTest
         ];
         self::$userID = $adminHelper->create(self::$admin);
         $user = $adminHelper->get(self::$userID);
+
         $this->assertEquals($user['name'], self::$admin['name']);
         $this->assertEquals($user['mobile'], self::$admin['mobile']);
         $this->assertEquals($user['email'], self::$admin['email']);
@@ -93,7 +103,16 @@ class HomePage extends SeleniumTest
         $this->assertEquals('Admin | Dashboard', $this->title());
         $welcomePage->assertWelcomeIs(self::$admin['name']);
     }
-
+    public function testAdminProfile()
+    {
+        $this->openUrl('/admin');
+        $this->byCssSelector('ul > li:nth-child(2) > a')->click();
+        $this->assertEquals('Admin | Profile', $this->title());
+        $adminName = $this->byCssSelector('body > div > div.container > div > div > div > div > div > div.text-gray-700 > div > div:nth-child(1) > div:nth-child(2)')->text();
+        $adminEmail = $this->byCssSelector('body > div > div.container > div > div > div > div > div > div.text-gray-700 > div > div:nth-child(3) > div:nth-child(2) > a')->text();
+        $this->assertEquals(self::$admin['name'], $adminName);
+        $this->assertEquals(self::$admin['email'], $adminEmail);
+    }
     public function testAdminLogout()
     {
         $this->openUrl('/admin');
@@ -129,7 +148,6 @@ class HomePage extends SeleniumTest
 
     public function testTeacherLogin()
     {
-
         $this->openUrl('/teacher');
         $this->assertEquals('Login', $this->title());
         $page = new AuthenticationPage($this);
@@ -139,6 +157,17 @@ class HomePage extends SeleniumTest
             ->submit();
         $this->assertEquals('Teacher | Dashboard', $this->title());
         $welcomePage->assertWelcomeIs(self::$teacher['name']);
+    }
+
+    public function testTeacherProfile()
+    {
+        $this->openUrl('/teacher');
+        $this->byCssSelector('body > div > div.flex.flex-col.w-80.sm\:w-56.bg-white.rounded-r-3xl.overflow-hidden > ul > li:nth-child(2) > a')->click();
+        $this->assertEquals('Teacher | Profile', $this->title());
+        $teacherName = $this->byCssSelector('body > div > div.container > div > div > div > div > div.bg-white.p-3.shadow-sm.rounded-sm > div.text-gray-700 > div > div:nth-child(1) > div:nth-child(2)')->text();
+        $teacherEmail = $this->byCssSelector('body > div > div.container > div > div > div > div > div.bg-white.p-3.shadow-sm.rounded-sm > div.text-gray-700 > div > div:nth-child(4) > div:nth-child(2) > a')->text();
+        $this->assertEquals(self::$teacher['name'], $teacherName);
+        $this->assertEquals(self::$teacher['email'], $teacherEmail);
     }
 
     public function testTeacherLogout()
