@@ -3,8 +3,6 @@
 namespace Tests\Unit\Selenium;
 
 use App\Helpers\Admin;
-use App\Helpers\Student;
-use App\Helpers\Teacher;
 use Core\Container;
 use Tests\Unit\Selenium\SeleniumTest;
 
@@ -18,6 +16,7 @@ class HomePage extends SeleniumTest
 
     public function testCreateStudent()
     {
+        $this->skip();
         self::$container = new Container();
         $studentHelper = self::$container->get(Student::class);
         self::$student = [
@@ -39,6 +38,7 @@ class HomePage extends SeleniumTest
 
     public function testStudentLogin()
     {
+        $this->skip();
         $this->openUrl('/');
         $this->assertEquals('Login', $this->title());
         $page = new AuthenticationPage($this);
@@ -51,6 +51,7 @@ class HomePage extends SeleniumTest
 
     public function testStudentLogout()
     {
+        $this->skip();
         $this->openUrl('/');
         $page = new WelcomePage($this);
         $page->logout();
@@ -59,6 +60,7 @@ class HomePage extends SeleniumTest
 
     public function testStudentDelete()
     {
+        $this->skip();
         $studentHelper = self::$container->get(Student::class);
         $studentHelper->delete(self::$userID);
         $user = $studentHelper->get(self::$userID);
@@ -67,6 +69,7 @@ class HomePage extends SeleniumTest
 
     public function testAdminCreate()
     {
+        self::$container = new Container();
         $adminHelper = self::$container->get(Admin::class);
         self::$admin = [
             'name' => 'Test Admin',
@@ -76,6 +79,7 @@ class HomePage extends SeleniumTest
         ];
         self::$userID = $adminHelper->create(self::$admin);
         $user = $adminHelper->get(self::$userID);
+
         $this->assertEquals($user['name'], self::$admin['name']);
         $this->assertEquals($user['mobile'], self::$admin['mobile']);
         $this->assertEquals($user['email'], self::$admin['email']);
@@ -93,7 +97,11 @@ class HomePage extends SeleniumTest
         $this->assertEquals('Admin | Dashboard', $this->title());
         $welcomePage->assertWelcomeIs(self::$admin['name']);
     }
-
+    public function testAdminProfile()
+    {
+        $this->openUrl('/admin/profile');
+        $this->assertEquals('Admin | Profile', $this->title());
+    }
     public function testAdminLogout()
     {
         $this->openUrl('/admin');
@@ -112,6 +120,7 @@ class HomePage extends SeleniumTest
 
     public function testTeacherCreate()
     {
+        $this->skip();
         $teacherHelper = self::$container->get(Teacher::class);
         self::$teacher = [
             'name' => 'Test Teacher',
@@ -129,7 +138,7 @@ class HomePage extends SeleniumTest
 
     public function testTeacherLogin()
     {
-
+        $this->skip();
         $this->openUrl('/teacher');
         $this->assertEquals('Login', $this->title());
         $page = new AuthenticationPage($this);
@@ -143,6 +152,7 @@ class HomePage extends SeleniumTest
 
     public function testTeacherLogout()
     {
+        $this->skip();
         $this->openUrl('/teacher');
         $page = new WelcomePage($this);
         $page->logout();
@@ -151,6 +161,7 @@ class HomePage extends SeleniumTest
 
     public function testTeacherDelete()
     {
+        $this->skip();
         $teacherHelper = self::$container->get(Teacher::class);
         $teacherHelper->delete(self::$userID);
         $user = $teacherHelper->get(self::$userID);
