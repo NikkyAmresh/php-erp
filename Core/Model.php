@@ -4,7 +4,6 @@ namespace Core;
 require_once 'MysqliDb.php';
 
 use App\Config;
-
 use \MysqliDb;
 
 abstract class Model
@@ -16,20 +15,21 @@ abstract class Model
     protected $dbCall = null;
     protected $dbModel;
 
-    public function __construct(MysqliDb $dbModel) {
+    public function __construct(MysqliDb $dbModel)
+    {
         $this->dbModel = $dbModel;
     }
 
     public function initDb()
     {
-        $this->db = $this->dbModel->setConfig(Config::getEnv('DB_HOST'),Config::getEnv('DB_USER'), Config::getEnv('DB_PASSWORD'), Config::getEnv('DB_NAME'));
+        $this->db = $this->dbModel->setConfig(Config::getEnv('DB_HOST'), Config::getEnv('DB_USER'), Config::getEnv('DB_PASSWORD'), Config::getEnv('DB_NAME'));
     }
 
-public function setPage($page)
-{
-    $this->page = $page;
-    return $this;
-}
+    public function setPage($page)
+    {
+        $this->page = $page;
+        return $this;
+    }
 
     public function bind($id = null, $cond = null, $orderBy = null, $page = 1)
     {
@@ -102,7 +102,7 @@ public function setPage($page)
         } else {
             $data = $this->db->getWithJoin($this->tableJOIN, $this->page, $this->orderBy);
         }
-        if(!isset($data[0])){
+        if (!isset($data[0])) {
             return null;
         }
         $this->setData($data[0]);
