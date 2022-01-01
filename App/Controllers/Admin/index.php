@@ -27,10 +27,12 @@ class Index extends AdminBaseController
             $validate = $admin->adminAuth($body['email'], $body['password']);
             if ($validate) {
                 $adminUser = $admin->getAdminUser();
+                $user = $admin->getUser();
+                Session::set(Constants::LOGGED_IN_ADMIN_USER_ID, $user['id']);
                 Session::set(Constants::LOGGED_IN_ADMIN_ID, $adminUser['id']);
-                Session::set(Constants::LOGGED_IN_ADMIN_NAME, $adminUser['name']);
-                Session::set(Constants::LOGGED_IN_ADMIN_EMAIL, $adminUser['email']);
-                $this->setSuccessMessage("logined admin in as " . $adminUser['name']);
+                Session::set(Constants::LOGGED_IN_ADMIN_NAME, $user['name']);
+                Session::set(Constants::LOGGED_IN_ADMIN_EMAIL, $user['email']);
+                $this->setSuccessMessage("logined admin in as " . $user['name']);
                 $this->setTemplateVars(['islogin' => 1, 'name' => Session::get(Constants::LOGGED_IN_ADMIN_NAME)]);
                 $this->redirect("/admin");
                 return true;
