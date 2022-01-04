@@ -8,7 +8,7 @@ use \MysqliDb;
 class Teacher extends Model
 {
     protected $table = 'teachers';
-    protected $tableJOIN = 'SELECT teachers.*,departments.name as department,users.name as name,users.email as email,users.mobile as mobile FROM `teachers` join departments on departments.id=teachers.departmentID left JOIN users on users.id = teachers.userID';
+    protected $tableJOIN = 'SELECT teachers.*,departments.name as department,users.name as name,users.email as email,users.mobile as mobile FROM `teachers` left join departments on departments.id=teachers.departmentID left JOIN users on users.id = teachers.userID';
     protected $dbModel;
     protected $userModel;
     protected $timeTableModel;
