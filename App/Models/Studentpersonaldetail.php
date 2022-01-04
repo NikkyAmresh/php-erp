@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Core\Model;
-use \MysqliDb;
+use Core\MysqliDb;
 
 class StudentPersonalDetail extends Model
 {

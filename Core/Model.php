@@ -1,12 +1,10 @@
 <?php
 namespace Core;
 
-require_once 'MysqliDb.php';
-
 use App\Config;
-use \MysqliDb;
+use Core\MysqliDb;
 
-abstract class Model
+class Model
 {
 
     protected $table = '';

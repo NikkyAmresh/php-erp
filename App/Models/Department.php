@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Teacher;
 use Core\Model;
-use \MysqliDb;
+use Core\MysqliDb;
 
 class Department extends Model
 {

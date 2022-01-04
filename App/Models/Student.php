@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use \MysqliDb;
+use Core\MysqliDb;
 
 class Student extends \Core\Model
 

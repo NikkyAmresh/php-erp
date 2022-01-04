@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\MysqliDb;
 
 class Attendance extends Model
 {
@@ -22,7 +23,7 @@ class Attendance extends Model
         join semesters on semesters.id=classes.semesterID
         join periods on timetables.periodID=periods.id';
     
-    public function __construct(\MysqliDb $dbModel) {
+    public function __construct(MysqliDb $dbModel) {
         parent::__construct($dbModel);
     }
 }
