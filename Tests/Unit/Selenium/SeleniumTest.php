@@ -3,9 +3,10 @@
 namespace Tests\Unit\Selenium;
 
 use App\Config;
-use PHPUnit\Extensions\Selenium2TestCase;
 use Core\Container;
 use Core\Model;
+use PHPUnit\Extensions\Selenium2TestCase;
+
 class SeleniumTest extends Selenium2TestCase
 {
     protected $baseUrl = 'http://localhost';
@@ -13,17 +14,16 @@ class SeleniumTest extends Selenium2TestCase
     protected $url;
     protected static $container;
 
-
     public static function cleanDB()
     {
         self::$container = new Container();
 
         $model = self::$container->get(Model::class);
-        $tables = ['admin','teachers','students','users'];
+        $tables = ['admin', 'teachers', 'students', 'users', 'departments'];
 
-        foreach ($tables as $table){
-            print("\nCleaning table...".$table.' ');
-            $model->bind()->runQuery('DELETE FROM '.$table.' WHERE 1');
+        foreach ($tables as $table) {
+            print("\nCleaning table..." . $table . ' ');
+            $model->bind()->runQuery('DELETE FROM ' . $table . ' WHERE 1');
             print("Done");
         }
         print("\n");

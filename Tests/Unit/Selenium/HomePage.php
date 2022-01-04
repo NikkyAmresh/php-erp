@@ -118,22 +118,29 @@ class HomePage extends SeleniumTest
     {
         $this->byCssSelector('body > div > div.flex.flex-col.w-80.sm\:w-56.bg-white.rounded-r-3xl.overflow-hidden > ul > li:nth-child(3) > a')->click();
         $this->assertEquals('Admin | Department', $this->title());
+        $datas = $this->elements($this->using('css selector')->value('body > div > div.container > div > div > div > table > tbody > tr'));
+        $this->assertEquals(0, count($datas));
     }
     public function testCreateDepartment()
     {
         $this->byCssSelector('body > div > div.container > h2 > a > button')->click();
         $this->assertEquals('New | Department', $this->title());
-        $departmentValue = 'Computer Science Engineering';
-        $this->byName('name')->value($departmentValue);
+        $newValue = 'Computer Science Engineering';
+        $this->byName('name')->value($newValue);
         $this->byCssSelector('body > div > div.container > form > button')->click();
+        $newDepartment = $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2)')->text();
+        $this->assertEquals($newValue, $newDepartment);
     }
     public function testUpdateDepartment()
     {
         $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(4) > a.text-yellow-400.hover\:text-yellow-500.mx-2 > i')->click();
         $this->assertEquals('Update | Department', $this->title());
-        $departmentValue = 'Electrical Engineering';
-        $this->byName('name')->value($departmentValue);
+        $updateValue = 'Electrical Engineering';
+        $this->byName('name')->clear();
+        $this->byName('name')->value($updateValue);
         $this->byCssSelector('body > div > div.container > form > button')->click();
+        $updatedDepartment = $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2)')->text();
+        $this->assertEquals($updateValue, $updatedDepartment);
     }
 
     public function testDeleteDepartment()
@@ -172,7 +179,6 @@ class HomePage extends SeleniumTest
         ];
         self::$userID = $teacherHelper->create(self::$teacher);
         $user = $teacherHelper->get(self::$userID);
-        print_r(self::$userID);
         $this->assertEquals($user['name'], self::$teacher['name']);
         $this->assertEquals($user['mobile'], self::$teacher['mobile']);
         $this->assertEquals($user['email'], self::$teacher['email']);
