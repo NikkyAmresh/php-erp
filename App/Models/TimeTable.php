@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\MysqliDb;
 
 class TimeTable extends Model
 {
@@ -36,7 +37,7 @@ class TimeTable extends Model
     protected $studentModel;
 
 
-    public function __construct(\MysqliDb $dbModel) {
+    public function __construct(MysqliDb $dbModel) {
         parent::__construct($dbModel);
     }
 

@@ -4,15 +4,34 @@ namespace Tests\Unit\Selenium;
 
 use App\Config;
 use PHPUnit\Extensions\Selenium2TestCase;
-
+use Core\Container;
+use Core\Model;
 class SeleniumTest extends Selenium2TestCase
 {
     protected $baseUrl = 'http://localhost';
     protected $path = '/';
     protected $url;
+    protected static $container;
+
+
+    public static function cleanDB()
+    {
+        self::$container = new Container();
+
+        $model = self::$container->get(Model::class);
+        $tables = ['admin','teachers','students','users'];
+
+        foreach ($tables as $table){
+            print("\nCleaning table...".$table.' ');
+            $model->bind()->runQuery('DELETE FROM '.$table.' WHERE 1');
+            print("Done");
+        }
+        print("\n");
+    }
 
     public static function setUpBeforeClass(): void
     {
+        self::cleanDB();
         self::shareSession(true);
     }
 
