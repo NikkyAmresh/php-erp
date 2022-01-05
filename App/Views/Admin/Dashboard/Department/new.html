@@ -1,10 +1,6 @@
-{% extends "base.html" %}{%block body %}
+{% extends "base.html" %}{% block title %}New | Department{% endblock %}{%block body %}
 
-<form
-  action="/admin/createDepartment"
-  class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6"
-  method="post"
->
+<form action="/admin/createDepartment" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 m-6" method="post">
   <div class="input-field">
     <label for="name">Department Name</label>
     <input type="text" id="name" name="name" />

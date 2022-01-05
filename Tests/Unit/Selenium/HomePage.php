@@ -113,6 +113,43 @@ class HomePage extends SeleniumTest
         $this->assertEquals(self::$admin['name'], $adminName);
         $this->assertEquals(self::$admin['email'], $adminEmail);
     }
+
+    public function testViewDepartment()
+    {
+        $this->byCssSelector('body > div > div.flex.flex-col.w-80.sm\:w-56.bg-white.rounded-r-3xl.overflow-hidden > ul > li:nth-child(3) > a')->click();
+        $this->assertEquals('Admin | Department', $this->title());
+        $datas = $this->elements($this->using('css selector')->value('body > div > div.container > div > div > div > table > tbody > tr'));
+        $this->assertEquals(0, count($datas));
+    }
+    public function testCreateDepartment()
+    {
+        $this->byCssSelector('body > div > div.container > h2 > a > button')->click();
+        $this->assertEquals('New | Department', $this->title());
+        $newValue = 'Computer Science Engineering';
+        $this->byName('name')->value($newValue);
+        $this->byCssSelector('body > div > div.container > form > button')->click();
+        $newDepartment = $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2)')->text();
+        $this->assertEquals($newValue, $newDepartment);
+    }
+    public function testUpdateDepartment()
+    {
+        $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(4) > a.text-yellow-400.hover\:text-yellow-500.mx-2 > i')->click();
+        $this->assertEquals('Update | Department', $this->title());
+        $updateValue = 'Electrical Engineering';
+        $this->byName('name')->clear();
+        $this->byName('name')->value($updateValue);
+        $this->byCssSelector('body > div > div.container > form > button')->click();
+        $updatedDepartment = $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(2)')->text();
+        $this->assertEquals($updateValue, $updatedDepartment);
+    }
+
+    public function testDeleteDepartment()
+    {
+        $deleteBtn = $this->byCssSelector('body > div > div.container > div > div > div > table > tbody > tr:nth-child(1) > td:nth-child(4) > a.text-red-400.hover\:text-red-500.ml-2 > i');
+        $deleteBtn->click();
+        $datas = $this->elements($this->using('css selector')->value('body > div > div.container > div > div > div > table > tbody > tr'));
+        $this->assertEquals(0, count($datas));
+    }
     public function testAdminLogout()
     {
         $this->openUrl('/admin');
@@ -131,6 +168,7 @@ class HomePage extends SeleniumTest
 
     public function testTeacherCreate()
     {
+        self::$container = new Container();
         $teacherHelper = self::$container->get(Teacher::class);
         self::$teacher = [
             'name' => 'Test Teacher',

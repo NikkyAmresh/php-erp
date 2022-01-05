@@ -15,18 +15,17 @@ class Department
     public function create($department)
     {
         $departmentModel = $this->departmentModel->bind();
-        $departmentModel->setDepartmentID($department['department']);
         $departmentModel->setName($department['name']);
-        $departmentModel->setCode($department['code']);
         return $departmentModel->save();
     }
 
     public function update($department)
     {
         $departmentModel = $this->departmentModel->bind($department['id']);
-        $departmentModel->setDepartmentID($department['department']);
         $departmentModel->setName($department['name']);
-        $departmentModel->setCode($department['code']);
+        if (isset($department['hod'])) {
+            $departmentModel->setHodID($department['hod']);
+        }
         return $departmentModel->save();
     }
 
@@ -50,7 +49,7 @@ class Department
     public function get($id)
     {
         $st = $this->departmentModel->bind($id);
-        $res = $st->getCollection();
+        $res = $st->get();
         $hods = $st->getTeachers();
         return ['department' => $res, 'hods' => $hods];
     }
