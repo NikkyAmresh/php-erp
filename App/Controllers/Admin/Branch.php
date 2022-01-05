@@ -2,53 +2,43 @@
 
 namespace App\Controllers\Admin;
 
+use App\Helpers\Branch as BranchHelper;
 use App\Helpers\Constants;
+use App\Helpers\Department as DepartmentHelper;
 use App\Models\Admin as AdminModel;
-use App\Models\Branch as BranchModel;
-use App\Models\Department as DepartmentModel;
 
 class Branch extends AdminController
 {
     protected $pageCode = 'branch';
-    protected $branchModel;
-    protected $departmentModel;
+    protected $departmentHelper;
     protected $adminModel;
+    protected $branchHelper;
     public function __construct(
-        BranchModel $branchModel,
-        DepartmentModel $departmentModel,
+        BranchHelper $branchHelper,
+        DepartmentHelper $departmentHelper,
         AdminModel $adminModel
     ) {
-        $this->branchModel = $branchModel;
-        $this->departmentModel = $departmentModel;
+        $this->branchHelper = $branchHelper;
+        $this->departmentHelper = $departmentHelper;
         parent::__construct($adminModel);
     }
     public function createAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-
-            $branch = $this->branchModel->bind();
-            $branch->setDepartmentID($_REQUEST['department']);
-            $branch->setName($_REQUEST['name']);
-            $branch->setCode($_REQUEST['code']);
-            if (
-                $branch->save()) {
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->branchHelper->create($_REQUEST)) {
                 $this->setSuccessMessage("Branch {$_REQUEST['name']} created successfully");
             } else {
                 $this->setErrorMessage("Unable to create Branch");
             }
         } else {
-            $this->setErrorMessage("Invalid Request!");
+            $this->setErrorMessage("Unable to create Branch");
         }
         return $this->redirect('/admin/branch');
     }
     public function updateAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $branch = $this->branchModel->bind($_REQUEST['id']);
-            $branch->setDepartmentID($_REQUEST['department']);
-            $branch->setName($_REQUEST['name']);
-            $branch->setCode($_REQUEST['code']);
-            if ($branch->save()) {
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->branchHelper->update($_REQUEST)) {
                 $this->setSuccessMessage("Branch {$_REQUEST['name']} updated successfully");
             } else {
                 $this->setErrorMessage("Unable to update Branch");
@@ -61,9 +51,7 @@ class Branch extends AdminController
 
     public function deleteAction()
     {
-        $branch = $this->branchModel->bind($this->route_params['id']);
-        $res = $branch->delete();
-        if ($res) {
+        if ($this->batchHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("Branch delete successfully");
         } else {
             $this->setErrorMessage("Unable to create Branch");
@@ -73,18 +61,19 @@ class Branch extends AdminController
 
     public function indexAction()
     {
-        $st = $this->branchModel->bind();
-        $res = $st->getCollection();
-        $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
-        $this->setTemplateVars(['branches' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->branchHelper->getCollection($page);
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Branch/index.html');
     }
     public function editAction()
     {
-        $st = $this->branchModel->bind($this->route_params['id']);
-        $res = $st->get();
+        $res = $this->branchHelper->get($this->route_params['id']);
+        $depts = $this->departmentHelper->getAll();
         if ($res) {
-            $depts = $this->departmentModel->bind()->getAll();
             $this->setTemplateVars(['branch' => $res, 'deps' => $depts]);
             $this->renderTemplate('Admin/Dashboard/Branch/edit.html');
         } else {
@@ -93,7 +82,7 @@ class Branch extends AdminController
     }
     public function newAction()
     {
-        $depts = $this->departmentModel->bind()->getAll();
+        $depts = $this->departmentHelper->getCollection();
         $this->setTemplateVars(['deps' => $depts]);
         $this->renderTemplate('Admin/Dashboard/Branch/new.html');
     }

@@ -3,29 +3,27 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Helpers\Department as DepartmentHelper;
 use App\Models\Admin as AdminModel;
-use App\Models\Department as DepartmentModel;
 
 class Department extends AdminController
 {
     protected $pageCode = 'department';
-    protected $departmentModel;
+    protected $departmentHelper;
     protected $adminModel;
 
     public function __construct(
-        DepartmentModel $departmentModel,
+        DepartmentHelper $departmentHelper,
         AdminModel $adminModel
     ) {
-        $this->departmentModel = $departmentModel;
+        $this->departmentHelper = $departmentHelper;
         parent::__construct($adminModel);
     }
 
     public function createAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $department = $this->departmentModel->bind();
-            $department->setName($_REQUEST['name']);
-            if ($department->save()) {
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->departmentHelper->create($_REQUEST)) {
                 $this->setSuccessMessage("Department {$_REQUEST['name']} created successfully");
             } else {
                 $this->setErrorMessage("Unable to create Department");
@@ -37,11 +35,8 @@ class Department extends AdminController
     }
     public function updateAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $department = $this->departmentModel->bind($_REQUEST['id']);
-            $department->setName($_REQUEST['name']);
-            $department->setHodID($_REQUEST['hod']);
-            if ($department->save()) {
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->departmentHelper->update($_REQUEST)) {
                 $this->setSuccessMessage("Department {$_REQUEST['name']} updated successfully");
             } else {
                 $this->setErrorMessage("Unable to create Department");
@@ -54,9 +49,7 @@ class Department extends AdminController
 
     public function deleteAction()
     {
-        $department = $this->departmentModel->bind($this->route_params['id']);
-        $res = $department->delete();
-        if ($res) {
+        if ($this->departmentHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("Department delete successfully");
         } else {
             $this->setErrorMessage("Unable to create Department");
@@ -66,20 +59,20 @@ class Department extends AdminController
 
     public function indexAction()
     {
-        $st = $this->departmentModel->bind();
-        $res = $st->getCollection();
-        $columns = array('Serial no', 'Department', 'HOD', 'Edit');
-        $this->setTemplateVars(['departments' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->departmentHelper->getCollection($page);
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Department/index.html');
 
     }
     public function editAction()
     {
-        $st = $this->departmentModel->bind($this->route_params['id']);
-        $res = $st->getCollection();
-        if ($res) {
-            $hods = $st->getTeachers();
-            $this->setTemplateVars(['department' => $res, 'hods' => $hods]);
+        $data = $this->departmentHelper->get($this->route_params['id']);
+        if ($data) {
+            $this->setTemplateVars($data);
             $this->renderTemplate('Admin/Dashboard/Department/edit.html');
         } else {
             $this->redirect("/admin/department", ["message" => "Invalid DepartmentID!", 'type' => Constants::ERROR]);

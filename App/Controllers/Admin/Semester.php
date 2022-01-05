@@ -2,62 +2,61 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Helpers\Semester as SemesterHelper;
 use App\Models\Admin as AdminModel;
-use App\Models\Semester as SemesterModel;
 
 class Semester extends AdminController
 {
     protected $pageCode = 'semester';
     protected $adminModel;
-    protected $semesterModel;
+    protected $semesterHelper;
     public function __construct(
-        SemesterModel $semesterModel,
+        SemesterHelper $semesterHelper,
         AdminModel $adminModel
     ) {
-        $this->semesterModel = $semesterModel;
+        $this->semesterHelper = $semesterHelper;
         parent::__construct($adminModel);
     }
     public function indexAction()
     {
-        $st = $this->semesterModel->bind();
-        $res = $st->getAll();
-        $columns = array('Serial no', 'Name', 'Edit');
-        $this->setTemplateVars(['semesters' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->semesterHelper->getCollection($page);
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Semester/index.html');
     }
     public function createAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = $this->semesterModel->bind();
-            $semester->setName($_REQUEST['name']);
-            $semester->save();
-            $this->setSuccessMessage("semester created successfully");
+            if ($this->semesterHelper->create($_REQUEST)) {
+                $this->setSuccessMessage("Semester {$_REQUEST['name']} created successfully");
+            } else {
+                $this->setErrorMessage("Unable to create Semester");
+            }
         } else {
-            $this->setErrorMessage("Unable to create semester");
+            $this->setErrorMessage("Unable to create Semester");
         }
         return $this->redirect('/admin/semester');
     }
     public function updateAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
-            $semester = $this->semesterModel->bind($_REQUEST['id']);
-            $semester->setName($_REQUEST['name']);
-            if ($semester->save()) {
-                $this->setSuccessMessage("semester updated successfully");
+            if ($this->semesterHelper->update($_REQUEST)) {
+                $this->setSuccessMessage("Semester {$_REQUEST['name']} updated successfully");
             } else {
-                $this->setErrorMessage("Unable to update semester");
+                $this->setErrorMessage("Unable to update Semester");
             }
         } else {
-            $this->setErrorMessage("Invalid Request!");
+            $this->setErrorMessage("Unable to update Semester");
         }
         return $this->redirect('/admin/semester');
     }
 
     public function deleteAction()
     {
-        $semester = $this->semesterModel->bind($this->route_params['id']);
-        $res = $semester->delete();
-        if ($res) {
+        if ($this->semesterHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("semester deleted successfully");
         } else {
             $this->setErrorMessage("Unable to delete");
@@ -66,10 +65,10 @@ class Semester extends AdminController
     }
     public function editAction()
     {
-        $st = $this->semesterModel->bind($this->route_params['id']);
-        $res = $st->get();
-        if ($res) {
-            $this->setTemplateVars(['semester' => $res]);
+
+        $data = $this->semesterHelper->get($this->route_params['id']);
+        if ($data) {
+            $this->setTemplateVars($data);
             $this->renderTemplate('Admin/Dashboard/semester/edit.html');
         } else {
             $this->redirect("/admin/semester", ["message" => "Invalid semester id!", 'type' => Constants::ERROR]);

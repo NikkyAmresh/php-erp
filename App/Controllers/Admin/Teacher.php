@@ -3,43 +3,31 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Helpers\Department as DepartmentHelper;
+use App\Helpers\Teacher as TeacherHelper;
 use App\Models\Admin as AdminModel;
-use App\Models\Department as DepartmentModel;
-use App\Models\Teacher as TeacherModel;
-use App\Models\User as UserModel;
 
 class Teacher extends AdminController
 {
     protected $pageCode = 'teacher';
-    protected $teacherModel;
-    protected $departmentModel;
-    protected $userModel;
+    protected $teacherHelper;
+    protected $departmentHelper;
     protected $adminModel;
     public function __construct(
-        DepartmentModel $departmentModel,
-        TeacherModel $teacherModel,
-        UserModel $userModel,
+        DepartmentHelper $departmentHelper,
+        TeacherHelper $teacherHelper,
         AdminModel $adminModel
     ) {
-        $this->teacherModel = $teacherModel;
-        $this->userModel = $userModel;
-        $this->departmentModel = $departmentModel;
+        $this->teacherHelper = $teacherHelper;
+        $this->departmentHelper = $departmentHelper;
         parent::__construct($adminModel);
     }
 
     public function createAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $teacher = $this->userModel->bind();
-            $teacher->setName($_REQUEST['name']);
-            $teacher->setMobile($_REQUEST['mobile']);
-            $teacher->setEmail($_REQUEST['email']);
-            $teacher->setPassword(md5($_REQUEST['password']));
-            if ($id = $teacher->save()) {
-                $teacher = $this->teacherModel->bind();
-                $teacher->setUserID($id);
-                $teacher->setDepartmentID($_REQUEST['department']);
-                $teacher->save();
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->teacherHelper->create($_REQUEST)) {
+
                 $this->setSuccessMessage("Teacher {$_REQUEST['name']} created successfully");
             } else {
                 $this->setErrorMessage("Unable to create Teacher");
@@ -51,16 +39,8 @@ class Teacher extends AdminController
     }
     public function updateAction()
     {
-        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST && !empty(trim($_REQUEST['name']))) {
-            $teacher = $this->teacherModel->bind($_REQUEST['id']);
-            $teacher->get();
-            if ($_REQUEST['userID']) {
-                $user = $this->userModel->bind();
-                $user->get($_REQUEST['userID']);
-                $user->setName($_REQUEST['name'])->save();
-            }
-            $teacher->setDepartmentID($_REQUEST['department']);
-            if ($teacher->save()) {
+        if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
+            if ($this->teacherHelper->update($_REQUEST)) {
                 $this->setSuccessMessage("Teacher {$_REQUEST['name']} updated successfully");
             } else {
                 $this->setErrorMessage("Unable to update Teacher");
@@ -73,9 +53,7 @@ class Teacher extends AdminController
 
     public function deleteAction()
     {
-        $teacher = $this->teacherModel->bind($this->route_params['id']);
-        $res = $teacher->delete();
-        if ($res) {
+        if ($this->teacherHelper->delete($this->route_params['id'])) {
             $this->setSuccessMessage("Teacher delete successfully");
         } else {
             $this->setErrorMessage("Unable to create Teacher");
@@ -85,18 +63,19 @@ class Teacher extends AdminController
 
     public function indexAction()
     {
-        $st = $this->teacherModel->bind();
-        $res = $st->getCollection();
-        $columns = array('Serial no', 'Name', 'Department', 'Edit');
-        $this->setTemplateVars(['teachers' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()]);
+        $page = 1;
+        if (isset($this->route_params['page'])) {
+            $page = $this->route_params['page'];
+        }
+        $data = $this->teacherHelper->getCollection($page);
+        $this->setTemplateVars($data);
         $this->renderTemplate('Admin/Dashboard/Teacher/index.html');
     }
     public function editAction()
     {
-        $st = $this->teacherModel->bind($this->route_params['id']);
-        $res = $st->get();
+        $res = $this->teacherHelper->getAll($this->route_params['id']);
         if ($res) {
-            $depts = ($this->departmentModel->bind())->getAll();
+            $depts = $this->departmentHelper->getAll();
             $this->setTemplateVars(['teacher' => $res, 'deps' => $depts]);
             $this->renderTemplate('Admin/Dashboard/Teacher/edit.html');
         } else {
@@ -105,7 +84,7 @@ class Teacher extends AdminController
     }
     public function newAction()
     {
-        $depts = ($this->departmentModel->bind())->getAll();
+        $depts = $this->departmentHelper->getAll();
         $this->setTemplateVars(['deps' => $depts]);
         $this->renderTemplate('Admin/Dashboard/Teacher/new.html');
     }
