@@ -6,7 +6,7 @@ use App\Helpers\Admin as AdminHelper;
 use App\Helpers\Constants;
 use App\Models\Admin as AdminModel;
 
-class Setting extends AdminController
+class Settings extends AdminController
 {
     protected $adminModel;
     public function __construct(
@@ -20,11 +20,11 @@ class Setting extends AdminController
 
     public function indexAction()
     {
-        $this->renderTemplate('Admin/Dashboard/Setting/index.html');
+        $this->renderTemplate('Admin/Dashboard/Settings/index.html');
     }
     public function newAction()
     {
-        $this->renderTemplate('Admin/Dashboard/Setting/password.html');
+        $this->renderTemplate('Admin/Dashboard/Settings/password.html');
     }
     public function updateAction()
     {
@@ -33,7 +33,7 @@ class Setting extends AdminController
                 $this->setErrorMessage("Password didn't match.Please try again.");
             } else {
                 $result = $this->adminHelper->changePassword($this->admin->getUserID(), $_REQUEST);
-                if ($result == -1) {
+                if ($result === -1) {
                     $this->setErrorMessage("Incorrect old password");
                 } else if ($result) {
                     $this->setSuccessMessage("Password changed succesfully.");
