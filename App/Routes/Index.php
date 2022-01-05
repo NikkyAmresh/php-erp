@@ -50,6 +50,9 @@ class Index
         $this->router->add("admin/showTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'show']);
         $this->router->add("admin/setTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'updateByClass']);
         $this->router->add("admin/profile", ['controller' => 'Admin\Profile', 'action' => 'index']);
+        $this->router->add("admin/settings", ['controller' => 'Admin\Setting', 'action' => 'index']);
+        $this->router->add("admin/settings/changePassword", ['controller' => 'Admin\Setting', 'action' => 'new']);
+        $this->router->add("admin/settings/updatePassword", ['controller' => 'Admin\Setting', 'action' => 'update']);
 
         $this->router->add("student", ['controller' => 'Student\Index', 'action' => 'index']);
         $this->router->add("student/getTimeTable", ['controller' => 'Student\TimeTable', 'action' => 'get']);
