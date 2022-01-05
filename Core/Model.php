@@ -1,6 +1,5 @@
 <?php
 namespace Core;
-
 use App\Config;
 use Core\MysqliDb;
 
