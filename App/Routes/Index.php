@@ -50,12 +50,18 @@ class Index
         $this->router->add("admin/showTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'show']);
         $this->router->add("admin/setTimeTable", ['controller' => 'Admin\TimeTable', 'action' => 'updateByClass']);
         $this->router->add("admin/profile", ['controller' => 'Admin\Profile', 'action' => 'index']);
+        $this->router->add("admin/settings", ['controller' => 'Admin\Settings', 'action' => 'index']);
+        $this->router->add("admin/settings/changePassword", ['controller' => 'Admin\Settings', 'action' => 'changePassword']);
+        $this->router->add("admin/settings/updatePassword", ['controller' => 'Admin\Settings', 'action' => 'changePasswordRequestHandler']);
 
         $this->router->add("student", ['controller' => 'Student\Index', 'action' => 'index']);
         $this->router->add("student/getTimeTable", ['controller' => 'Student\TimeTable', 'action' => 'get']);
         $this->router->add("student/timeTable", ['controller' => 'Student\TimeTable', 'action' => 'show']);
         $this->router->add("student/profile", ['controller' => 'Student\Profile', 'action' => 'index']);
         $this->router->add("student/attendance", ['controller' => 'Student\Attendance', 'action' => 'index']);
+        $this->router->add("student/settings", ['controller' => 'Student\Settings', 'action' => 'index']);
+        $this->router->add("student/settings/changePassword", ['controller' => 'Student\Settings', 'action' => 'changePassword']);
+        $this->router->add("student/settings/updatePassword", ['controller' => 'Student\Settings', 'action' => 'changePasswordRequestHandler']);
 
         $this->router->add("teacher", ['controller' => 'teacher\Index', 'action' => 'index']);
         $this->router->add("teacher/getTimeTable", ['controller' => 'teacher\TimeTable', 'action' => 'get']);
@@ -63,6 +69,9 @@ class Index
         $this->router->add("teacher/attendance/{id:\d+}", ['controller' => 'teacher\Attendance', 'action' => 'mark']);
         $this->router->add("teacher/profile", ['controller' => 'Teacher\Profile', 'action' => 'index']);
         $this->router->add("teacher/submitAttendance", ['controller' => 'Teacher\Attendance', 'action' => 'submitAttendance']);
+        $this->router->add("teacher/settings", ['controller' => 'Teacher\Settings', 'action' => 'index']);
+        $this->router->add("teacher/settings/changePassword", ['controller' => 'Teacher\Settings', 'action' => 'changePassword']);
+        $this->router->add("teacher/settings/updatePassword", ['controller' => 'Teacher\Settings', 'action' => 'changePasswordRequestHandler']);
     }
 
 }

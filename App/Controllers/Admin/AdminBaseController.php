@@ -3,7 +3,6 @@
 namespace App\Controllers\Admin;
 
 class AdminBaseController extends \Core\Controller
-
 {
 
     public function before()
@@ -23,6 +22,7 @@ class AdminBaseController extends \Core\Controller
                 ['name' => 'Subjects', 'url' => '/admin/subject', 'icon' => 'fas fa-books', 'code' => 'subject'],
                 ['name' => 'Periods', 'url' => '/admin/period', 'icon' => 'fas fa-clock', 'code' => 'period'],
                 ['name' => 'Time table', 'url' => '/admin/timeTable', 'icon' => 'fa fa-calendar', 'code' => 'timetable'],
+                ['name' => 'Settings', 'url' => '/admin/settings', 'icon' => 'fas fa-cog', 'code' => 'settings'],
                 ['name' => 'Logout', 'url' => '/logout', 'icon' => 'fa fa-sign-out-alt'],
             ],
             ]);

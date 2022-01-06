@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Helpers;
+
 use App\Models\Admin as AdminModel;
 use App\Models\User as UserModel;
 
-class Admin extends User{
+class Admin extends User
+{
 
-    public function __construct(AdminModel $adminModel,UserModel $userModel) {
+    public function __construct(AdminModel $adminModel, UserModel $userModel)
+    {
         $this->adminModel = $adminModel;
         $this->userModel = $userModel;
         parent::__construct($userModel);

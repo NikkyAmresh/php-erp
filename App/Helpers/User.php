@@ -4,9 +4,10 @@ namespace App\Helpers;
 
 use App\Models\User as UserModel;
 
-
-class User{
-    public function __construct(UserModel $userModel) {
+class User
+{
+    public function __construct(UserModel $userModel)
+    {
         $this->userModel = $userModel;
     }
 
@@ -28,13 +29,16 @@ class User{
         $userModel->setEmail($user['email'])->save();
     }
 
-    public function changePassword($userID, $oldPassword, $newPassword){
-        $userModel = $this->userModel->bind(null,['users.id'=>$userID, 'users.password'=>md5($oldPassword)]);
-        if(!$userModel->get()){
+    public function changePassword($userID, $password)
+    {
+        $userModel = $this->userModel->bind(null, ['users.id' => $userID, 'users.password' => md5($password['oldPassword'])]);
+        if (!$userModel->get()) {
             return -1;
+        } else {
+            $userModel->setPassword(md5($password['newPassword']));
+            return $userModel->save();
         }
-        $userModel->setPassword(md5($newPassword));
-        return $userModel->save();
+
     }
 
     public function deleteUser($userID)

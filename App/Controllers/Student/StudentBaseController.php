@@ -13,6 +13,7 @@ class StudentBaseController extends \Core\Controller
                 ['name' => 'Profile', 'url' => '/student/profile', 'icon' => 'fa fa-user', 'code' => 'profile'],
                 ['name' => 'Attendance', 'url' => '#', 'icon' => 'fa fa-clock', 'code' => 'attendance'],
                 ['name' => 'Timetable', 'url' => '/student/timetable/', 'icon' => 'fa fa-calendar', 'code' => 'timetable'],
+                ['name' => 'Settings', 'url' => '/student/settings', 'icon' => 'fas fa-cog', 'code' => 'settings'],
                 ['name' => 'Logout', 'url' => '/logout', 'icon' => 'fa fa-sign-out-alt'],
             ],
             ]);
