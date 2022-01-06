@@ -68,8 +68,12 @@ class TimeTable extends ModelHelper
     {
         $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $teacherID, 'timetables.day' => lcfirst(date('l'))]);
         $res = $timeTable->get();
-        $students = $timeTable->setStudent($this->studentModel)->getStudents();
-        return ['timeTable' => $res, 'students' => $students];
+        if ($res) {
+            $students = $timeTable->setStudent($this->studentModel)->getStudents();
+            return ['timeTable' => $res, 'students' => $students];
+        }else{
+            return null;
+        }
     }
 
 }
