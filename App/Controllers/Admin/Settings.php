@@ -22,11 +22,11 @@ class Settings extends AdminController
     {
         $this->renderTemplate('Admin/Dashboard/Settings/index.html');
     }
-    public function newAction()
+    public function changePasswordAction()
     {
         $this->renderTemplate('Admin/Dashboard/Settings/password.html');
     }
-    public function updateAction()
+    public function changePasswordRequestHandlerAction()
     {
         if ($_SERVER["REQUEST_METHOD"] == Constants::REQUEST_METHOD_POST) {
             if (!($_REQUEST["newPassword"] == $_REQUEST["confirmPassword"])) {
