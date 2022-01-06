@@ -8,6 +8,8 @@ use App\Models\Admin as AdminModel;
 
 class Settings extends AdminController
 {
+    protected $pageCode = 'settings';
+
     protected $adminModel;
     public function __construct(
         AdminHelper $adminHelper,

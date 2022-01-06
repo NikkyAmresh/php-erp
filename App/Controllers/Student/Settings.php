@@ -8,6 +8,8 @@ use App\Models\Student as StudentModel;
 
 class Settings extends StudentController
 {
+    protected $pageCode = 'settings';
+
     protected $studentModel;
     public function __construct(
         StudentHelper $studentHelper,

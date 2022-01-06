@@ -8,6 +8,8 @@ use App\Models\Teacher as TeacherModel;
 
 class Settings extends TeacherController
 {
+    protected $pageCode = 'settings';
+
     protected $teacherModel;
     public function __construct(
         TeacherHelper $teacherHelper,
