@@ -3,21 +3,21 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Helpers\Period as PeriodHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Period as PeriodHelper;
 
 class Period extends AdminController
 {
     protected $pageCode = 'period';
-    protected $adminModel;
+    protected $adminHelper;
     protected $periodHelper;
 
     public function __construct(
-        AdminModel $adminModel,
+        AdminHelper $adminHelper,
         PeriodHelper $periodHelper
     ) {
         $this->periodHelper = $periodHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
     public function createAction()
     {
@@ -70,10 +70,10 @@ class Period extends AdminController
     {
         $data = $this->periodHelper->get($this->route_params['id']);
         if ($data) {
-            $this->setTemplateVars($data);
+            $this->setTemplateVars(['period' => $data]);
             $this->renderTemplate('Admin/Dashboard/Period/edit.html');
         } else {
-            $this->redirect("/admin/period", ["message" => "Invalid TecherID!", 'type' => Constants::ERROR]);
+            $this->redirect("/admin/period");
         }
     }
     public function newAction()

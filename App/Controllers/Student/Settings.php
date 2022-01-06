@@ -3,21 +3,19 @@
 namespace App\Controllers\Student;
 
 use App\Helpers\Constants;
-use App\Helpers\Student as StudentHelper;
-use App\Models\Student as StudentModel;
+use App\Helpers\Models\Student as StudentHelper;
 
 class Settings extends StudentController
 {
     protected $pageCode = 'settings';
 
-    protected $studentModel;
+    protected $studentHelper;
     public function __construct(
-        StudentHelper $studentHelper,
-        StudentModel $studentModel
+        StudentHelper $studentHelper
     ) {
         $this->studentHelper = $studentHelper;
 
-        parent::__construct($studentModel);
+        parent::__construct($studentHelper);
     }
 
     public function indexAction()

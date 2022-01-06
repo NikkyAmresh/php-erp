@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
-use App\Helpers\Classes as ClassHelper;
+use App\Helpers\Models\Classes as ClassHelper;
 use App\Models\Branch as BranchModel;
 use App\Models\Classes as ClassModel;
 use App\Models\Period as PeriodModel;
+use App\Models\Student as StudentModel;
 use App\Models\Subject as SubjectModel;
 use App\Models\Teacher as TeacherModel;
 use App\Models\TimeTable as TimeTableModel;
 
-class TimeTable
+class TimeTable extends ModelHelper
 {
     protected $periodModel;
     protected $classModel;
@@ -18,7 +19,7 @@ class TimeTable
     protected $teacherModel;
     protected $timeTableModel;
     protected $branchModel;
-    public function __construct(ClassHelper $classHelper, ClassModel $classModel, PeriodModel $periodModel, SubjectModel $subjectModel, TeacherModel $teacherModel, TimeTableModel $timeTableModel, BranchModel $branchModel)
+    public function __construct(StudentModel $studentModel, ClassHelper $classHelper, ClassModel $classModel, PeriodModel $periodModel, SubjectModel $subjectModel, TeacherModel $teacherModel, TimeTableModel $timeTableModel, BranchModel $branchModel)
     {
         $this->branchModel = $branchModel;
         $this->periodModel = $periodModel;
@@ -27,17 +28,15 @@ class TimeTable
         $this->teacherModel = $teacherModel;
         $this->timeTableModel = $timeTableModel;
         $this->classHelper = $classHelper;
+        $this->studentModel = $studentModel;
+        parent::__construct($timeTableModel);
     }
 
-    public function deleteMany($classId)
+    public function updateByClass($data)
     {
         $timeTable = $this->timeTableModel->bind();
-        return $timeTable->deleteMany(['classID' => $classId]);
-    }
-    public function insertMulti($data)
-    {
-        $timeTable = $this->timeTableModel->bind();
-        return $timeTable->insertMulti($data);
+        $timeTable->deleteMany(['classID' => $data['classID']]);
+        $timeTable->insertMulti($data['data']);
     }
 
     public function getCollection()
@@ -63,6 +62,14 @@ class TimeTable
         $st = $this->classModel->bind($id);
         $res = $st->getTimeTable();
         return $res;
+    }
+
+    public function getAttendanceDetails($timeTableId, $teacherID)
+    {
+        $timeTable = $this->timeTableModel->bind(null, ['timetables.id' => $timeTableId, 'timetables.teacherID' => $teacherID, 'timetables.day' => lcfirst(date('l'))]);
+        $res = $timeTable->get();
+        $students = $timeTable->setStudent($this->studentModel)->getStudents();
+        return ['timeTable' => $res, 'students' => $students];
     }
 
 }

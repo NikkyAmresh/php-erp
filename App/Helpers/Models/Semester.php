@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Semester as SemesterModel;
 
-class Semester
+class Semester extends ModelHelper
 {
 
     public function __construct(SemesterModel $semesterModel)
     {
         $this->semesterModel = $semesterModel;
+        parent::__construct($semesterModel);
     }
 
     public function create($semester)
@@ -26,25 +27,12 @@ class Semester
         return $semesterModel->save();
     }
 
-    public function delete($id)
-    {
-        $semesterModel = $this->semesterModel->bind($id);
-        return $semesterModel->delete();
-    }
-
     public function getCollection($page)
     {
         $st = $this->semesterModel->bind()->setPage($page);
         $res = $st->getAll();
         $columns = array('Serial no', 'Name', 'Edit');
         return ['semesters' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
-    }
-
-    public function get($id)
-    {
-        $st = $this->semesterModel->bind($id);
-        $res = $st->get();
-        return ['semester' => $res];
     }
 
 }

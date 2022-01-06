@@ -8,9 +8,9 @@ block body %}
     </div>
     <br>
     <div class="input-field col s12">
-        <select name="duration" class="browser-default" id="hod">
+        <select name="duration" class="browser-default" id="duration">
             {% for year in range(1,5) %}
-            <option {% if course.duration==year %}selected="selected" {% endif %} value="{{course.id}}">
+            <option {% if course.duration==year %}selected="selected" {% endif %} value="{{year}}">
                 {{year}}</option>
             {% endfor %}
         </select>

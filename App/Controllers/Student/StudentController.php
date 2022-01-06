@@ -3,18 +3,18 @@
 namespace App\Controllers\Student;
 
 use App\Helpers\Constants;
+use App\Helpers\Models\Student as StudentHelper;
 use App\Helpers\Session;
-use App\Models\Student as StudentModel;
 
 class StudentController extends StudentBaseController
 {
-    protected $studentModel;
+    protected $studentHelper;
     /**
      * Class constructor.
      */
-    public function __construct(StudentModel $studentModel)
+    public function __construct(StudentHelper $studentHelper)
     {
-        $this->studentModel = $studentModel;
+        $this->studentHelper = $studentHelper;
     }
     public function isLoggedIn()
     {
@@ -26,7 +26,7 @@ class StudentController extends StudentBaseController
         $studentID = $this->isLoggedIn();
         if ($studentID) {
             $this->loggedStudentID = $studentID;
-            $this->student = $this->studentModel->bind($this->loggedStudentID);
+            $this->student = $this->studentHelper->getUser($this->loggedStudentID);
             $this->setTemplateVars(['islogin' => 1, 'name' => $this->student->getName()]);
             return true;
         }

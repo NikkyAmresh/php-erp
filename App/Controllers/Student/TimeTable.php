@@ -2,22 +2,21 @@
 
 namespace App\Controllers\Student;
 
-use App\Controllers\Student\StudentController;
-use App\Models\Period as PeriodModel;
-use App\Models\Student as StudentModel;
+use App\Helpers\Models\Student as StudentHelper;
+use App\Models\Period as PeriodHelper;
 
 class TimeTable extends StudentController
 {
     protected $pageCode = 'timetable';
-    protected $periodModel;
-    protected $studentModel;
+    protected $periodHelper;
+    protected $studentHelper;
     /**
      * Class constructor.
      */
-    public function __construct(PeriodModel $periodModel, StudentModel $studentModel)
+    public function __construct(PeriodHelper $periodHelper, StudentHelper $studentHelper)
     {
-        $this->periodModel = $periodModel;
-        parent::__construct($studentModel);
+        $this->periodHelper = $periodHelper;
+        parent::__construct($studentHelper);
     }
     public function getAction()
     {
@@ -27,7 +26,7 @@ class TimeTable extends StudentController
     }
     public function showAction()
     {
-        $periods = $this->periodModel->bind()->getAll();
+        $periods = $this->periodHelper->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
         $this->renderTemplate('Student/Dashboard/TimeTable/TimeTable.html');

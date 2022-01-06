@@ -2,22 +2,19 @@
 
 namespace App\Controllers\Admin;
 
-use App\Helpers\Admin as AdminHelper;
 use App\Helpers\Constants;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
 
 class Settings extends AdminController
 {
     protected $pageCode = 'settings';
 
-    protected $adminModel;
+    protected $adminHelper;
     public function __construct(
-        AdminHelper $adminHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->adminHelper = $adminHelper;
-
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function indexAction()

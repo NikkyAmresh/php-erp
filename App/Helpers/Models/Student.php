@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
-use App\Helpers\Classes as ClassHelper;
+use App\Helpers\Models\Classes as ClassHelper;
 use App\Models\Batch as BatchModel;
 use App\Models\Classes as ClassModel;
 use App\Models\Course as CourseModel;
@@ -19,13 +19,9 @@ class Student extends User
         $this->classModel = $classModel;
         $this->batchModel = $batchModel;
         $this->classHelper = $classHelper;
-        parent::__construct($userModel);
+        parent::__construct($userModel, $studentModel);
     }
 
-    public function get($id)
-    {
-        return $this->studentModel->bind($id)->get();
-    }
 
     public function create($student)
     {
@@ -73,12 +69,5 @@ class Student extends User
             'students' => $res,
             'result' => $st->getPaginationSummary(),
         ];
-    }
-    public function delete($id)
-    {
-        $student = $this->studentModel->bind($id);
-        $userId = $student->get()['userID'];
-        $student->delete($id);
-        return $this->deleteUser($userId);
     }
 }

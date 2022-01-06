@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Batch as BatchModel;
 
-class Batch
+class Batch extends ModelHelper
 {
 
-    public function __construct(BatchModel $batchModel)
+    public function __construct(BatchModel $model)
     {
-        $this->batchModel = $batchModel;
+        parent::__construct($model);
     }
 
     public function create($batch)
     {
-        $batchModel = $this->batchModel->bind();
+        $batchModel = $this->model->bind();
         $batchModel->setFromYear($batch['fromYear']);
         $batchModel->setToYear($batch['toYear']);
         $batchModel->setCode($batch['fromYear'] . "-" . $batch['toYear']);
@@ -23,19 +23,13 @@ class Batch
 
     public function update($batch)
     {
-        $batchModel = $this->batchModel->bind($batch['id']);
+        $batchModel = $this->model->bind($batch['id']);
         $batchModel->setFromYear($batch['fromYear']);
         $batchModel->setToYear($batch['toYear']);
         $from = $batch['fromYear'];
         $to = $batch['toYear'];
         $batchModel->setCode($from . "-" . $to);
         return $batchModel->save();
-    }
-
-    public function delete($id)
-    {
-        $batch = $this->batchModel->bind($id);
-        return $batch->delete();
     }
 
     public function get10Years()
@@ -52,17 +46,11 @@ class Batch
 
     public function getCollection($page)
     {
-        $st = $this->batchModel->bind()->setPage($page);
+        $st = $this->model->bind()->setPage($page);
         $res = $st->getCollection();
         $years = $this->get10Years();
         $columns = array('Serial no', 'Name', 'From', 'To', 'Edit');
         return ['batches' => $res, 'years' => $years, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
-    }
-
-    public function get($id)
-    {
-        $st = $this->batchModel->bind($id);
-        return $st->get();
     }
 
 }

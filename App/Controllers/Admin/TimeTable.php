@@ -2,35 +2,34 @@
 
 namespace App\Controllers\Admin;
 
-use App\Helpers\TimeTable as TimeTableHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\TimeTable as TimeTableHelper;
 
 class TimeTable extends AdminController
 {
     protected $pageCode = 'timetable';
-    protected $adminModel;
+    protected $adminHelper;
     protected $timeTableHelper;
 
     public function __construct(
-        AdminModel $adminModel,
+        AdminHelper $adminHelper,
         TimeTableHelper $timeTableHelper
     ) {
         $this->timeTableHelper = $timeTableHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function updateByClassAction()
     {
-        $q1 = $this->timeTableHelper->deleteMany($_REQUEST['classID']);
-        $q2 = $this->timeTableHelper->insertMulti($_REQUEST['data']);
-        echo $q1 . $q2;
+        $this->timeTableHelper->updateByClass($_REQUEST);
+        echo true;
 
     }
 
     public function getAction()
     {
         $data = $this->timeTableHelper->get($this->route_params['id']);
-        echo json_encode($res);
+        echo json_encode($data);
         return;
     }
     public function indexAction()

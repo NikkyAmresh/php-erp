@@ -2,25 +2,25 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Helpers\Department as DepartmentHelper;
-use App\Helpers\Subject as SubjectHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Department as DepartmentHelper;
+use App\Helpers\Models\Subject as SubjectHelper;
 
 class Subject extends AdminController
 {
     protected $pageCode = 'subject';
-    protected $adminModel;
+    protected $adminHelper;
     protected $departmentHelper;
     protected $subjectHelper;
 
     public function __construct(
-        AdminModel $adminModel,
+        AdminHelper $adminHelper,
         DepartmentHelper $departmentHelper,
         SubjectHelper $subjectHelper
     ) {
         $this->departmentHelper = $departmentHelper;
         $this->subjectHelper = $subjectHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
     public function indexAction()
     {
@@ -61,9 +61,8 @@ class Subject extends AdminController
 
     public function deleteAction()
     {
-        $subject = $this->subjectModel->bind($this->route_params['id']);
-        $res = $subject->delete();
-        if ($this->subjectHelper->delete($this->route_params['id'])) {
+        $delete = $this->subjectHelper->delete($this->route_params['id']);
+        if ($delete) {
             $this->setSuccessMessage("subject deleted successfully");
         } else {
             $this->setErrorMessage("Unable to delete");

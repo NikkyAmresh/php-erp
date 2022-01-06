@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Admin as AdminModel;
 use App\Models\User as UserModel;
@@ -12,12 +12,7 @@ class Admin extends User
     {
         $this->adminModel = $adminModel;
         $this->userModel = $userModel;
-        parent::__construct($userModel);
-    }
-
-    public function get($id)
-    {
-        return $this->adminModel->bind($id)->get();
+        parent::__construct($userModel, $adminModel);
     }
 
     public function create($admin)
@@ -33,13 +28,5 @@ class Admin extends User
             }
         }
         return null;
-    }
-
-    public function delete($id)
-    {
-        $admin = $this->adminModel->bind($id);
-        $userId = $admin->get()['userID'];
-        $admin->delete($id);
-        return $this->deleteUser($userId);
     }
 }

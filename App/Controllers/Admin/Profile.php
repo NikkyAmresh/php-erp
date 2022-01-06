@@ -2,16 +2,16 @@
 
 namespace App\Controllers\Admin;
 
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
 
 class Profile extends AdminController
 {
     protected $pageCode = 'profile';
 
     public function __construct(
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function indexAction()

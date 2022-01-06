@@ -3,15 +3,15 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
+use App\Helpers\Models\Admin as AdminHelper;
 use App\Helpers\Session;
-use App\Models\Admin as AdminModel;
 
 class AdminController extends AdminBaseController
 {
-    protected $adminModel;
-    public function __construct(AdminModel $adminModel)
+    protected $adminHelper;
+    public function __construct(AdminHelper $adminHelper)
     {
-        $this->adminModel = $adminModel;
+        $this->adminHelper = $adminHelper;
     }
     public function isLoggedIn()
     {
@@ -23,7 +23,7 @@ class AdminController extends AdminBaseController
         $adminID = $this->isLoggedIn();
         if ($adminID) {
             $this->loggedAdminID = $adminID;
-            $this->admin = $this->adminModel->bind($this->loggedAdminID);
+            $this->admin = $this->adminHelper->getUser($this->loggedAdminID);
             $this->setTemplateVars(['islogin' => 1, 'name' => $this->admin->getName()]);
             return true;
         }

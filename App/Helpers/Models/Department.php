@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Department as DepartmentModel;
 
-class Department
+class Department extends ModelHelper
 {
 
     public function __construct(DepartmentModel $departmentModel)
     {
         $this->departmentModel = $departmentModel;
+        parent::__construct($departmentModel);
     }
 
     public function create($department)
@@ -29,12 +30,6 @@ class Department
         return $departmentModel->save();
     }
 
-    public function delete($id)
-    {
-        $departmentModel = $this->departmentModel->bind($id);
-        return $departmentModel->delete();
-    }
-
     public function getCollection($page)
     {
         $st = $this->departmentModel->bind()->setPage($page);
@@ -42,10 +37,7 @@ class Department
         $columns = array('Serial no', 'Department', 'HOD', 'Edit');
         return ['departments' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
     }
-    public function getAll()
-    {
-        return ($this->departmentModel->bind())->getAll();
-    }
+
     public function get($id)
     {
         $st = $this->departmentModel->bind($id);

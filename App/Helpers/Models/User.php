@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\User as UserModel;
+use Core\Model as UserAreaModel;
 
-class User
+class User extends ModelHelper
 {
-    public function __construct(UserModel $userModel)
+    public function __construct(UserModel $userModel, UserAreaModel $userAreaModel)
     {
         $this->userModel = $userModel;
+        $this->userAreaModel = $userAreaModel;
+        parent::__construct($userAreaModel);
     }
 
     public function createUser($user)
@@ -45,5 +48,18 @@ class User
     {
         $userModel = $this->userModel->bind($userID);
         return $userModel->delete();
+    }
+
+    public function delete($id)
+    {
+        $user = $this->userAreaModel->bind($id);
+        $userId = $user->get()['userID'];
+        $user->delete($id);
+        return $this->deleteUser($userId);
+    }
+
+    public function getUser($userID)
+    {
+        return $this->userAreaModel->bind($userID);
     }
 }
