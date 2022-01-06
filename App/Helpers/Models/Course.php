@@ -29,7 +29,7 @@ class Course extends ModelHelper
         return $courseModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->courseModel->bind()->setPage($page);
         $res = $st->getAll();

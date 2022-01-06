@@ -30,7 +30,7 @@ class Department extends ModelHelper
         return $departmentModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->departmentModel->bind()->setPage($page);
         $res = $st->getCollection();

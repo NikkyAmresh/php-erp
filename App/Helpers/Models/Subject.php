@@ -31,7 +31,7 @@ class Subject extends ModelHelper
         return $subjectModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->subjectModel->bind()->setPage($page);
         $res = $st->getCollection();

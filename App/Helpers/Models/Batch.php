@@ -44,7 +44,7 @@ class Batch extends ModelHelper
         return ['to' => $toYears, 'from' => $fromYears];
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->model->bind()->setPage($page);
         $res = $st->getCollection();

@@ -67,7 +67,6 @@ class Course extends AdminController
     {
         $res = $this->courseHelper->get($this->route_params['id']);
         if ($res) {
-            print_r($res);
             $this->setTemplateVars(['course' => $res]);
             $this->renderTemplate('Admin/Dashboard/course/edit.html');
         } else {

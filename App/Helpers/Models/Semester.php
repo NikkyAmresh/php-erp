@@ -27,7 +27,7 @@ class Semester extends ModelHelper
         return $semesterModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->semesterModel->bind()->setPage($page);
         $res = $st->getAll();

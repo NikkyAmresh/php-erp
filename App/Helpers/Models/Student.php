@@ -22,7 +22,6 @@ class Student extends User
         parent::__construct($userModel, $studentModel);
     }
 
-
     public function create($student)
     {
         $user = $this->userModel->bind();
@@ -59,7 +58,7 @@ class Student extends User
         $studentModel->setRollNum($student['rollNum']);
         return $studentModel->save();
     }
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->studentModel->bind(null, null, ['users.id', 'asc'], $page);
         $res = $st->getCollection();

@@ -44,7 +44,7 @@ class Teacher extends User
         return $teacherModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->teacherModel->bind()->setPage($page);
         $res = $st->getCollection();

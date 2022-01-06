@@ -31,7 +31,7 @@ class Branch extends ModelHelper
         return $branchModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->branchModel->bind()->setPage($page);
         $res = $st->getCollection();

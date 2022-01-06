@@ -50,8 +50,7 @@ class Classes extends ModelHelper
         return $classModel->save();
     }
 
-
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->classModel->bind(null, null, ['semester', 'asc'], $page);
         $res = $st->getCollection();
@@ -67,6 +66,5 @@ class Classes extends ModelHelper
             'result' => $st->getPaginationSummary(),
         ];
     }
-
 
 }

@@ -29,7 +29,7 @@ class Period extends ModelHelper
         return $periodModel->save();
     }
 
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->periodModel->bind()->setPage($page);
         $res = $st->getCollection();
