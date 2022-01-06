@@ -2,16 +2,17 @@
 
 namespace App\Controllers\Student;
 
-use App\Models\Student as StudentModel;
+use App\Helpers\Models\Student as StudentHelper;
+
 class Attendance extends StudentController
 {
 
     /**
      * Class constructor.
      */
-    public function __construct(StudentModel $studentModel)
+    public function __construct(StudentHelper $studentHelper)
     {
-        parent::__construct($studentModel);
+        parent::__construct($studentHelper);
     }
 
     protected $pageCode = 'attendance';

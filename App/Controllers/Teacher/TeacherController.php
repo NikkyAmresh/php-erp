@@ -3,15 +3,15 @@
 namespace App\Controllers\Teacher;
 
 use App\Helpers\Constants;
+use App\Helpers\Models\Teacher as TeacherHelper;
 use App\Helpers\Session;
-use App\Models\Teacher as TeacherModel;
 
 class TeacherController extends TeacherBaseController
 {
-    protected $teacherModel;
-    public function __construct(TeacherModel $teacherModel)
+    protected $teacherHelper;
+    public function __construct(TeacherHelper $teacherHelper)
     {
-        $this->teacherModel = $teacherModel;
+        $this->teacherHelper = $teacherHelper;
     }
 
     public function isLoggedIn()
@@ -24,7 +24,7 @@ class TeacherController extends TeacherBaseController
         $teacherID = $this->isLoggedIn();
         if ($this->isLoggedIn()) {
             $this->loggedTeacherID = $teacherID;
-            $this->teacher = $this->teacherModel->bind($this->loggedTeacherID);
+            $this->teacher = $this->teacherHelper->getUser($this->loggedTeacherID);
             $this->setTemplateVars(['islogin' => 1, 'name' => $this->teacher->getName()]);
             return true;
         }

@@ -3,36 +3,32 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Batch as BatchHelper;
-use App\Helpers\Classes as ClassHelper;
 use App\Helpers\Constants;
-use App\Helpers\Course as CourseHelper;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Classes as ClassHelper;
+use App\Helpers\Models\Course as CourseHelper;
 use App\Helpers\Student as StudentHelper;
-use App\Helpers\User as UserHelper;
-use App\Models\Admin as AdminModel;
 
 class Student extends AdminController
 {
     protected $pageCode = 'student';
-    protected $adminModel;
+    protected $adminHelper;
     protected $classHelper;
     protected $courseHelper;
     protected $studentHelper;
-    protected $userHelper;
     protected $batchHelper;
     public function __construct(
-        AdminModel $adminModel,
+        AdminHelper $adminHelper,
         ClassHelper $classHelper,
         BatchHelper $batchHelper,
         StudentHelper $studentHelper,
-        UserHelper $userHelper,
         CourseHelper $courseHelper
     ) {
         $this->batchHelper = $batchHelper;
         $this->studentHelper = $studentHelper;
-        $this->userHelper = $userHelper;
         $this->classHelper = $classHelper;
         $this->courseHelper = $courseHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
     public function createAction()
     {

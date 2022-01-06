@@ -4,23 +4,23 @@ namespace App\Controllers\Admin;
 
 use App\Helpers\Branch as BranchHelper;
 use App\Helpers\Constants;
-use App\Helpers\Department as DepartmentHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Department as DepartmentHelper;
 
 class Branch extends AdminController
 {
     protected $pageCode = 'branch';
     protected $departmentHelper;
-    protected $adminModel;
+    protected $adminHelper;
     protected $branchHelper;
     public function __construct(
         BranchHelper $branchHelper,
         DepartmentHelper $departmentHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->branchHelper = $branchHelper;
         $this->departmentHelper = $departmentHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
     public function createAction()
     {

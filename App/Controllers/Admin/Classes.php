@@ -2,27 +2,27 @@
 
 namespace App\Controllers\Admin;
 
-use App\Helpers\Branch as BranchHelper;
-use App\Helpers\Classes as ClassHelper;
 use App\Helpers\Constants;
-use App\Helpers\Department as DepartmentHelper;
-use App\Helpers\Semester as SemesterHelper;
-use App\Helpers\Teacher as TeacherHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Branch as BranchHelper;
+use App\Helpers\Models\Classes as ClassHelper;
+use App\Helpers\Models\Department as DepartmentHelper;
+use App\Helpers\Models\Semester as SemesterHelper;
+use App\Helpers\Models\Teacher as TeacherHelper;
 
 class Classes extends AdminController
 {
 
     protected $pageCode = 'classes';
     protected $semesterHelper;
-    protected $adminModel;
+    protected $adminHelper;
     protected $branchHelper;
     protected $classHelper;
     protected $departmentHelper;
     protected $teacherHelper;
     public function __construct(
         SemesterHelper $semesterHelper,
-        AdminModel $adminModel,
+        AdminHelper $adminHelper,
         BranchHelper $branchHelper,
         ClassHelper $classHelper,
         DepartmentHelper $departmentHelper,
@@ -33,7 +33,7 @@ class Classes extends AdminController
         $this->departmentHelper = $departmentHelper;
         $this->classHelper = $classHelper;
         $this->teacherHelper = $teacherHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function createAction()
@@ -88,10 +88,10 @@ class Classes extends AdminController
     {
         $res = $this->classHelper->get($this->route_params['id']);
         if ($res) {
-            $depts = $this->departmentHelper->getCollection();
-            $branches = $this->branchHelper->getCollection();
-            $teachers = $this->teacherHelper->getCollection();
-            $semesters = $this->semesterHelper->getCollection();
+            $depts = $this->departmentHelper->getAll();
+            $branches = $this->branchHelper->getAll();
+            $teachers = $this->teacherHelper->getAll();
+            $semesters = $this->semesterHelper->getAll();
             $res['name'] = $this->classHelper->formatClassName($res);
             $sections = $this->classHelper->getSections();
             $this->setTemplateVars([
@@ -109,11 +109,11 @@ class Classes extends AdminController
     }
     public function newAction()
     {
-        $res = $this->classHelper->getCollection();
-        $depts = $this->departmentHelper->bind()->getCollection();
-        $branches = $this->branchHelper->bind()->getCollection();
-        $teachers = $this->teacherHelper->bind()->getCollection();
-        $semesters = $this->semesterHelper->bind()->getCollection();
+        $res = $this->classHelper->getAll(null, ['semester', 'asc']);
+        $depts = $this->departmentHelper->getAll();
+        $branches = $this->branchHelper->getAll();
+        $teachers = $this->teacherHelper->getAll();
+        $semesters = $this->semesterHelper->getAll();
         $sections = $this->classHelper->getSections();
         foreach ($res as $key => $r) {
             $res[$key]['name'] = $this->classHelper->formatClassName($r);

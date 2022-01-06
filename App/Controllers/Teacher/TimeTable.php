@@ -2,21 +2,21 @@
 
 namespace App\Controllers\Teacher;
 
-use App\Models\Period as PeriodModel;
-use App\Models\Teacher as TeacherModel;
+use App\Helpers\Models\Teacher as TeacherHelper;
+use App\Helpers\Models\Period as PeriodHelper;
 
 class TimeTable extends TeacherController
 {
     protected $pageCode = 'timetable';
-    protected $periodModel;
-    protected $teacherModel;
+    protected $periodHelper;
+    protected $teacherHelper;
     /**
      * Class constructor.
      */
-    public function __construct(PeriodModel $periodModel, TeacherModel $teacherModel)
+    public function __construct(PeriodHelper $periodHelper, TeacherHelper $teacherHelper)
     {
-        $this->periodModel = $periodModel;
-        parent::__construct($teacherModel);
+        $this->periodHelper = $periodHelper;
+        parent::__construct($teacherHelper);
     }
     public function getAction()
     {
@@ -26,7 +26,7 @@ class TimeTable extends TeacherController
     }
     public function showAction()
     {
-        $periods = $this->periodModel->bind()->getAll();
+        $periods = $this->periodHelper->getAll();
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
         $this->setTemplateVars(['periods' => $periods, 'days' => $days]);
         $this->renderTemplate('Teacher/Dashboard/TimeTable/TimeTable.html');

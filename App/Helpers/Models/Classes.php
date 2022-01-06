@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Classes as ClassModel;
 
-class Classes
+class Classes extends ModelHelper
 {
 
     public function __construct(ClassModel $classModel)
     {
         $this->classModel = $classModel;
+        parent::__construct($classModel);
     }
     public function formatClassName($array)
     {
@@ -49,13 +50,7 @@ class Classes
         return $classModel->save();
     }
 
-    public function delete($id)
-    {
-        $classModel = $this->classModel->bind($id);
-        return $classModel->delete();
-    }
-
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->classModel->bind(null, null, ['semester', 'asc'], $page);
         $res = $st->getCollection();
@@ -70,12 +65,6 @@ class Classes
             'sections' => $sections,
             'result' => $st->getPaginationSummary(),
         ];
-    }
-
-    public function get($id)
-    {
-        $st = $this->classModel->bind($id);
-        return $st->get();
     }
 
 }

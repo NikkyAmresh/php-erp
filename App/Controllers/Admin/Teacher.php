@@ -3,24 +3,24 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Helpers\Department as DepartmentHelper;
-use App\Helpers\Teacher as TeacherHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Department as DepartmentHelper;
+use App\Helpers\Models\Teacher as TeacherHelper;
 
 class Teacher extends AdminController
 {
     protected $pageCode = 'teacher';
     protected $teacherHelper;
     protected $departmentHelper;
-    protected $adminModel;
+    protected $adminHelper;
     public function __construct(
         DepartmentHelper $departmentHelper,
         TeacherHelper $teacherHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->teacherHelper = $teacherHelper;
         $this->departmentHelper = $departmentHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function createAction()

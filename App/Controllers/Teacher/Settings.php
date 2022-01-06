@@ -3,21 +3,19 @@
 namespace App\Controllers\Teacher;
 
 use App\Helpers\Constants;
-use App\Helpers\Teacher as TeacherHelper;
-use App\Models\Teacher as TeacherModel;
+use App\Helpers\Models\Teacher as TeacherHelper;
 
 class Settings extends TeacherController
 {
     protected $pageCode = 'settings';
 
-    protected $teacherModel;
+    protected $teacherHelper;
     public function __construct(
-        TeacherHelper $teacherHelper,
-        TeacherModel $teacherModel
+        TeacherHelper $teacherHelper
     ) {
         $this->teacherHelper = $teacherHelper;
 
-        parent::__construct($teacherModel);
+        parent::__construct($teacherHelper);
     }
 
     public function indexAction()

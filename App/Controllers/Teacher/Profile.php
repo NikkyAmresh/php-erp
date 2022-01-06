@@ -2,16 +2,17 @@
 
 namespace App\Controllers\Teacher;
 
-use App\Models\Teacher as TeacherModel;
+use App\Helpers\Models\Teacher as TeacherHelper;
+
 class Profile extends TeacherController
 {
     protected $pageCode = 'profile';
 
     public function __construct(
-        TeacherModel $teacherModel
+        TeacherHelper $teacherHelper
     ) {
-        $this->teacherModel = $teacherModel;
-        parent::__construct($teacherModel);
+        $this->teacherHelper = $teacherHelper;
+        parent::__construct($teacherHelper);
     }
 
     public function indexAction()

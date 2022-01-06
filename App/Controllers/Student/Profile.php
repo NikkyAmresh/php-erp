@@ -3,21 +3,21 @@
 namespace App\Controllers\Student;
 
 use App\Controllers\Student\StudentController;
-use App\Models\Student as StudentModel;
+use App\Helpers\Models\Student as StudentHelper;
 
 class Profile extends StudentController
 {
     protected $pageCode = 'profile';
     protected $personalDetail;
     protected $studentController;
-    protected $studentModel;
+    protected $studentHelper;
 
     /**
      * Class constructor.
      */
-    public function __construct(StudentModel $studentModel)
+    public function __construct(StudentHelper $studentHelper)
     {
-        parent::__construct($studentModel);
+        parent::__construct($studentHelper);
     }
 
     public function indexAction()

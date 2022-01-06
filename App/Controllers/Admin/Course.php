@@ -2,20 +2,20 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Helpers\Course as CourseHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Course as CourseHelper;
 
 class Course extends AdminController
 {
     protected $pageCode = 'course';
     protected $courseHelper;
-    protected $adminModel;
+    protected $adminHelper;
     public function __construct(
         CourseHelper $courseHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->courseHelper = $courseHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
     public function indexAction()
     {
@@ -67,8 +67,8 @@ class Course extends AdminController
     {
         $res = $this->courseHelper->get($this->route_params['id']);
         if ($res) {
-            $this->setTemplateVars(['courses' => $res]);
-            $this->renderTemplate('Admin/Dashboard/course/edit.html', ['course' => $res]);
+            $this->setTemplateVars(['course' => $res]);
+            $this->renderTemplate('Admin/Dashboard/course/edit.html');
         } else {
             $this->redirect("/admin/course", ["message" => "Invalid course id!", 'type' => Constants::ERROR]);
         }

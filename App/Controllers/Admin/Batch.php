@@ -2,21 +2,21 @@
 
 namespace App\Controllers\Admin;
 
-use App\Helpers\Batch as BatchHelper;
 use App\Helpers\Constants;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Batch as BatchHelper;
 
 class Batch extends AdminController
 {
     protected $pageCode = 'batch';
-    protected $adminModel;
+    protected $adminHelper;
     protected $batchModel;
     public function __construct(
         BatchHelper $batchHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->batchHelper = $batchHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function indexAction()
@@ -73,7 +73,7 @@ class Batch extends AdminController
             $this->setTemplateVars(['batch' => $res, 'years' => $years]);
             $this->renderTemplate('Admin/Dashboard/Batch/edit.html');
         } else {
-            $this->redirect("/admin/teacher", ["message" => "Invalid Batch id!", 'type' => Constants::ERROR]);
+            $this->redirect("/admin/batch");
         }
     }
     public function newAction()

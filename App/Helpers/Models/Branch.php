@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Branch as BranchModel;
 
-class Branch
+class Branch extends ModelHelper
 {
 
     public function __construct(BranchModel $branchModel)
     {
         $this->branchModel = $branchModel;
+        parent::__construct($branchModel);
     }
 
     public function create($branch)
@@ -30,24 +31,12 @@ class Branch
         return $branchModel->save();
     }
 
-    public function delete($id)
-    {
-        $branchModel = $this->branchModel->bind($id);
-        return $branchModel->delete();
-    }
-
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->branchModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'Edit');
         return ['branches' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
-    }
-
-    public function get($id)
-    {
-        $st = $this->branchModel->bind($id);
-        return $st->get();
     }
 
 }

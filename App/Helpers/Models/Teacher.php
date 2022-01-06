@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Teacher as TeacherModel;
 use App\Models\User as UserModel;
@@ -12,12 +12,7 @@ class Teacher extends User
     {
         $this->teacherModel = $teacherModel;
         $this->userModel = $userModel;
-        parent::__construct($userModel);
-    }
-
-    public function get($id)
-    {
-        return $this->teacherModel->bind($id)->get();
+        parent::__construct($userModel, $teacherModel);
     }
 
     public function create($teacher)
@@ -49,23 +44,11 @@ class Teacher extends User
         return $teacherModel->save();
     }
 
-    public function delete($id)
-    {
-        $teacher = $this->teacherModel->bind($id);
-        $userId = $teacher->get()['userID'];
-        $teacher->delete($id);
-        return $this->deleteUser($userId);
-    }
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->teacherModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Department', 'Edit');
         return ['teachers' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
-    }
-    public function getAll($id)
-    {
-        $teacherModel = $this->teacherModel->bind($id);
-        return $teacherModel->get();
     }
 }

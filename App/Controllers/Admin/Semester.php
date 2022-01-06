@@ -2,20 +2,20 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Helpers\Semester as SemesterHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Semester as SemesterHelper;
 
 class Semester extends AdminController
 {
     protected $pageCode = 'semester';
-    protected $adminModel;
+    protected $adminHelper;
     protected $semesterHelper;
     public function __construct(
         SemesterHelper $semesterHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->semesterHelper = $semesterHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
     public function indexAction()
     {

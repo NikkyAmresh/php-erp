@@ -3,21 +3,21 @@
 namespace App\Controllers\Admin;
 
 use App\Helpers\Constants;
-use App\Helpers\Department as DepartmentHelper;
-use App\Models\Admin as AdminModel;
+use App\Helpers\Models\Admin as AdminHelper;
+use App\Helpers\Models\Department as DepartmentHelper;
 
 class Department extends AdminController
 {
     protected $pageCode = 'department';
     protected $departmentHelper;
-    protected $adminModel;
+    protected $adminHelper;
 
     public function __construct(
         DepartmentHelper $departmentHelper,
-        AdminModel $adminModel
+        AdminHelper $adminHelper
     ) {
         $this->departmentHelper = $departmentHelper;
-        parent::__construct($adminModel);
+        parent::__construct($adminHelper);
     }
 
     public function createAction()

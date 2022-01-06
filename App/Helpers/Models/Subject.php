@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Helpers\Models;
 
 use App\Models\Subject as SubjectModel;
 
-class Subject
+class Subject extends ModelHelper
 {
 
     public function __construct(SubjectModel $subjectModel)
     {
         $this->subjectModel = $subjectModel;
+        parent::__construct($subjectModel);
     }
 
     public function create($subject)
@@ -30,28 +31,11 @@ class Subject
         return $subjectModel->save();
     }
 
-    public function delete($id)
-    {
-        $subjectModel = $this->subjectModel->bind($id);
-        return $subjectModel->delete();
-    }
-
-    public function getCollection($page)
+    public function getCollection($page = 1)
     {
         $st = $this->subjectModel->bind()->setPage($page);
         $res = $st->getCollection();
         $columns = array('Serial no', 'Name', 'Code', 'Department', 'edit');
         return ['subjects' => $res, 'columns' => $columns, 'result' => $st->getPaginationSummary()];
-    }
-
-    public function get($id)
-    {
-        $st = $this->subjectModel->bind($id);
-        return $st->get();
-    }
-    public function getAll()
-    {
-        $st = $this->subjectModel->bind();
-        return $st->getAll();
     }
 }

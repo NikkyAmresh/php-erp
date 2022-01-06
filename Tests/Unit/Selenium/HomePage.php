@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Selenium;
 
-use App\Helpers\Admin;
-use App\Helpers\Student;
-use App\Helpers\Teacher;
+use App\Helpers\Models\Admin;
+use App\Helpers\Models\Student;
+use App\Helpers\Models\Teacher;
 use Core\Container;
 use Tests\Unit\Selenium\SeleniumTest;
 
