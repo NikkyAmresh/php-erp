@@ -21,6 +21,7 @@ class Attendance extends ModelHelper
             $doc = ['studentID' => $value['id'], 'status' => $value['status'], 'date' => $date, 'timetableID' => $timeTableId];
             array_push($docs, $doc);
         }
+        $attendanceModel = $this->attendanceModel->bind();
         $attendanceModel->deleteMany(['date' => $date, 'timetableID' => $timeTableId]);
         return $attendanceModel->insertMulti($docs);
     }

@@ -25,11 +25,16 @@ class Attendance extends TeacherController
     {
         $timeTableId = $this->route_params['id'];
         $res = $this->timeTableHelper->getAttendanceDetails($timeTableId, $this->teacher->getId());
+        if(!$res){
+            $this->setErrorMessage("You are not allowed to mark this date/subject attendace");
+            $this->redirect("/teacher/timeTable");
+            return;
+        }
         $students = $res['students'];
         $timeTable = $res['timeTable'];
         $date = date("Y/m/d");
         $attendance = $this->attendanceHelper->getAll(['date' => $date, 'timetableID' => $timeTableId]);
-        $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $res, 'students' => $students, 'attendance' => $attendance]);
+        $this->setTemplateVars(['ets' => json_encode($res), 'timeTable' => $timeTable, 'students' => $students, 'attendance' => $attendance]);
         $this->renderTemplate('Teacher/Dashboard/Attendance/index.html');
         return;
     }
