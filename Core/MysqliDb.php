@@ -2,20 +2,6 @@
 
 namespace Core;
 
-/**
- * MysqliDb Class
- *
- * @category  Database Access
- * @package   MysqliDb
- * @author    Jeffery Way <jeffrey@jeffrey-way.com>
- * @author    Josh Campbell <jcampbell@ajillion.com>
- * @author    Alexander V. Butenko <a.butenka@gmail.com>
- * @copyright Copyright (c) 2010-2017
- * @license   http://opensource.org/licenses/gpl-3.0.html GNU Public License
- * @link      http://github.com/joshcam/PHP-MySQLi-Database-Class
- * @version   2.9.3
- */
-
 class MysqliDb
 {
 
@@ -556,13 +542,6 @@ class MysqliDb
         throw new \Exception(sprintf('Unprepared Query Failed, ERRNO: %u (%s)', $this->mysqli()->errno, $this->mysqli()->error), $this->mysqli()->errno);
     }
 
-    /**
-     * Prefix add raw SQL query.
-     *
-     * @author Emre Emir <https://github.com/bejutassle>
-     * @param string $query      User-provided query to execute.
-     * @return string Contains the returned rows from the query.
-     */
     public function rawAddPrefix($query)
     {
         $query = str_replace(PHP_EOL, null, $query);
@@ -735,16 +714,16 @@ class MysqliDb
         return $this;
     }
 
-    public function getWithJoin($joinStr, $page = 1,  $orderBy = null, $pageLimit = 20)
+    public function getWithJoin($joinStr, $page = 1, $orderBy = null, $pageLimit = 20)
     {
         substr_replace($joinStr, ' SQL_CALC_FOUND_ROWS ', 6, 0);
 
-        $this->_query = substr_replace($joinStr, ' SQL_CALC_FOUND_ROWS ', 6, 0);;
+        $this->_query = substr_replace($joinStr, ' SQL_CALC_FOUND_ROWS ', 6, 0);
 
         $this->pageLimit = $pageLimit;
 
         $offset = $this->pageLimit * ($page - 1);
-       if ($orderBy) {
+        if ($orderBy) {
             $this->orderBy($orderBy[0], $orderBy[1]);
         }
 
@@ -763,9 +742,9 @@ class MysqliDb
         $totalCount = $stmt->fetch_row();
         $this->totalCount = $totalCount[0];
         $this->totalPages = ceil($this->totalCount / $this->pageLimit);
-        $this->resultData = [ 'startIndex' => $offset, 'endIndex'=> $offset+count($res),
-        'totalCount'=>$this->totalCount, 'totalPage'=>$this->totalPages, 'currentPage'=>$page
-    ];
+        $this->resultData = ['startIndex' => $offset, 'endIndex' => $offset + count($res),
+            'totalCount' => $this->totalCount, 'totalPage' => $this->totalPages, 'currentPage' => $page,
+        ];
         return $res;
     }
 
@@ -1693,9 +1672,6 @@ class MysqliDb
             }
         }
 
-        // avoid out of memory bug in php 5.2 and 5.3. Mysqli allocates lot of memory for long*
-        // and blob* types. So to avoid out of memory issues store_result is used
-        // https://github.com/joshcam/PHP-MySQLi-Database-Class/pull/119
         if ($shouldStoreResult) {
             $stmt->store_result();
         }
@@ -2069,9 +2045,6 @@ class MysqliDb
      */
     protected function refValues(array &$arr)
     {
-        //Reference in the function arguments are required for HHVM to work
-        //https://github.com/facebook/hhvm/issues/5155
-        //Referenced data array is required by mysqli since PHP 5.3+
         if (strnatcmp(phpversion(), '5.3') >= 0) {
             $refs = array();
             foreach ($arr as $key => $value) {
